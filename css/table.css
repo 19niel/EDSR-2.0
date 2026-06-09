@@ -1,0 +1,6 @@
+.table td,
+.table th {
+  padding-left: 25px;
+  padding-right: 25px;
+  white-space: nowrap;
+}

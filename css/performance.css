@@ -1,0 +1,22 @@
+.table td {
+  text-align: center;
+  margin-top: 0%;
+  white-space: nowrap;
+  background-color: white;
+  border-width: 1px;
+  /* Adjust the thickness as desired */
+  border-style: solid;
+  border-color: black;
+}
+
+.table th {
+  text-align: center;
+  margin-top: 0%;
+  background-color: #002060;
+  white-space: nowrap;
+  color: white;
+  border-width: 1px;
+  /* Adjust the thickness as desired */
+  border-style: solid;
+  border-color: black;
+}
