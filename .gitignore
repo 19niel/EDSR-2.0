@@ -1,0 +1,41 @@
+# ==========================================
+# AI Agents & Assistants (Claude / Cursor)
+# ==========================================
+CLAUDE.md
+AGENTS.md
+.cursorrules
+
+# ==========================================
+# Composer & Dependencies
+# ==========================================
+# Ignore the vendor directory as it can be re-installed via 'composer install'
+/vendor/
+
+# ==========================================
+# Database & Backup Files
+# ==========================================
+# Ignores your database dumps so they don't bloat the repository
+*.sql
+edsr2.sql
+
+# ==========================================
+# Code Backups & Redundant Files
+# ==========================================
+# Matches files like "prefillForm copy.js", "encode copy.php", or "*_old.php" 
+# If you intentionally want to track these, comment out these lines.
+* copy.*
+*_old.*
+
+# ==========================================
+# Environment & Secrets (Good practice)
+# ==========================================
+.env
+.env.local
+config.local.php
+
+# ==========================================
+# OS & System Files
+# ==========================================
+.DS_Store
+Thumbs.db
+Desktop.ini

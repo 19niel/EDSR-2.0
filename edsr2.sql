@@ -287,8 +287,13 @@ INSERT INTO `encoded` (`id`, `sbu`, `accExec`, `callDate`, `accName`, `arsExpiry
 -- Triggers `encoded`
 --
 DELIMITER $$
+<<<<<<< HEAD
 CREATE TRIGGER `before_insert_encoded` BEFORE INSERT ON `encoded` FOR EACH ROW BEGIN
     SET NEW.accexec_id = (SELECT id FROM users WHERE name = NEW.accexec LIMIT 1);
+=======
+CREATE TRIGGER `before_insert_encoded` BEFORE INSERT ON `encoded` FOR EACH ROW BEGIN
+    SET NEW.accexec_id = (SELECT id FROM users WHERE name = NEW.accexec LIMIT 1);
+>>>>>>> 76073268e16b9ed697445edd1c1d87e290962e3d
 END
 $$
 DELIMITER ;
@@ -806,8 +811,13 @@ INSERT INTO `event` (`id`, `employee_name`, `type`, `duration`, `date`, `employe
 -- Triggers `event`
 --
 DELIMITER $$
+<<<<<<< HEAD
 CREATE TRIGGER `before_insert_event` BEFORE INSERT ON `event` FOR EACH ROW BEGIN
     SET NEW.employee_id = (SELECT id FROM users WHERE name = NEW.employee_name LIMIT 1);
+=======
+CREATE TRIGGER `before_insert_event` BEFORE INSERT ON `event` FOR EACH ROW BEGIN
+    SET NEW.employee_id = (SELECT id FROM users WHERE name = NEW.employee_name LIMIT 1);
+>>>>>>> 76073268e16b9ed697445edd1c1d87e290962e3d
 END
 $$
 DELIMITER ;
@@ -1928,8 +1938,13 @@ INSERT INTO `leave_status` (`id`, `employee_name`, `leave_date`, `leave_duration
 -- Triggers `leave_status`
 --
 DELIMITER $$
+<<<<<<< HEAD
 CREATE TRIGGER `before_insert_leave_status` BEFORE INSERT ON `leave_status` FOR EACH ROW BEGIN
     SET NEW.employee_id = (SELECT id FROM users WHERE name = NEW.employee_name LIMIT 1);
+=======
+CREATE TRIGGER `before_insert_leave_status` BEFORE INSERT ON `leave_status` FOR EACH ROW BEGIN
+    SET NEW.employee_id = (SELECT id FROM users WHERE name = NEW.employee_name LIMIT 1);
+>>>>>>> 76073268e16b9ed697445edd1c1d87e290962e3d
 END
 $$
 DELIMITER ;
