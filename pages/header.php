@@ -18,7 +18,7 @@
                 <li id="users" class="nav-item admin"><a class="nav-link text-white" href="user.php">User</a></li>
                 <li id="leave" class="nav-item admin"><a class="nav-link text-white" href="leaveData.php">Leave Data</a></li>
                 <li id="customize" class="nav-item admin"><a class="nav-link text-white" href="customize.php">Customize</a></li>
-                <li id="customize" class="nav-item admin"><a class="nav-link text-white" href="bo_dashboard.php">BO Dashboard</a></li>
+                <li id="bo_dashboard" class="nav-item admin"><a class="nav-link text-white" href="bo_dashboard.php">BO Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="../php/logout.php?logoutid=<?php echo $name; ?>" onclick="return confirm('Logout Account?')">Logout</a></li>
             </ul>
         </div>

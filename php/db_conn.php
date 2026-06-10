@@ -3,6 +3,7 @@
 $sname = "localhost";
 $uname = "root";
 $password = "";
+// $password = "M1s@dm1n";
 
 $db_name = "edsr2";
 

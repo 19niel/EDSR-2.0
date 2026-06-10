@@ -286,5 +286,9 @@ include('../php/accountList.php');
         var isDownloadRestricted = <?php echo isset($is_download_restricted) && $is_download_restricted ? 'true' : 'false'; ?>;
     </script>
     <script type="text/javascript" src="../js/downloadRestriction.js"></script>
+    <script>
+        var category = "<?php echo $_SESSION['category'] ?? $category ?? ''; ?>";
+    </script>
+    <script src="../js/hideElement.js"></script>
 </body>
 </html>

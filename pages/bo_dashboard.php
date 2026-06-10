@@ -114,5 +114,10 @@ mysqli_close($conn);
     <script src="../js/db_4leaderboardRealtime.js"></script>
     <script src="../js/db_5wonProjectsRealtime.js"></script>
     <script src="../js/db_6agingProjectsRealTime.js"></script> </body>
+
+    <script>
+        var category = "<?php echo $_SESSION['category'] ?? $category ?? ''; ?>";
+    </script>
+    <script src="../js/hideElement.js"></script>
 </body>
 </html>
