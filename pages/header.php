@@ -19,6 +19,7 @@
                 <li id="leave" class="nav-item admin"><a class="nav-link text-white" href="leaveData.php">Leave Data</a></li>
                 <li id="customize" class="nav-item admin"><a class="nav-link text-white" href="customize.php">Customize</a></li>
                 <li id="bo_dashboard" class="nav-item admin"><a class="nav-link text-white" href="bo_dashboard.php">BO Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="my_accounts.php">My Encoded</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="../php/logout.php?logoutid=<?php echo $name; ?>" onclick="return confirm('Logout Account?')">Logout</a></li>
             </ul>
         </div>

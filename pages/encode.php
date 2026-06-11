@@ -52,7 +52,7 @@
 
                                     <!-- Account Executive -->
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <label for="accountExecutive" class="form-label">Account Executive (for review) <span class="req">*</span></label>
+                                        <label for="accountExecutive" class="form-label">Account Executive<span class="req">*</span></label>
                                         <div id="accountExecutiveContainer"></div>
                                     </div>
 

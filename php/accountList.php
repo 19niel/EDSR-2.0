@@ -56,10 +56,11 @@ if ($category == 'Admin' || $category == 'VP') {
     }
 }
 
-// --- COMMMENTED OUT USER OWNERSHIP RESTRICTION ---
-// if ($category == 'User') {
-//     $whereConditions[] = "e.accExec LIKE '%" . mysqli_real_escape_string($conn, $name) . "%'";
-// }
+// 🔒 PERSONAL ISOLATION LAYER: Regular users are strictly locked to their own encoded records
+if ($category == 'User') {
+    $escapedName = mysqli_real_escape_string($conn, $name);
+    $whereConditions[] = "e.accExec = '$escapedName'";
+}
 
 // Structural Modal Filters
 if (!empty($accountName)) {

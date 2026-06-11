@@ -33,30 +33,7 @@ mysqli_close($conn);
     
     <title>E-DSR - BO Dashboard</title>
     
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
-        }
-        /* 🎯 MATCHED DESIGN DIMENSIONS MATRIX FOR ALL SLOTS */
-        .main-content-card {
-            background: #ffffff;
-            border-radius: 12px;
-            border: 1px solid #e9ecef;
-            height: 320px; /* Precise uniform size control override */
-            position: relative;
-            overflow: hidden;
-        }
-        .border-dashed {
-            border-style: dashed !important;
-            background-color: #fdfdfd;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
+
 </head>
 <body>
     <?php include('header.php'); ?>

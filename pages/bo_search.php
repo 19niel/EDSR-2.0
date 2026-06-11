@@ -21,11 +21,7 @@ include('../php/accountList.php');
     <title>E-DSR - Search Records</title>
     
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
-        }
+
         .main-content-card {
             background: #ffffff;
             border-radius: 12px;
