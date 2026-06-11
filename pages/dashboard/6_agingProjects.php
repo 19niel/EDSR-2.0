@@ -29,7 +29,7 @@
     border-color: #dee2e6;
 }
 
-/* 🎯 NEW: Interactive Row Hover Highlights for Aging/Attention Required items */
+/* 🎯 Interactive Row Hover Highlights for Aging/Attention Required items */
 #aging-projects-table-body tr {
     transition: background-color 0.15s ease-in-out;
 }
@@ -41,43 +41,41 @@
 }
 </style>
 
-<div class="col-12 col-md-12 col-lg-4"> 
-    <div class="main-content-card p-3 shadow-sm d-flex flex-column h-100">
-        <div class="w-100 mb-2">
-            <div class="d-flex justify-content-between align-items-center">
-                <h6 class="text-uppercase text-secondary tracking-wider fw-bold small m-0">
-                    <i class="fa-solid fa-triangle-exclamation me-2 text-danger"></i>Aging Accounts
-                </h6>
-                <span class="badge bg-danger-subtle text-danger border px-2 py-0.5" style="font-size: 0.65rem; font-weight: 600; border-radius: 4px;">Attention Required</span>
-            </div>
-            <hr class="my-1.5 text-black-50">
+<div class="main-content-card p-3 shadow-sm d-flex flex-column h-100 w-100">
+    <div class="w-100 mb-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h6 class="text-uppercase text-secondary tracking-wider fw-bold small m-0">
+                <i class="fa-solid fa-triangle-exclamation me-2 text-danger"></i>Aging Accounts
+            </h6>
+            <span class="badge bg-danger-subtle text-danger border px-2 py-0.5" style="font-size: 0.65rem; font-weight: 600; border-radius: 4px;">Attention Required</span>
         </div>
+        <hr class="my-1.5 text-black-50">
+    </div>
 
-        <div class="table-responsive aging-table-container flex-grow-1">
-            <table class="table table-sm table-hover align-middle aging-table-fontSize mb-0">
-                <thead class="table-light text-secondary">
-                    <tr>
-                        <th style="width: 25%;">LID</th>
-                        <th style="width: 50%;">Client Name</th>
-                        <th class="text-end" style="width: 25%;">Last Update</th>
-                    </tr>
-                </thead>
-                <tbody id="aging-projects-table-body">
-                    <tr>
-                        <td colspan="3" class="text-center py-3 text-muted">Loading aging accounts...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="table-responsive aging-table-container flex-grow-1">
+        <table class="table table-sm table-hover align-middle aging-table-fontSize mb-0">
+            <thead class="table-light text-secondary">
+                <tr>
+                    <th style="width: 25%;">LID</th>
+                    <th style="width: 50%;">Client Name</th>
+                    <th class="text-end" style="width: 25%;">Last Update</th>
+                </tr>
+            </thead>
+            <tbody id="aging-projects-table-body">
+                <tr>
+                    <td colspan="3" class="text-center py-3 text-muted">Loading aging accounts...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <div class="d-flex justify-content-between align-items-center mt-2 pt-1 border-top">
-            <div class="text-muted aging-table-fontSize" id="aging-table-pagination-info">
-                Showing 0-0 of 0
-            </div>
-            <nav aria-label="Aging projects internal navigation">
-                <ul class="pagination pagination-sm pagination-sm-override-aging m-0" id="aging-table-pagination-buttons">
-                </ul>
-            </nav>
+    <div class="d-flex justify-content-between align-items-center mt-2 pt-1 border-top">
+        <div class="text-muted aging-table-fontSize" id="aging-table-pagination-info">
+            Showing 0-0 of 0
         </div>
+        <nav aria-label="Aging projects internal navigation">
+            <ul class="pagination pagination-sm pagination-sm-override-aging m-0" id="aging-table-pagination-buttons">
+            </ul>
+        </nav>
     </div>
 </div>

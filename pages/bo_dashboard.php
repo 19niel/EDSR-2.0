@@ -57,21 +57,33 @@ mysqli_close($conn);
                     </div>
                 </div>
 
-                <div class="row g-4">
+                <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch">
                     
-                    <?php include('dashboard/1_kpiMeter.php'); ?>
+                    <div class="col d-flex">
+                        <?php include('dashboard/1_kpiMeter.php'); ?>
+                    </div>
 
-                    <?php include('dashboard/2_pipeline.php'); ?>
+                    <div class="col d-flex">
+                        <?php include('dashboard/2_pipeline.php'); ?>
+                    </div>
 
-                    <?php include('dashboard/3_newAndExisting.php'); ?>
+                    <div class="col d-flex">
+                        <?php include('dashboard/3_newAndExisting.php'); ?>
+                    </div>
 
-                    <?php include('dashboard/4_leaderboard.php'); ?>
+                    <div class="col d-flex">
+                        <?php include('dashboard/4_leaderboard.php'); ?>
+                    </div>
 
-                    <?php include('dashboard/5_wonProjects.php'); ?>
+                    <div class="col d-flex">
+                        <?php include('dashboard/5_wonProjects.php'); ?>
+                    </div>
 
-                    <?php include('dashboard/6_agingProjects.php'); ?>
+                    <div class="col d-flex">
+                        <?php include('dashboard/6_agingProjects.php'); ?>
+                    </div>
 
-                </div> 
+                </div>
             </main>
         </div>
     </div>

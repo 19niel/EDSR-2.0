@@ -3,16 +3,17 @@
 $currentMonthIndex = date('m');
 ?>
 
-<div class="col-12 col-md-6 col-lg-4"> 
-    <div class="main-content-card p-4 shadow-sm">
-        <div class="w-100 mb-2">
-            <div class="d-flex justify-content-between align-items-center">
-                <h6 class="text-uppercase text-secondary tracking-wider fw-bold small m-0">New and Existing</h6>
-            </div>
-            <hr class="my-2 text-black-50">
+<div class="main-content-card p-4 shadow-sm d-flex flex-column h-100 w-100">
+    <div class="w-100 mb-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h6 class="text-uppercase text-secondary tracking-wider fw-bold small m-0">New and Existing</h6>
         </div>
+        <hr class="my-2 text-black-50">
+    </div>
 
-        <div class="donut-outer-wrapper my-3">
+    <div class="flex-grow-1 d-flex flex-column justify-content-center" style="min-height: 220px;">
+        
+        <div class="donut-outer-wrapper my-auto">
             <div class="donut-svg-container">
                 <svg viewBox="0 0 100 100" class="donut-svg-matrix">
                     <circle class="donut-track-bg" cx="50" cy="50" r="40"></circle>
@@ -29,7 +30,7 @@ $currentMonthIndex = date('m');
             </div>
         </div>
 
-        <div class="donut-metric-footer mt-2">
+        <div class="donut-metric-footer mt-auto">
             <div class="donut-footer-split border-end text-center">
                 <div class="d-flex align-items-center justify-content-center">
                     <div class="legend-square bg-cat-new"></div>
@@ -48,5 +49,6 @@ $currentMonthIndex = date('m');
                 </div>
             </div>
         </div>
+        
     </div>
 </div>

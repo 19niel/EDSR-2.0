@@ -18,7 +18,7 @@ if ($settingsResult && mysqli_num_rows($settingsResult) > 0) {
 // 🎯 Step 2: Use the dynamic $thresholdDays variable in the DATEDIFF filter
 // Fully independent of month variables to show critical unattended items from oldest to newest
 $query = "SELECT 
-            COALESCE(id, 0) as lid,
+             lid,
             COALESCE(NULLIF(TRIM(accName), ''), 'Unknown Client') as client_name,
             COALESCE(DATE_FORMAT(progressDate, '%m/%d/%Y'), 'N/A') as formatted_date
           FROM encoded 
