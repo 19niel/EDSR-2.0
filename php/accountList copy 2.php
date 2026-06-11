@@ -56,10 +56,9 @@ if ($category == 'Admin' || $category == 'VP') {
     }
 }
 
-// --- COMMMENTED OUT USER OWNERSHIP RESTRICTION ---
-// if ($category == 'User') {
-//     $whereConditions[] = "e.accExec LIKE '%" . mysqli_real_escape_string($conn, $name) . "%'";
-// }
+if ($category == 'User') {
+    $whereConditions[] = "e.accExec LIKE '%" . mysqli_real_escape_string($conn, $name) . "%'";
+}
 
 // Structural Modal Filters
 if (!empty($accountName)) {
