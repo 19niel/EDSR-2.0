@@ -89,15 +89,7 @@ mysqli_close($conn);
     <title>E-DSR - BO Dashboard Settings</title>
     
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
-        }
         .main-content-card {
-            background: #ffffff;
-            border-radius: 12px;
-            border: 1px solid #e9ecef;
             min-height: 250px; /* Perfectly aligned matching box dimensions across row axis */
             display: flex;
             flex-direction: column;
@@ -106,9 +98,10 @@ mysqli_close($conn);
         }
         .border-dashed {
             border-style: dashed !important;
-            background-color: #fdfdfd;
+            background-color: var(--surface-muted) !important;
             justify-content: center !important;
             align-items: center !important;
+            color: var(--text-muted) !important;
         }
     </style>
 </head>
@@ -121,7 +114,7 @@ mysqli_close($conn);
                 
                 <div class="d-flex justify-content-between align-items-center pb-4 mb-4 border-bottom flex-wrap gap-3">
                     <div>
-                        <h3 class="m-0 fw-bold tracking-tight text-dark">BO Dashboard Configurations</h3>
+                        <h3 class="m-0 fw-bold tracking-tight" style="color:var(--text-primary);">BO Dashboard Configurations</h3>
                         <p class="text-muted small m-0 mt-1">Modify panel operational limits in place. Cards match the main layout placement grid.</p>
                     </div>
                     <div class="d-flex gap-2">
@@ -151,10 +144,10 @@ mysqli_close($conn);
                                     <label for="targetAmountInput" class="form-label small fw-bold text-secondary text-uppercase" style="font-size:0.68rem;">Target Amount (₱)</label>
                                     <div class="input-group mb-2 input-group-sm">
                                         <span class="input-group-text bg-light fw-bold text-secondary">₱</span>
-                                        <input type="number" step="0.01" min="1" class="form-control fw-bold fs-6 text-dark" id="targetAmountInput" name="target_goal" value="<?php echo $currentSalesTarget; ?>" required>
+                                        <input type="number" step="0.01" min="1" class="form-control fw-bold fs-6" id="targetAmountInput" name="target_goal" value="<?php echo $currentSalesTarget; ?>" required>
                                     </div>
                                     <div class="form-text text-muted" style="font-size: 0.65rem;">
-                                        Shorthand Label Preview: <strong id="shorthandPreview" class="text-dark">--</strong>
+                                        Shorthand Label Preview: <strong id="shorthandPreview" style="color:var(--text-primary);">--</strong>
                                     </div>
                                 </div>
 
@@ -203,7 +196,7 @@ mysqli_close($conn);
                                     <label for="agingDaysInput" class="form-label small fw-bold text-secondary text-uppercase" style="font-size:0.68rem;">Stagnation Rule Threshold (Days)</label>
                                     <div class="input-group mb-2 input-group-sm">
                                         <span class="input-group-text bg-light text-secondary"><i class="fa-solid fa-calendar-day"></i></span>
-                                        <input type="number" min="1" class="form-control fw-bold text-dark" id="agingDaysInput" name="aging_days_threshold" value="<?php echo $agingDaysThreshold; ?>" required>
+                                        <input type="number" min="1" class="form-control fw-bold" id="agingDaysInput" name="aging_days_threshold" value="<?php echo $agingDaysThreshold; ?>" required>
                                     </div>
                                     <div class="form-text text-muted" style="font-size: 0.65rem;">
                                         Records with no changes for this many days will flag on the live summary dashboard tracking index row view.

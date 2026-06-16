@@ -21,7 +21,8 @@ $(document).ready(function () {
         const options = {
             series: [{
                 name: "Volume",
-                data: [0, 0, 0, 0, 0]
+                data: [0, 0, 0, 0, 0],
+                extraAccounts: [0, 0, 0, 0, 0]
             }],
             chart: {
                 type: 'bar',
@@ -46,7 +47,8 @@ $(document).ready(function () {
             dataLabels: {
                 enabled: true,
                 formatter: function (val, opt) {
-                    const accs = opt.w.config.series[0].extraAccounts[opt.dataPointIndex] || 0;
+                    const seriesObj = opt.w.config.series[0];
+                    const accs = (seriesObj && seriesObj.extraAccounts) ? (seriesObj.extraAccounts[opt.dataPointIndex] || 0) : 0;
                     return opt.w.globals.labels[opt.dataPointIndex] + ': ' + accs + ' Accs | ' + formatCurrency(val);
                 },
                 dropShadow: { enabled: false },
@@ -151,6 +153,16 @@ $(document).ready(function () {
         if (elPipeline) elPipeline.innerText = formatCurrency(pipeVolume);
         if (elActive) elActive.innerText = activeAccs;
         if (elWinRate) elWinRate.innerText = winRate.toFixed(1) + '%';
+
+        // --- UPDATE FUNNEL LEGEND GRID ---
+        order.forEach(id => {
+            const qtyEl = document.getElementById(`funnelQty-${id}`);
+            const valEl = document.getElementById(`funnelVal-${id}`);
+            const qtyVal = data[id] ? parseInt(data[id].accounts) || 0 : 0;
+            const volVal = data[id] ? parseFloat(data[id].volume) || 0 : 0;
+            if (qtyEl) qtyEl.innerText = qtyVal + (qtyVal === 1 ? ' Acc' : ' Accs');
+            if (valEl) valEl.innerText = formatCurrency(volVal);
+        });
     }
 
     // Initialize chart and data
