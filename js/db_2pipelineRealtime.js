@@ -37,24 +37,31 @@ $(document).ready(function () {
             colors: ['#0d6efd', '#0dcaf0', '#198754', '#dc3545', '#6c757d'],
             plotOptions: {
                 bar: {
-                    borderRadius: 4,
+                    borderRadius: 6,
                     horizontal: true,
-                    barHeight: '80%',
-                    isFunnel: true,
-                    distributed: true
+                    barHeight: '60%',
+                    distributed: true,
+                    colors: {
+                        backgroundBarColors: isDark ? ['rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)'] : ['rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)'],
+                        backgroundBarOpacity: 1,
+                        backgroundBarRadius: 6
+                    }
                 },
             },
             dataLabels: {
                 enabled: true,
+                textAnchor: 'start',
                 formatter: function (val, opt) {
                     const seriesObj = opt.w.config.series[0];
                     const accs = (seriesObj && seriesObj.extraAccounts) ? (seriesObj.extraAccounts[opt.dataPointIndex] || 0) : 0;
-                    return opt.w.globals.labels[opt.dataPointIndex] + ': ' + accs + ' Accs | ' + formatCurrency(val);
+                    return accs + ' Accs | ' + formatCurrency(val);
                 },
+                offsetX: 10,
                 dropShadow: { enabled: false },
                 style: {
-                    fontSize: '12px',
-                    colors: ['#fff']
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    colors: [isDark ? '#f8fafc' : '#0f172a']
                 }
             },
             xaxis: {
@@ -64,7 +71,18 @@ $(document).ready(function () {
                 axisTicks: { show: false }
             },
             yaxis: {
-                labels: { show: false }
+                labels: {
+                    show: true,
+                    style: {
+                        colors: isDark ? '#cbd5e1' : '#475569',
+                        fontSize: '12px',
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 600
+                    }
+                }
+            },
+            grid: {
+                show: false
             },
             legend: { show: false },
             tooltip: {
@@ -178,8 +196,28 @@ $(document).ready(function () {
     // Handle theme toggle
     document.addEventListener('edsrThemeChange', function(e) {
         if (pipelineChart) {
+            const isDark = e.detail.theme === 'dark';
             pipelineChart.updateOptions({
-                theme: { mode: e.detail.theme }
+                theme: { mode: e.detail.theme },
+                plotOptions: {
+                    bar: {
+                        colors: {
+                            backgroundBarColors: isDark ? ['rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)'] : ['rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)']
+                        }
+                    }
+                },
+                dataLabels: {
+                    style: {
+                        colors: [isDark ? '#f8fafc' : '#0f172a']
+                    }
+                },
+                yaxis: {
+                    labels: {
+                        style: {
+                            colors: isDark ? '#cbd5e1' : '#475569'
+                        }
+                    }
+                }
             });
         }
     });

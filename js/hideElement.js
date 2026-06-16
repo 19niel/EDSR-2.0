@@ -25,7 +25,6 @@ function hideElements() {
   var customize = document.getElementById("customize");
   var users = document.getElementById("users");
   var leave = document.getElementById("leave");
-  var bo_dashboard = document.getElementById("bo_dashboard");
   var bo_search = document.getElementById("bo_search");
 
   var accountExecutiveSearch = document.getElementById("accountExecutiveSearch");
@@ -43,7 +42,6 @@ function hideElements() {
   if (users) users.style.display = "none";
   if (leave) leave.style.display = "none";
   if (customize) customize.style.display = "none";
-  if (bo_dashboard) bo_dashboard.style.display = "none";
   if (bo_search) bo_search.style.display = "none";
   if (accountExecutiveSearch) accountExecutiveSearch.style.display = "none";
   if (accountExecutiveLabelSearch) accountExecutiveLabelSearch.style.display = "none";
