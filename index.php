@@ -16,7 +16,7 @@ include('php/autoLogin.php');
     <div class="center">
         <form name="form" action="php/login.php" onsubmit="return isvalid()" method="POST">
             <img class="logo" src="img/new.png" alt="ubix">
-            <div class="title">Electronic Daily Sales Report</div>
+            <div class="title">Electronic Daily Sales Report Version 2</div>
             <div class="txt_field">
                 <input type="text" id="user" name="user" required>
                 <span></span>

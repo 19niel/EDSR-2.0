@@ -15,8 +15,7 @@ AGENTS.md
 # Database & Backup Files
 # ==========================================
 # Ignores your database dumps so they don't bloat the repository
-*.sql
-edsr2.sql
+
 
 # ==========================================
 # Code Backups & Redundant Files
