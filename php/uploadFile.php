@@ -1,6 +1,6 @@
 <?php
 include 'db_conn.php';
-require 'C:\xampp\htdocs\e-dsr\vendor\autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 

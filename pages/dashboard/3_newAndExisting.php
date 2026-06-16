@@ -10,24 +10,12 @@ $currentMonthIndex = date('m');
         <hr class="my-2 text-black-50">
     </div>
 
-    <div class="flex-grow-1 d-flex flex-column justify-content-center" style="min-height: 220px;">
-        
-        <div class="donut-outer-wrapper my-auto">
-            <div class="donut-svg-container">
-                <svg viewBox="0 0 100 100" class="donut-svg-matrix">
-                    <circle class="donut-track-bg" cx="50" cy="50" r="40"></circle>
-                    
-                    <circle id="donut-track-makati" class="donut-segment-track" stroke="#30885f" cx="50" cy="50" r="40"></circle>
-                    
-                    <circle id="donut-track-qc" class="donut-segment-track" stroke="#0d6efd" cx="50" cy="50" r="40"></circle>
-                    
-                    <circle id="donut-track-manila" class="donut-segment-track" stroke="#ffc107" cx="50" cy="50" r="40"></circle>
-                </svg>
-                
-                <div class="donut-center-metric text-center">
-                    <span class="donut-total-count d-block fw-bold" id="donutTotalCount">0</span>
-                    <span class="text-uppercase text-muted tracking-wide" style="font-size: 0.55rem; font-weight: 700;">Total Won</span>
-                </div>
+    <div class="flex-grow-1 d-flex flex-column justify-content-center position-relative" style="min-height: 220px;">
+        <div style="position: relative; height: 160px; width: 100%;">
+            <canvas id="teamWonChart"></canvas>
+            <div class="position-absolute top-50 start-50 translate-middle text-center" style="pointer-events: none;">
+                <span class="d-block fw-bold text-dark" id="donutTotalCount" style="font-size: 1.5rem; line-height: 1;">0</span>
+                <span class="text-uppercase text-muted tracking-wide" style="font-size: 0.55rem; font-weight: 700;">Total Won</span>
             </div>
         </div>
 
@@ -69,6 +57,5 @@ $currentMonthIndex = date('m');
 
             </div>
         </div>
-
     </div>
 </div>

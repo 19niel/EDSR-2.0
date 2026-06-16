@@ -1,143 +1,169 @@
+/**
+ * E-DSR Bar + Line Daily Calls Chart — v2.0
+ * Theme-aware: reads EDSR_THEME and listens for edsrThemeChange to update colors.
+ */
+
 document.addEventListener("DOMContentLoaded", function () {
-  var myModal = new bootstrap.Modal("#updateGraphModal");
-  function fetchData() {
-    var callDateStart = document.getElementById("callDateStart").value;
-    var callDateEnd = document.getElementById("callDateEnd").value;
+    var myModal = new bootstrap.Modal("#updateGraphModal");
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "../php/graphData.php", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var requestData =
-      "callDateStart=" +
-      encodeURIComponent(callDateStart) +
-      "&callDateEnd=" +
-      encodeURIComponent(callDateEnd);
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          try {
-            var responseData = JSON.parse(xhr.responseText);
+    // ─── Theme-aware color palettes ──────────────────────────────────────────
+    function getChartColors() {
+        var isDark = (document.documentElement.getAttribute('data-theme') === 'dark');
+        return {
+            barBg:       isDark ? 'rgba(96, 165, 250, 0.22)'  : 'rgba(37, 99, 235, 0.15)',
+            barBorder:   isDark ? 'rgba(96, 165, 250, 0.85)'  : 'rgba(37, 99, 235, 0.85)',
+            lineBorder:  isDark ? 'rgba(251, 146, 60, 0.9)'   : 'rgba(220, 38, 38, 0.9)',
+            gridColor:   isDark ? 'rgba(248, 250, 252, 0.07)' : 'rgba(15, 23, 42, 0.07)',
+            tickColor:   isDark ? '#94A3B8' : '#64748B',
+        };
+    }
 
-            // Check if responseData has the expected structure
-            if (Array.isArray(responseData) && responseData.length > 0) {
-              // Extract data from each object in the array
-              var labels = responseData.map(function (item) {
-                return item.callDate;
-              });
+    var barLineChart = null;
 
-              var barData = responseData.map(function (item) {
-                return parseInt(item.rowCount, 10); // Assuming rowCount is a string
-              });
+    // ─── Data fetch & chart update ────────────────────────────────────────────
+    function fetchData() {
+        var callDateStart = document.getElementById("callDateStart").value;
+        var callDateEnd   = document.getElementById("callDateEnd").value;
 
-              var lineData = responseData.map(function (item) {
-                return parseInt(item.statusCount, 10); // Assuming statusCount is a string
-              });
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "../php/graphData.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var requestData =
+            "callDateStart=" + encodeURIComponent(callDateStart) +
+            "&callDateEnd="  + encodeURIComponent(callDateEnd);
 
-              var totalCallCount = responseData.reduce(function (sum, item) {
-                return sum + parseInt(item.rowCount, 10);
-              }, 0);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    try {
+                        var responseData = JSON.parse(xhr.responseText);
+                        if (Array.isArray(responseData) && responseData.length > 0) {
+                            var labels = responseData.map(function (item) { return item.callDate; });
+                            var barData  = responseData.map(function (item) { return parseInt(item.rowCount, 10); });
+                            var lineData = responseData.map(function (item) { return parseInt(item.statusCount, 10); });
 
-              var totalActualCount = responseData.reduce(function (sum, item) {
-                return sum + parseInt(item.actualCount, 10);
-              }, 0);
+                            var totalCallCount   = responseData.reduce(function (s, i) { return s + parseInt(i.rowCount, 10); }, 0);
+                            var totalActualCount = responseData.reduce(function (s, i) { return s + parseInt(i.actualCount, 10); }, 0);
+                            var totalCloseCount  = responseData.reduce(function (s, i) { return s + parseInt(i.closeCount, 10); }, 0);
 
-              // Calculate the sum of all closeCount values
-              var totalCloseCount = responseData.reduce(function (sum, item) {
-                return sum + parseInt(item.closeCount, 10);
-              }, 0);
+                            var conversionRate = totalCloseCount > 0
+                                ? (totalCloseCount / totalActualCount) * 100 : 0;
 
-              // Calculate the conversion rate
-              console.log("Total Actual Count:", totalActualCount);
-              console.log("Total Close Count:", totalCloseCount);
+                            barLineChart.data.labels = labels;
+                            barLineChart.data.datasets[0].data = barData;
+                            barLineChart.data.datasets[1].data = lineData;
 
-              var conversionRate =
-                totalCloseCount > 0
-                  ? (totalCloseCount / totalActualCount) * 100
-                  : 0;
-              console.log("Conversion Rate:", conversionRate);
+                            document.getElementById("callCountSpan").innerHTML          = totalCallCount;
+                            document.getElementById("actualCountSpan").innerHTML        = totalActualCount;
+                            document.getElementById("actualClosedCountSpan").innerHTML  = totalCloseCount;
+                            document.getElementById("conversionSpan").innerHTML         = conversionRate.toFixed(2) + "%";
 
-              // Update chart data
-              barLineChart.data.labels = labels;
-              barLineChart.data.datasets[0].data = barData;
-              barLineChart.data.datasets[1].data = lineData;
-
-              document.getElementById("callCountSpan").innerHTML =
-                totalCallCount;
-              document.getElementById("actualCountSpan").innerHTML =
-                totalActualCount;
-              document.getElementById("actualClosedCountSpan").innerHTML =
-                totalCloseCount;
-              document.getElementById("conversionSpan").innerHTML =
-                conversionRate.toFixed(2) + "%";
-
-              console.log(totalCallCount);
-
-              myModal.hide();
-              barLineChart.update();
-            } else {
-              console.error("Invalid response format:", responseData);
+                            myModal.hide();
+                            barLineChart.update();
+                        } else {
+                            console.error("Invalid response format:", responseData);
+                        }
+                    } catch (error) {
+                        console.error("Error parsing response:", error);
+                    }
+                } else {
+                    console.error("Error fetching data. Status:", xhr.status);
+                }
             }
-          } catch (error) {
-            console.error("Error parsing response:", error);
-          }
+        };
+
+        if (callDateStart && callDateEnd) {
+            xhr.send(requestData);
         } else {
-          console.error("Error fetching data. Status:", xhr.status);
+            xhr.send();
         }
-      }
+    }
+
+    // ─── Apply theme colors to existing chart ────────────────────────────────
+    function applyChartTheme() {
+        if (!barLineChart) return;
+        var c = getChartColors();
+        barLineChart.data.datasets[0].backgroundColor = c.barBg;
+        barLineChart.data.datasets[0].borderColor      = c.barBorder;
+        barLineChart.data.datasets[1].borderColor      = c.lineBorder;
+
+        barLineChart.options.scales.x.grid.color     = c.gridColor;
+        barLineChart.options.scales.x.ticks.color    = c.tickColor;
+        barLineChart.options.scales.y.grid.color     = c.gridColor;
+        barLineChart.options.scales.y.ticks.color    = c.tickColor;
+
+        barLineChart.update('none'); // 'none' = no animation, instant
+    }
+
+    // ─── Form submit listener ────────────────────────────────────────────────
+    var updateGraphForm = document.getElementById("updateGraphForm");
+    updateGraphForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        fetchData();
+    });
+
+    // ─── Chart initialization ────────────────────────────────────────────────
+    var c = getChartColors();
+    var chartData = {
+        labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"],
+        datasets: [
+            {
+                label: "Calls",
+                backgroundColor: c.barBg,
+                borderColor:     c.barBorder,
+                borderWidth: 1.5,
+                borderRadius: 4,
+                data: [5, 10, 15, 7, 20],
+                type: "bar",
+            },
+            {
+                label: "Closed Calls",
+                borderColor:  c.lineBorder,
+                borderWidth:  2,
+                pointRadius:  3,
+                pointHoverRadius: 5,
+                tension: 0.3,
+                fill: false,
+                data: [10, 5, 8, 15, 12],
+                type: "line",
+            },
+        ],
     };
 
-    if (callDateStart && callDateEnd) {
-      xhr.send(requestData);
-    } else {
-      xhr.send();
-    }
-  }
-
-  // Add an event listener to the form
-  var updateGraphForm = document.getElementById("updateGraphForm");
-  updateGraphForm.addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent the default form submission
-    fetchData(); // Call the fetchData function to update the chart
-  });
-
-  // Sample data for the initial chart
-  var chartData = {
-    labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"],
-    datasets: [
-      {
-        label: "Calls",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 1,
-        data: [5, 10, 15, 7, 20],
+    var ctx = document.getElementById("barLineChart").getContext("2d");
+    barLineChart = new Chart(ctx, {
         type: "bar",
-      },
-      {
-        label: "Closed Call",
-        borderColor: "rgba(255, 99, 132, 1)",
-        borderWidth: 2,
-        fill: false,
-        data: [10, 5, 8, 15, 12],
-        type: "line",
-      },
-    ],
-  };
-
-  var ctx = document.getElementById("barLineChart").getContext("2d");
-  var barLineChart = new Chart(ctx, {
-    type: "bar",
-    data: chartData,
-    options: {
-      responsive: true, // Enable responsiveness
-      maintainAspectRatio: false, // Allow the chart to stretch its height
-      scales: {
-        y: {
-          beginAtZero: true,
+        data: chartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: c.tickColor,
+                        font: { family: "'Inter', sans-serif", size: 12 },
+                    },
+                },
+            },
+            scales: {
+                x: {
+                    grid:  { color: c.gridColor },
+                    ticks: { color: c.tickColor, font: { family: "'Inter', sans-serif", size: 11 } },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid:  { color: c.gridColor },
+                    ticks: { color: c.tickColor, font: { family: "'Inter', sans-serif", size: 11 } },
+                },
+            },
         },
-      },
-    },
-  });
+    });
 
-  // Fetch data initially
-  fetchData();
+    // Fetch initial data
+    fetchData();
+
+    // ─── Re-theme when toggle fires ──────────────────────────────────────────
+    document.addEventListener('edsrThemeChange', function () {
+        applyChartTheme();
+    });
 });

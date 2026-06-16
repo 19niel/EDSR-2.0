@@ -11,7 +11,7 @@
             <!-- Modal body containing the form to edit user details -->
             <div class="modal-body">
                 <!-- Form for editing user details, uses POST method and validates input before submission -->
-                <form class="row g-3" action="../php/editUser.php" onsubmit="return isvalid()" method="POST">
+                <form class="row g-3" action="../php/editUser.php" method="POST">
                     <!-- Input field for the user's ID (hidden) -->
                     <div class="col-md-6 d-none">
                         <label for="editId" class="form-label">ID</label>

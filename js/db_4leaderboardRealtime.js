@@ -1,8 +1,9 @@
 /**
- * E-DSR Dashboard - Team Leaderboard Real-Time Engine
+ * E-DSR Dashboard - Team Leaderboard Real-Time Engine (Chart.js)
  */
 
 $(document).ready(function () {
+    let leaderboardChart = null;
 
     function formatShortCurrency(value) {
         return new Intl.NumberFormat('en-PH', {
@@ -10,6 +11,63 @@ $(document).ready(function () {
             currency: 'PHP',
             maximumFractionDigits: 0
         }).format(value);
+    }
+
+    function initLeaderboardChart() {
+        const ctx = document.getElementById('leaderboardChart');
+        if (!ctx) return;
+
+        const theme = document.documentElement.getAttribute('data-theme') || 'light';
+        const isDark = theme === 'dark';
+        const textColor = isDark ? '#F8FAFC' : '#0F172A';
+        const gridColor = isDark ? 'rgba(248, 250, 252, 0.05)' : 'rgba(15, 23, 42, 0.05)';
+
+        leaderboardChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Volume (PHP)',
+                    data: [],
+                    backgroundColor: '#0d6efd',
+                    borderRadius: 4,
+                    barThickness: 24,
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { show: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return formatShortCurrency(context.raw);
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        display: false,
+                        grid: { display: false }
+                    },
+                    y: {
+                        grid: {
+                            display: true,
+                            color: gridColor,
+                            drawBorder: false,
+                        },
+                        ticks: {
+                            color: textColor,
+                            font: { family: 'Inter', size: 11, weight: '600' }
+                        }
+                    }
+                }
+            }
+        });
     }
 
     function fetchLeaderboardMetrics(selectedMonth = 'current') {
@@ -32,47 +90,43 @@ $(document).ready(function () {
     }
 
     function renderLeaderboardLayout(executors) {
-        const $container = $('#leaderboard-chart-container');
-        $container.empty();
+        if (!leaderboardChart) return;
 
         if (!executors || executors.length === 0) {
-            $container.html('<div class="text-center text-muted small py-4">No active pipeline records found</div>');
+            leaderboardChart.data.labels = [];
+            leaderboardChart.data.datasets[0].data = [];
+            leaderboardChart.update();
             return;
         }
 
-        // 1. Identify highest volume baseline value (first item due to SQL sorting layout)
-        const highestVolume = parseFloat(executors[0].amount) || 0;
+        const labels = [];
+        const data = [];
 
-        // 2. Iterate and generate graph row elements dynamically
         executors.forEach(exec => {
-            const currentAmount = parseFloat(exec.amount) || 0;
-            
-            // Proportional layout scaling width mapping logic matching image specifications
-            const calculateWidth = highestVolume > 0 ? (currentAmount / highestVolume) * 100 : 0;
-            
-            // Use slightly compressed styling scales if values are completely empty
-            const barWidth = calculateWidth > 0 ? Math.max(calculateWidth, 3) : 0; 
-
-            const dynamicRowHtml = `
-                <div class="leaderboard-row">
-                    <div class="leaderboard-label" title="${exec.name}">${exec.name}</div>
-                    <div class="leaderboard-bar-container">
-                        <div class="leaderboard-bar-fill" style="width: ${barWidth}%;"></div>
-                        <div class="leaderboard-value">${formatShortCurrency(currentAmount)}</div>
-                    </div>
-                </div>
-            `;
-            $container.append(dynamicRowHtml);
+            labels.push(exec.name);
+            data.push(parseFloat(exec.amount) || 0);
         });
+
+        leaderboardChart.data.labels = labels;
+        leaderboardChart.data.datasets[0].data = data;
+        leaderboardChart.update();
     }
 
-    // Initialize module actions immediately on system loading sequence execution loops
+    initLeaderboardChart();
     fetchLeaderboardMetrics('current');
 
-    // Handle updates when changing dashboard calendar dropdown menus
     $('#kpiMonthFilter').on('change', function () {
         const pickedMonth = $(this).val();
         fetchLeaderboardMetrics(pickedMonth);
+    });
+
+    document.addEventListener('edsrThemeChange', function(e) {
+        if (leaderboardChart) {
+            const isDark = e.detail.theme === 'dark';
+            leaderboardChart.options.scales.y.ticks.color = isDark ? '#F8FAFC' : '#0F172A';
+            leaderboardChart.options.scales.y.grid.color = isDark ? 'rgba(248, 250, 252, 0.05)' : 'rgba(15, 23, 42, 0.05)';
+            leaderboardChart.update();
+        }
     });
 
     window.refreshLeaderboard = fetchLeaderboardMetrics;

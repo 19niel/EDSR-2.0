@@ -12,12 +12,34 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+        <meta name="description" content="E-DSR — DSR Encoding Engine. Submit your daily sales activity report.">
+        <title>Encode — E-DSR</title>
+
+        <!-- Anti-flash: apply saved theme before render -->
+        <script>
+        (function(){
+            var t = localStorage.getItem('edsr-theme');
+            if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', t);
+            document.documentElement.setAttribute('data-bs-theme', t);
+            window.EDSR_THEME = t;
+        })();
+        </script>
+
+        <!-- Inter Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+        <!-- Bootstrap 5.3.2 & Icons -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <!-- Theme & App CSS -->
+        <link rel="stylesheet" href="/e-dsr/css/theme.css" />
         <link rel="stylesheet" href="/e-dsr/css/sidebar.css" />
         <link rel="stylesheet" href="/e-dsr/css/encode.css" />
 
-        <title>Encode - E-DSR</title>
         <script src="../js/hideElement.js" defer></script>
     </head>
     <body>
@@ -29,11 +51,14 @@
                 <!-- Main Content -->
                 <main class="col-12 col-md-10 mx-auto px-4">
                     <div class="d-flex justify-content-between align-items-center py-3 border-bottom mb-4">
-                        <h3 class="m-0 text-primary fw-bold">Encode Account</h3>
+                        <div>
+                            <h3 class="m-0 fw-bold" style="color:var(--text-primary);">Encode Account</h3>
+                            <p class="text-muted small m-0 mt-1">Submit your daily sales activity report.</p>
+                        </div>
                     </div>
                     
                     <div class="row py-3">
-                        <form action="../php/encodeAccount.php" onsubmit="return isvalid()" method="POST">
+                        <form action="../php/encodeAccount.php" method="POST">
                             
                             <!-- Segment 1: Pipeline Information -->
                             <div class="card p-4 shadow-sm mb-4">
@@ -256,11 +281,11 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="row mb-4">
+                                <div class="row mb-4">
                                     <div class="col-12">
                                         <button type="button" class="btn btn-outline-primary btn-sm" id="addContactEntry">Add Another Contact</button>
                                     </div>
-                                </div> -->
+                                </div>
 
                                 <!-- Decision Maker Details -->
                                 <div class="row g-3 border-top pt-3">

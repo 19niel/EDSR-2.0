@@ -1,83 +1,190 @@
+/* ==========================================================================
+   E-DSR Sidebar / Shared Utility CSS — v2.0
+   Uses CSS variables from theme.css for dark mode support.
+   ========================================================================== */
+
+/* Legacy sidebar ID (kept for compatibility) */
 #sidebar {
-  padding: 0;
+    padding: 0;
 }
 
+/* Old .custom class — now maps to navbar link style via theme vars */
 .custom {
-  padding: 15px;
-  color: #212529;
+    padding: 12px 16px;
+    color: var(--sidebar-text, #CBD5E1);
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
 }
 
 .custom:hover {
-  padding: 15px;
-  color: white;
-  background-color: #2691d9;
+    background-color: var(--sidebar-hover-bg, #1E293B);
+    color: #fff;
 }
 
+/* Old .bg class (navbar background) — now uses CSS variable */
 .bg {
-  background-color: #2691d9;
+    background-color: var(--navbar-bg, #0F172A) !important;
 }
+
+/* ==========================================================================
+   AUTOCOMPLETE DROPDOWN (Account name search in encode form)
+   ========================================================================== */
 
 .dropdown-container {
     position: relative;
 }
 
 .account-list {
-    background-color: white;
+    background-color: var(--surface, #FFFFFF);
+    border: 1px solid var(--border-color, #E2E8F0);
     display: none;
     position: absolute;
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-    height: 300px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    margin: 4px 0 0;
+    padding: 4px;
+    max-height: 280px;
+    width: 90%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    z-index: 1050;
     overflow: auto;
 }
 
 .account-list li {
-    padding: 8px;
+    padding: 8px 12px;
     cursor: pointer;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: var(--text-primary, #0F172A);
+    transition: background 0.1s;
 }
 
 .account-list li:hover {
-    background-color: #f0f0f0;
+    background-color: var(--surface-muted, #F1F5F9);
+    color: var(--primary, #2563EB);
 }
+
+/* ==========================================================================
+   REQUIRED FIELD MARKER
+   ========================================================================== */
+
 .req {
-    color: red;
+    color: var(--danger, #DC2626) !important;
+    margin-left: 3px;
 }
 
-.req { color: red; margin-left: 3px; }
-.account-list { list-style: none; padding: 0; margin: 0; position: absolute; background: white; border: 1px solid #ccc; width: 90%; z-index: 1000; display: none; }
-.account-list li { padding: 8px; cursor: pointer; }
-.account-list li:hover { background-color: #f0f0f0; }
-
+/* ==========================================================================
+   SHADOW UTILITY
+   ========================================================================== */
 
 .shadow-xs {
-    box-shadow: 0 1px 2px rgba(0,0,0,0.03) !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
 }
 
-/* Timeline Custom Scrollbar Metrics styling */
+/* ==========================================================================
+   TIMELINE / PROGRESS (used in editEncode pages)
+   ========================================================================== */
+
 .progress-timeline-wrapper::-webkit-scrollbar {
     width: 6px;
 }
+
 .progress-timeline-wrapper::-webkit-scrollbar-track {
-    background: #f1f3f5;
+    background: var(--surface-muted, #F1F5F9);
     border-radius: 4px;
-}
-.progress-timeline-wrapper::-webkit-scrollbar-thumb {
-    background: #ced4da;
-    border-radius: 4px;
-}
-.progress-timeline-wrapper::-webkit-scrollbar-thumb:hover {
-    background: #adb5bd;
 }
 
-/* Ensure micro tables maintain absolute wrap alignments */
+.progress-timeline-wrapper::-webkit-scrollbar-thumb {
+    background: var(--border-color, #E2E8F0);
+    border-radius: 4px;
+}
+
+.progress-timeline-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted, #94A3B8);
+}
+
+/* Timeline card micro-transitions */
 .timeline-content-card {
     transition: all 0.2s ease-in-out;
+    background-color: var(--surface);
+    border-color: var(--border-color) !important;
 }
+
 .timeline-content-card:hover {
-    background-color: #ffffff !important;
-    border-color: #bfe3f0 !important;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03) !important;
+    background-color: var(--surface) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+}
+
+/* ==========================================================================
+   STATUS BADGE CLASSES (used in search/tables)
+   ========================================================================== */
+
+.status-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   METRIC COUNTER CARDS (welcome_page.php sidebar metric area)
+   ========================================================================== */
+
+/* The small counter cards in the right column */
+.mini-btns .card {
+    height: 100%;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover)) !important;
+    border: none !important;
+    border-radius: 10px !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22) !important;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.mini-btns .card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.32) !important;
+}
+
+.mini-btns .card h4,
+.mini-btns .card h6 {
+    color: #fff !important;
+    font-family: 'Inter', sans-serif;
+}
+
+.mini-btns .card h4 {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.mini-btns .card h6 {
+    font-size: 0.73rem;
+    font-weight: 500;
+    opacity: 0.85;
+}
+
+/* ==========================================================================
+   UTILITY — Table column toggle checkboxes (toggleColumns.js)
+   ========================================================================== */
+
+.column-toggle-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0.75rem 0;
+}
+
+.form-check-label {
+    font-size: 0.8125rem;
+    color: var(--text-primary) !important;
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
 }

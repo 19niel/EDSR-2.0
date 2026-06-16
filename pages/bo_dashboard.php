@@ -22,20 +22,36 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta name="description" content="E-DSR BO Dashboard — Real-time sales KPIs, pipeline funnel, leaderboard, and project tracking.">
+
+    <!-- Anti-flash: apply saved theme before render -->
+    <script>
+    (function(){
+        var t = localStorage.getItem('edsr-theme');
+        if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.setAttribute('data-bs-theme', t);
+        window.EDSR_THEME = t;
+    })();
+    </script>
+
+    <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Theme & App CSS -->
+    <link rel="stylesheet" href="../css/theme.css">
     <link rel="stylesheet" href="../css/sidebar.css">
     <link rel="stylesheet" href="../css/table.css">
     <link rel="stylesheet" href="../css/search.css">
     <link rel="stylesheet" href="../css/dashboard.css">
-    
-    <title>E-DSR - BO Dashboard</title>
-    
 
+    <title>E-DSR — BO Dashboard</title>
 </head>
 <body>
     <?php include('header.php'); ?>
@@ -46,8 +62,8 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
                 
                 <div class="d-flex justify-content-between align-items-center pb-4 mb-4 border-bottom flex-wrap gap-3">
                     <div>
-                        <h3 class="m-0 fw-bold tracking-tight text-dark">BO Dashboard</h3>
-                        <p class="text-muted small m-0 mt-1">Real-time digitalization metric matrices and operational performance summary data logs.</p>
+                        <h3 class="m-0 fw-bold tracking-tight" style="color:var(--text-primary);">BO Dashboard</h3>
+                        <p class="small m-0 mt-1" style="color:var(--text-secondary);">Real-time digitalization metric matrices and operational performance summary data logs.</p>
                     </div>
                     <div class="d-flex gap-2">
                         <a href="../php/exportAllData.php" class="btn btn-white border border-secondary-subtle btn-light px-3 fw-medium d-flex align-items-center gap-2 shadow-sm rounded-3">
@@ -60,6 +76,9 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
                     <?php endif; ?>
                     </div>
                 </div>
+
+                <!-- KPI Summary Cards -->
+                <?php include('dashboard/0_kpiSummaryCards.php'); ?>
 
                 <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch">
                     
@@ -94,6 +113,8 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <script>
         window.dashboardConfig = {

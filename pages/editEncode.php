@@ -62,7 +62,7 @@
                             </div>
                             
                             <div class="row py-3">
-                                <form id="editEncodeForm" action="../php/editEncodeAccount.php" onsubmit="return isvalid()" method="POST" class="row g-3">
+                                <form id="editEncodeForm" action="../php/editEncodeAccount.php" method="POST" class="row g-3">
                                     <input type="hidden" name="editEncode" value="true">
                                     <input type="hidden" name="encodeId" id="encodeId" value="<?php echo htmlspecialchars($row['id'] ?? ''); ?>">
                                     

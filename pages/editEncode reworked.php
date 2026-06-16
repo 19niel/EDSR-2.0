@@ -35,7 +35,7 @@
                         </span></h3>
                     </div>
                     <div class="row g-3 py-3">
-                        <form class="row g-3" action="../php/editEncodeAccount.php" onsubmit="return isvalid()" method="POST">
+                        <form class="row g-3" action="../php/editEncodeAccount.php" method="POST">
                             <input type="hidden" name="editEncode" value="true">
                             <script>
                                 var id = new URLSearchParams(window.location.search).get('id');

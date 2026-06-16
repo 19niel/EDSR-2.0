@@ -8,59 +8,74 @@ include('../php/accountList.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap 5.3.2 & Google Fonts Integration -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <meta name="description" content="E-DSR Search Records — Filter and export daily sales report data.">
+
+    <!-- Anti-flash: apply saved theme before render -->
+    <script>
+    (function(){
+        var t = localStorage.getItem('edsr-theme');
+        if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.setAttribute('data-bs-theme', t);
+        window.EDSR_THEME = t;
+    })();
+    </script>
+
+    <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3.2 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Theme & App CSS -->
+    <link rel="stylesheet" href="../css/theme.css">
     <link rel="stylesheet" href="../css/sidebar.css">
     <link rel="stylesheet" href="../css/table.css">
     <link rel="stylesheet" href="../css/search.css">
-    <title>E-DSR - Search Records</title>
+
+    <title>E-DSR — Search Records</title>
     
     <style>
-
         .main-content-card {
-            background: #ffffff;
+            background: var(--surface);
             border-radius: 12px;
-            border: 1px solid #e9ecef;
+            border: 1px solid var(--border-color);
         }
         .modern-search-input {
             border-radius: 8px 0 0 8px !important;
-            border: 1px solid #dee2e6;
+            border: 1px solid var(--input-border);
             font-size: 0.95rem;
+            background-color: var(--input-bg) !important;
+            color: var(--input-text) !important;
         }
         .modern-search-input:focus {
-            border-color: #86b7fe;
-            box-shadow: none;
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
         .search-group-btn {
             border-radius: 0 8px 8px 0 !important;
         }
-        .table modern-table {
-            border-collapse: separate;
-            border-spacing: 0;
-        }
         .table thead th {
-            background-color: #f1f3f5;
-            color: #495057;
+            background-color: var(--table-header-bg) !important;
+            color: var(--text-secondary) !important;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            padding: 14px 16px;
-            border-bottom: 2px solid #dee2e6;
+            padding: 12px 16px;
+            border-bottom: 2px solid var(--table-border) !important;
         }
         .table tbody td {
-            padding: 14px 16px;
-            font-size: 0.9rem;
-            color: #495057;
-            border-bottom: 1px solid #efefef;
+            padding: 12px 16px;
+            font-size: 0.875rem;
+            color: var(--text-primary) !important;
+            border-bottom: 1px solid var(--table-border) !important;
         }
         .table-hover tbody tr:hover {
-            background-color: #f8f9fa;
+            background-color: var(--table-row-hover) !important;
             transition: background-color 0.15s ease-in-out;
         }
         .action-btn {
@@ -75,9 +90,6 @@ include('../php/accountList.php');
         .action-btn:hover {
             transform: translateY(-1px);
         }
-        .status-badge {
-            font-size: 0.75rem;
-            font-weight: 600;
             padding: 6px 12px;
             border-radius: 30px;
             letter-spacing: 0.3px;

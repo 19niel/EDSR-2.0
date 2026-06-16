@@ -11,7 +11,7 @@
             <!-- Modal body containing the form to search accounts -->
             <div class="modal-body">
                 <!-- Form for searching accounts, uses GET method and validates input before submission -->
-                <form class="row g-3" action="" method="GET" onsubmit="return isvalid()">
+                <form class="row g-3" action="" method="GET">
                     <!-- Dropdown to select the account executive -->
                     <div class="col-12">
                         <label for="accountExecutiveSearch" class="form-label">Account Executive</label>

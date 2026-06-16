@@ -1,15 +1,20 @@
 /* ==========================================================================
-   DYNAMIC SEMI-CIRCULAR KPI SALES GAUGE (CORRELATED FILL ENVIRONMENT)
+   E-DSR Dashboard Panel Styles — v2.0
+   Uses CSS variables from theme.css for full dark mode support.
    ========================================================================== */
 
-/* Registers the custom property so CSS transitions understand degree value shifts smoothly */
+/* --------------------------------------------------------------------------
+   DYNAMIC SEMI-CIRCULAR KPI SALES GAUGE
+   -------------------------------------------------------------------------- */
+
+/* Registers the custom property so CSS transitions understand degree shifts */
 @property --body-fill-sweep {
     syntax: '<angle>';
     inherits: false;
     initial-value: 0deg;
 }
 
-/* Base structural wrapper masks the bottom half of the circle circle windows */
+/* Base structural wrapper — masks bottom half of the circle */
 .gauge-wrapper {
     position: relative;
     width: 240px;
@@ -26,171 +31,135 @@
     width: 240px;
     height: 240px;
     border-radius: 50%;
-
-    /* 🎯 FIX: Changed baseline anchor 'from 270deg' to lock 0% directly to the horizontal left edge.
-       The fill color now advances clockwise in lockstep with the visual progress angle. */
     background: conic-gradient(from 270deg,
-            var(--bar-color, #dc3545) 0deg,
-            var(--bar-color, #dc3545) var(--body-fill-sweep, 0deg),
-            #dee2e6 var(--body-fill-sweep, 0deg),
-            #dee2e6 360deg);
+        var(--bar-color, #dc3545) 0deg,
+        var(--bar-color, #dc3545) var(--body-fill-sweep, 0deg),
+        var(--gauge-track-bg, #dee2e6) var(--body-fill-sweep, 0deg),
+        var(--gauge-track-bg, #dee2e6) 360deg);
     box-sizing: border-box;
     z-index: 1;
     transition: --body-fill-sweep 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 🎯 THE TARGET POINT NOTCH LINE */
+/* Target point notch line */
 .gauge-target-line {
     position: absolute;
     top: 0;
     left: 50%;
     width: 4px;
     height: 24px;
-    /* Matches the 24px track depth thickness */
-    background: #212529;
+    background: var(--gauge-label, #212529);
     transform-origin: 50% 120px;
-    /* Core rotation axle alignment */
     transform: translateX(-50%) rotate(22.5deg);
-    /* Target alignment matching your line layout */
     z-index: 4;
 }
 
-/* 🏷️ FLOATING STATIC VALUE LABEL ABOVE TARGET LINE */
+/* Floating label above target line */
 .gauge-target-line::after {
-    /* 🎯 AUTOMATED: Dynamically pulls whatever text JavaScript injects into data-target="" */
     content: attr(data-target);
     position: absolute;
     top: -24px;
-    /* Pulls the label up safely above the gauge's outer rim */
     left: 50%;
     transform: translateX(-50%);
-    /* Keeps the text perfectly centered over the 4px line */
     font-size: 0.8rem;
     font-weight: 700;
-    color: #212529;
+    color: var(--gauge-label, #212529);
     white-space: nowrap;
 }
 
-/* Inner Core Mask Circle: Cuts out the inside to turn the circle into a narrow ring */
+/* Inner Core Mask Circle: Creates the ring look */
 .gauge-body::before {
     content: "";
     position: absolute;
     top: 24px;
     left: 24px;
     width: 192px;
-    /* 240px minus 48px combined track wall width sizes */
     height: 192px;
     border-radius: 50%;
-    background: #ffffff;
-    /* Must match dashboard card background color */
+    background: var(--gauge-inner-bg, #ffffff);
     z-index: 3;
 }
 
-/* Needle Component Pointer */
+/* Needle Pointer */
 .gauge-needle {
     position: absolute;
     bottom: 0;
     left: 50%;
     width: 4px;
     height: 110px;
-    /* Reaches right to the outer edge of the bar channel */
-    background: #212529;
+    background: var(--gauge-needle, #212529);
     border-radius: 2px;
     transform-origin: 50% 100%;
     transform: translateX(-50%) rotate(-90deg);
-    /* Starts at far-left (0%) */
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 5;
 }
 
-/* Center Pin Axle Cap Overlay */
+/* Center Pin Cap */
 .gauge-center-cap {
     position: absolute;
     bottom: -10px;
     left: 50%;
     width: 20px;
     height: 20px;
-    background: #212529;
+    background: var(--gauge-cap, #212529);
     border-radius: 50%;
     transform: translateX(-50%);
     z-index: 6;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Digital Percentage Display Text */
+/* Digital Percentage Display */
 .gauge-value-display {
     font-size: 1.8rem;
     font-weight: 700;
     margin-top: 15px;
     line-height: 1;
     transition: color 0.4s ease;
+    color: var(--text-primary);
 }
 
-/* Font Accent Colors for textual status updates */
-.text-state-low {
-    color: #dc3545 !important;
-}
-
-.text-state-mid {
-    color: #fd7e14 !important;
-}
-
-.text-state-high {
-    color: #198754 !important;
-}
+/* Font Accent Colors for gauge state */
+.text-state-low  { color: #dc3545 !important; }
+.text-state-mid  { color: #fd7e14 !important; }
+.text-state-high { color: var(--success, #198754) !important; }
 
 /* ==========================================================================
-   Pipeline Funnel Component Styles (Dynamic Bar Chart Variation)
+   PIPELINE FUNNEL COMPONENT
    ========================================================================== */
 
 .funnel-row-wrapper {
     position: relative;
     width: 100%;
     margin-bottom: 6px;
-    /* Clean tracking gaps */
 }
 
-/* Base Track: Flat, full-width, non-tapered anchor track */
+/* Base Track */
 .funnel-bar-track {
     position: relative;
     height: 30px;
-    background-color: #d4d5d6;
+    background-color: var(--surface-muted, #d4d5d6);
     border-radius: 4px !important;
     overflow: hidden;
     display: flex;
     justify-content: center;
-    /* Keeps text centered inside the track track */
     align-items: center;
 }
 
-/* Sharp Color-Coded Dynamic Progress Bars */
+/* Dynamic Progress Bars */
 .funnel-bar-track .progress-bar {
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     border-radius: 0px !important;
 }
 
-.bg-funnel-qualified {
-    background-color: #0d6efd !important;
-}
+.bg-funnel-qualified   { background-color: #3B82F6 !important; }
+.bg-funnel-negotiation { background-color: #06B6D4 !important; }
+.bg-funnel-won         { background-color: #16A34A !important; }
+.bg-funnel-lost        { background-color: #EF4444 !important; }
+.bg-funnel-dropped     { background-color: #6B7280 !important; }
 
-.bg-funnel-negotiation {
-    background-color: #0dcaf0 !important;
-}
-
-.bg-funnel-won {
-    background-color: #198754 !important;
-}
-
-.bg-funnel-lost {
-    background-color: #dc3545 !important;
-}
-
-.bg-funnel-dropped {
-    background-color: #6c757d !important;
-}
-
-/* Text Overlay Config */
+/* Text overlay on bars */
 .funnel-text-overlay {
     position: absolute;
     top: 0;
@@ -205,14 +174,13 @@
     font-size: 0.72rem;
     font-weight: 700;
     pointer-events: none;
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.85);
-    /* Protects readability when bar passes behind text */
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.9);
 }
 
-/* Legend 2-Row Grid Layout */
+/* Legend */
 .funnel-legend-container {
     padding-top: 10px;
-    border-top: 1px dashed #e9ecef;
+    border-top: 1px dashed var(--border-color, #e9ecef);
 }
 
 .funnel-legend-row {
@@ -227,7 +195,7 @@
     align-items: center;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #6c757d;
+    color: var(--text-secondary, #6c757d);
 }
 
 .legend-square {
@@ -239,10 +207,10 @@
 }
 
 /* ==========================================================================
-   MULTI-SEGMENT PROJECTS WON DISTRIBUTION DONUT TRACK STRUCTURES 
+   DONUT CHART — Projects Won by Team
    ========================================================================== */
 
-/* 1. Base SVG Container Matrix Layout */
+/* Base SVG Container */
 .donut-svg-container {
     position: relative;
     width: 155px;
@@ -255,50 +223,35 @@
     height: 100%;
 }
 
-/* 2. Background Track: The empty grey channel ring */
+/* Background Track */
 .donut-track-bg {
     fill: transparent;
-    stroke: #f1f3f5;
+    stroke: var(--surface-muted, #f1f3f5);
     stroke-width: 8.5;
 }
 
-/* 3. Dynamic Segment Arcs (Makati, QC, Manila) */
+/* Dynamic Segment Arcs */
 .donut-segment-track {
     fill: transparent;
     stroke-width: 8.5;
-
-    /* 🎯 FIX: Removed the global -90deg rotation from here to stop the layout calculation collision */
     transform-origin: 50px 50px;
-
-    /* Smooth transition handling for live updates */
     transition: stroke-dasharray 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-        stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 🎯 FIX: Explicitly handle individual directional base rotations independently */
+/* Individual segment rotations */
 #donut-track-makati,
 #donut-track-qc,
 #donut-track-manila {
     transform: rotate(-90deg);
 }
 
-/* 4. Team Color Hex Mapping Configurations */
-#donut-track-makati {
-    stroke: #30885f !important;
-    /* Makati - Emerald Green */
-}
+/* Team Color Mappings */
+#donut-track-makati { stroke: #30885f !important; }
+#donut-track-qc     { stroke: #3B82F6 !important; }
+#donut-track-manila { stroke: #ffc107 !important; }
 
-#donut-track-qc {
-    stroke: #0d6efd !important;
-    /* QC - Corporate Blue */
-}
-
-#donut-track-manila {
-    stroke: #ffc107 !important;
-    /* Manila - Yellow */
-}
-
-/* 5. Center Absolute Floating Counter Display Placement */
+/* Center metric display */
 .donut-center-metric {
     position: absolute;
     top: 50%;
@@ -311,11 +264,187 @@
 .donut-total-count {
     font-size: 1.85rem;
     line-height: 1.1;
-    color: #212529;
+    color: var(--text-primary, #212529);
+    font-weight: 700;
 }
 
-/* 6. Metric Footer Representation Panel Grid */
+/* Footer metric row */
 .donut-metric-footer {
     padding-top: 10px;
-    border-top: 1px dashed #e9ecef;
+    border-top: 1px dashed var(--border-color, #e9ecef);
+}
+
+/* ==========================================================================
+   LEADERBOARD HORIZONTAL BAR CHART
+   ========================================================================== */
+
+.leaderboard-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.leaderboard-label {
+    width: 130px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-secondary, #495057);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 8px;
+    text-align: right;
+}
+
+.leaderboard-bar-container {
+    flex-grow: 1;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.leaderboard-bar-fill {
+    height: 24px;
+    background: linear-gradient(90deg, var(--primary, #2563EB), #4F46E5);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-radius: 0 4px 4px 0;
+}
+
+.leaderboard-value {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-primary, #212529);
+    padding-left: 6px;
+}
+
+/* ==========================================================================
+   WON PROJECTS TABLE (5_wonProjects.php)
+   ========================================================================== */
+
+.won-table-fontSize { font-size: 0.70rem !important; }
+.won-table-container { height: 165px; overflow-y: auto; }
+.text-ellipsis-won {
+    max-width: 95px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pagination-sm-override .page-link {
+    padding: 0.15rem 0.4rem;
+    font-size: 0.65rem;
+    color: var(--success, #198754);
+    background-color: var(--surface);
+    border-color: var(--border-color);
+}
+
+.pagination-sm-override .page-item.active .page-link {
+    background-color: var(--success, #198754);
+    border-color: var(--success, #198754);
+    color: #fff;
+}
+
+/* ==========================================================================
+   AGING PROJECTS TABLE (6_agingProjects.php)
+   ========================================================================== */
+
+.aging-table-fontSize { font-size: 0.70rem !important; }
+.aging-table-container { min-height: 165px; }
+.text-ellipsis-aging {
+    max-width: 145px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pagination-sm-override-aging .page-link {
+    padding: 0.15rem 0.4rem;
+    font-size: 0.65rem;
+    color: var(--danger, #dc3545);
+    border-color: var(--border-color, #dee2e6);
+    background-color: var(--surface);
+}
+
+.pagination-sm-override-aging .page-item.active .page-link {
+    background-color: var(--danger, #dc3545);
+    border-color: var(--danger, #dc3545);
+    color: #fff;
+}
+
+.pagination-sm-override-aging .page-item.disabled .page-link {
+    color: var(--text-muted);
+    background-color: var(--surface);
+    border-color: var(--border-color);
+}
+
+/* Hover highlight for aging rows */
+#aging-projects-table-body tr {
+    transition: background-color 0.15s ease-in-out;
+}
+#aging-projects-table-body tr:hover {
+    background-color: rgba(239, 68, 68, 0.06) !important;
+}
+
+/* ==========================================================================
+   DARK MODE OVERRIDES — Dashboard specific
+   ========================================================================== */
+
+/* Funnel bar track in dark mode needs contrast */
+[data-theme="dark"] .funnel-bar-track {
+    background-color: #1E293B !important;
+}
+
+/* Table-light header in dark mode */
+[data-theme="dark"] .table-light {
+    background-color: var(--table-header-bg) !important;
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .table-light th {
+    background-color: var(--table-header-bg) !important;
+    color: var(--text-secondary) !important;
+    border-color: var(--table-border) !important;
+}
+
+/* HR dividers in dark mode */
+[data-theme="dark"] .text-black-50 {
+    color: var(--border-color) !important;
+}
+
+/* Badge in dark mode */
+[data-theme="dark"] .bg-light {
+    background-color: var(--surface-muted) !important;
+    color: var(--text-secondary) !important;
+}
+
+/* Border-top separators in dark mode */
+[data-theme="dark"] .border-top {
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .border-end {
+    border-color: var(--border-color) !important;
+}
+
+/* ==========================================================================
+   SELECTION DROPDOWN (Style-select override)
+   ========================================================================== */
+
+.style-select {
+    background-color: var(--input-bg) !important;
+    border-color: var(--input-border) !important;
+    color: var(--input-text) !important;
+    font-size: 0.75rem;
+    height: 26px;
+    border-radius: 6px !important;
+}
+
+.style-select option {
+    background-color: var(--input-bg);
+    color: var(--input-text);
 }

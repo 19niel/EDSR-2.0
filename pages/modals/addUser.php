@@ -11,7 +11,7 @@
             <!-- Modal body containing the form to add a new user -->
             <div class="modal-body">
                 <!-- Form for adding a new user, uses POST method and validates input before submission -->
-                <form class="row g-3" action="../php/addUser.php" onsubmit="return isvalid()" method="POST">
+                <form class="row g-3" action="../php/addUser.php" method="POST">
                     <!-- Input field for the user's name -->
                     <div class="col-md-6">
                         <label for="name" class="form-label">Name</label>

@@ -1,0 +1,885 @@
+/* ==========================================================================
+   E-DSR Theme System — v2.0
+   Centralized CSS variable definitions for light and dark mode.
+   Applied via data-theme="light" | data-theme="dark" on <html>.
+   Bootstrap 5 is also updated via data-bs-theme attribute in parallel.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   GOOGLE FONTS — Inter (primary type face for the entire application)
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* --------------------------------------------------------------------------
+   LIGHT MODE — Default / :root variables
+   -------------------------------------------------------------------------- */
+:root,
+[data-theme="light"] {
+    /* Backgrounds */
+    --app-bg:          #F6F8FB;
+    --surface:         #FFFFFF;
+    --surface-muted:   #F1F5F9;
+
+    /* Brand Colors */
+    --primary:         #2563EB;
+    --primary-hover:   #1D4ED8;
+    --accent:          #14B8A6;
+
+    /* Semantic Status Colors */
+    --success:         #16A34A;
+    --warning:         #F59E0B;
+    --danger:          #DC2626;
+
+    /* Text */
+    --text-primary:    #0F172A;
+    --text-secondary:  #64748B;
+    --text-muted:      #94A3B8;
+
+    /* Borders & Dividers */
+    --border-color:    #E2E8F0;
+
+    /* Sidebar */
+    --sidebar-bg:      #0F172A;
+    --sidebar-text:    #CBD5E1;
+    --sidebar-active:  #2563EB;
+    --sidebar-hover-bg:#1E293B;
+
+    /* Cards */
+    --card-shadow:     0 4px 16px rgba(15, 23, 42, 0.08);
+    --card-shadow-hover: 0 8px 24px rgba(15, 23, 42, 0.13);
+
+    /* Gauge + Charts (light) */
+    --gauge-track-bg:  #dee2e6;
+    --gauge-inner-bg:  #ffffff;
+    --gauge-needle:    #0F172A;
+    --gauge-cap:       #0F172A;
+    --gauge-label:     #0F172A;
+    --chart-grid:      rgba(15, 23, 42, 0.08);
+    --chart-text:      #64748B;
+
+    /* Inputs */
+    --input-bg:        #FFFFFF;
+    --input-border:    #CBD5E1;
+    --input-focus:     #2563EB;
+    --input-text:      #0F172A;
+    --input-placeholder: #94A3B8;
+
+    /* Modal */
+    --modal-bg:        #FFFFFF;
+    --modal-header-bg: #F8FAFC;
+    --modal-border:    #E2E8F0;
+
+    /* Tables */
+    --table-header-bg: #F8FAFC;
+    --table-row-hover: #F1F5F9;
+    --table-border:    #E2E8F0;
+
+    /* Navbar */
+    --navbar-bg:       #0F172A;
+    --navbar-text:     #F1F5F9;
+    --navbar-brand:    #FFFFFF;
+}
+
+/* --------------------------------------------------------------------------
+   DARK MODE — Overrides applied when data-theme="dark" is on <html>
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] {
+    /* Backgrounds */
+    --app-bg:          #0B1120;
+    --surface:         #111827;
+    --surface-muted:   #1E293B;
+
+    /* Brand Colors */
+    --primary:         #60A5FA;
+    --primary-hover:   #3B82F6;
+    --accent:          #2DD4BF;
+
+    /* Semantic Status Colors */
+    --success:         #22C55E;
+    --warning:         #FBBF24;
+    --danger:          #F87171;
+
+    /* Text */
+    --text-primary:    #F8FAFC;
+    --text-secondary:  #94A3B8;
+    --text-muted:      #64748B;
+
+    /* Borders & Dividers */
+    --border-color:    #334155;
+
+    /* Sidebar */
+    --sidebar-bg:      #020617;
+    --sidebar-text:    #CBD5E1;
+    --sidebar-active:  #60A5FA;
+    --sidebar-hover-bg:#0F172A;
+
+    /* Cards */
+    --card-shadow:     0 4px 16px rgba(0, 0, 0, 0.35);
+    --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+    /* Gauge + Charts (dark) */
+    --gauge-track-bg:  #334155;
+    --gauge-inner-bg:  #111827;
+    --gauge-needle:    #F8FAFC;
+    --gauge-cap:       #F8FAFC;
+    --gauge-label:     #F8FAFC;
+    --chart-grid:      rgba(248, 250, 252, 0.07);
+    --chart-text:      #94A3B8;
+
+    /* Inputs */
+    --input-bg:        #1E293B;
+    --input-border:    #334155;
+    --input-focus:     #60A5FA;
+    --input-text:      #F8FAFC;
+    --input-placeholder: #64748B;
+
+    /* Modal */
+    --modal-bg:        #111827;
+    --modal-header-bg: #1E293B;
+    --modal-border:    #334155;
+
+    /* Tables */
+    --table-header-bg: #1E293B;
+    --table-row-hover: #1a2540;
+    --table-border:    #334155;
+
+    /* Navbar */
+    --navbar-bg:       #020617;
+    --navbar-text:     #CBD5E1;
+    --navbar-brand:    #F8FAFC;
+}
+
+/* ==========================================================================
+   GLOBAL BASE STYLES — Applied across the entire application
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--app-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus ring — accessibility improvement */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY OVERRIDES
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+p, span, small, li {
+    color: var(--text-primary);
+}
+
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+small, .small {
+    font-size: 0.8125rem;
+    letter-spacing: 0.01em;
+}
+
+/* ==========================================================================
+   NAVBAR / HEADER
+   ========================================================================== */
+
+.edsr-navbar {
+    background-color: var(--navbar-bg) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    min-height: 60px;
+    padding: 0 1.25rem;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
+
+.edsr-navbar .navbar-brand {
+    color: var(--navbar-brand) !important;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.edsr-navbar .nav-link {
+    color: var(--sidebar-text) !important;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 6px;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.edsr-navbar .nav-link:hover {
+    background-color: var(--sidebar-hover-bg);
+    color: #fff !important;
+}
+
+.edsr-navbar .nav-link.active {
+    background-color: var(--sidebar-active);
+    color: #fff !important;
+}
+
+.edsr-navbar .navbar-toggler {
+    border-color: rgba(255,255,255,0.2);
+}
+
+.edsr-navbar .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* Theme toggle button in navbar */
+#themeToggleBtn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 8px;
+    color: var(--sidebar-text);
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.2s;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+}
+
+#themeToggleBtn:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.35);
+    transform: scale(1.08);
+}
+
+/* Logged-in user badge in navbar */
+.edsr-user-badge {
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #F1F5F9;
+    border: 1px solid rgba(255,255,255,0.15);
+    white-space: nowrap;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   CARDS
+   ========================================================================== */
+
+.edsr-card,
+.main-content-card {
+    background-color: var(--surface) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--card-shadow) !important;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.edsr-card:hover {
+    box-shadow: var(--card-shadow-hover) !important;
+}
+
+/* Bootstrap card overrides */
+.card {
+    background-color: var(--surface) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--card-shadow) !important;
+}
+
+.card-header {
+    background-color: var(--surface-muted) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.card-body {
+    color: var(--text-primary) !important;
+}
+
+.card-title {
+    color: var(--text-primary) !important;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+    letter-spacing: 0.01em;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+}
+
+.btn-primary:focus-visible {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35) !important;
+}
+
+.btn-outline-secondary {
+    border-color: var(--border-color) !important;
+    color: var(--text-secondary) !important;
+    background: transparent !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--surface-muted) !important;
+    color: var(--text-primary) !important;
+}
+
+.btn-danger {
+    background-color: var(--danger) !important;
+    border-color: var(--danger) !important;
+    color: #fff !important;
+}
+
+.btn-success {
+    background-color: var(--success) !important;
+    border-color: var(--success) !important;
+    color: #fff !important;
+}
+
+.btn-light {
+    background-color: var(--surface-muted) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.btn-light:hover {
+    background-color: var(--border-color) !important;
+}
+
+/* ==========================================================================
+   FORM INPUTS & SELECTS
+   ========================================================================== */
+
+.form-control,
+.form-select {
+    background-color: var(--input-bg) !important;
+    border: 1px solid var(--input-border) !important;
+    color: var(--input-text) !important;
+    border-radius: 8px !important;
+    font-size: 0.875rem;
+    font-family: 'Inter', sans-serif;
+    padding: 0.5rem 0.75rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-control::placeholder {
+    color: var(--input-placeholder) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--input-focus) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+    outline: none !important;
+    background-color: var(--input-bg) !important;
+    color: var(--input-text) !important;
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2) !important;
+}
+
+.form-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary) !important;
+    margin-bottom: 0.375rem;
+}
+
+.form-select option {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+}
+
+.input-group-text {
+    background-color: var(--surface-muted) !important;
+    border-color: var(--input-border) !important;
+    color: var(--text-secondary) !important;
+}
+
+/* ==========================================================================
+   TABLES
+   ========================================================================== */
+
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-primary);
+    --bs-table-border-color: var(--table-border);
+    color: var(--text-primary) !important;
+    font-size: 0.875rem;
+}
+
+.table thead th {
+    background-color: var(--table-header-bg) !important;
+    color: var(--text-secondary) !important;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 12px 16px;
+    border-bottom: 2px solid var(--table-border) !important;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 12px 16px;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--table-border) !important;
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--table-row-hover) !important;
+}
+
+/* ==========================================================================
+   MODALS
+   ========================================================================== */
+
+.modal-content {
+    background-color: var(--modal-bg) !important;
+    border: 1px solid var(--modal-border) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25) !important;
+    color: var(--text-primary) !important;
+}
+
+.modal-header {
+    background-color: var(--modal-header-bg) !important;
+    border-bottom: 1px solid var(--modal-border) !important;
+    border-radius: 14px 14px 0 0 !important;
+    padding: 1rem 1.25rem;
+}
+
+.modal-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary) !important;
+}
+
+.modal-body {
+    padding: 1.25rem;
+}
+
+.modal-footer {
+    background-color: var(--modal-header-bg) !important;
+    border-top: 1px solid var(--modal-border) !important;
+    border-radius: 0 0 14px 14px !important;
+    padding: 0.875rem 1.25rem;
+}
+
+.btn-close {
+    filter: none;
+}
+
+[data-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(1) brightness(2);
+}
+
+.modal-backdrop {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* ==========================================================================
+   BADGES
+   ========================================================================== */
+
+.badge {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border-radius: 6px;
+}
+
+/* Status badge dark mode fixes */
+[data-theme="dark"] .bg-success-subtle {
+    background-color: rgba(34, 197, 94, 0.18) !important;
+    color: #4ade80 !important;
+    border-color: rgba(34, 197, 94, 0.3) !important;
+}
+
+[data-theme="dark"] .bg-warning-subtle {
+    background-color: rgba(251, 191, 36, 0.15) !important;
+    color: #fbbf24 !important;
+    border-color: rgba(251, 191, 36, 0.3) !important;
+}
+
+[data-theme="dark"] .bg-danger-subtle {
+    background-color: rgba(248, 113, 113, 0.15) !important;
+    color: #f87171 !important;
+    border-color: rgba(248, 113, 113, 0.3) !important;
+}
+
+[data-theme="dark"] .bg-secondary {
+    background-color: #374151 !important;
+    color: #9ca3af !important;
+}
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.pagination .page-link {
+    background-color: var(--surface) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 6px;
+    margin: 0 2px;
+    transition: background 0.15s;
+}
+
+.pagination .page-link:hover {
+    background-color: var(--surface-muted) !important;
+    color: var(--primary) !important;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #fff !important;
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: var(--surface-muted) !important;
+    color: var(--text-muted) !important;
+}
+
+/* ==========================================================================
+   DROPDOWNS
+   ========================================================================== */
+
+.dropdown-menu {
+    background-color: var(--surface) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--card-shadow) !important;
+    padding: 0.375rem;
+}
+
+.dropdown-item {
+    color: var(--text-primary) !important;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.875rem;
+    transition: background 0.12s;
+}
+
+.dropdown-item:hover {
+    background-color: var(--surface-muted) !important;
+    color: var(--primary) !important;
+}
+
+/* ==========================================================================
+   PAGE LAYOUT
+   ========================================================================== */
+
+.edsr-page-header {
+    padding: 1.25rem 0 1rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.edsr-page-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.edsr-page-header p.subtitle {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    margin: 4px 0 0;
+}
+
+/* ==========================================================================
+   DIVIDERS / HR
+   ========================================================================== */
+
+hr {
+    border-color: var(--border-color) !important;
+    opacity: 1 !important;
+}
+
+/* ==========================================================================
+   METRIC COUNTER CARDS (welcome_page.php)
+   ========================================================================== */
+
+.edsr-metric-card {
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover)) !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 14px 16px !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+    margin-bottom: 8px;
+}
+
+.edsr-metric-card h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff !important;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.edsr-metric-card h6 {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.8) !important;
+    margin: 0;
+    font-weight: 500;
+    text-align: right;
+}
+
+/* ==========================================================================
+   FULLCALENDAR DARK MODE
+   ========================================================================== */
+
+[data-theme="dark"] .fc {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .fc-theme-standard td,
+[data-theme="dark"] .fc-theme-standard th,
+[data-theme="dark"] .fc-theme-standard .fc-scrollgrid {
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .fc-col-header-cell-cushion,
+[data-theme="dark"] .fc-daygrid-day-number {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .fc-daygrid-day {
+    background-color: var(--surface) !important;
+}
+
+[data-theme="dark"] .fc-daygrid-day.fc-day-today {
+    background-color: rgba(96, 165, 250, 0.12) !important;
+}
+
+[data-theme="dark"] .fc-button-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #fff !important;
+}
+
+[data-theme="dark"] .fc-button-primary:hover {
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+}
+
+[data-theme="dark"] .fc-button-primary:not(:disabled).fc-button-active {
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+}
+
+[data-theme="dark"] .fc-toolbar-title {
+    color: var(--text-primary) !important;
+}
+
+/* ==========================================================================
+   SCROLLBAR — Subtle styling for both modes
+   ========================================================================== */
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--surface-muted);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* ==========================================================================
+   ACCOUNT-LIST AUTOCOMPLETE (encode form)
+   ========================================================================== */
+
+.account-list {
+    background-color: var(--surface) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--card-shadow) !important;
+    border-radius: 8px !important;
+    z-index: 1050;
+}
+
+.account-list li {
+    color: var(--text-primary) !important;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.account-list li:hover {
+    background-color: var(--surface-muted) !important;
+    color: var(--primary) !important;
+}
+
+/* ==========================================================================
+   FORM SECTION CARDS (encode.php segments)
+   ========================================================================== */
+
+.encode-section-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--card-shadow);
+}
+
+.encode-section-card h5 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.625rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   DASHBOARD PANEL SECTION HEADINGS
+   ========================================================================== */
+
+.edsr-panel-heading {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary) !important;
+    margin: 0;
+}
+
+.edsr-live-badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    background: var(--surface-muted) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-secondary) !important;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 8px;
+    border-radius: 6px;
+}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+.text-primary-var {
+    color: var(--primary) !important;
+}
+
+.bg-surface {
+    background-color: var(--surface) !important;
+}
+
+.bg-surface-muted {
+    background-color: var(--surface-muted) !important;
+}
+
+.border-theme {
+    border-color: var(--border-color) !important;
+}
+
+.shadow-theme {
+    box-shadow: var(--card-shadow) !important;
+}
+
+/* Transition for theme switching — smooth */
+body,
+.card,
+.modal-content,
+.form-control,
+.form-select,
+.table thead th,
+.table tbody td,
+.edsr-navbar,
+.dropdown-menu {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* ==========================================================================
+   UTILITY CLASS OVERRIDES (For hardcoded Bootstrap classes in Dark Mode)
+   ========================================================================== */
+[data-theme="dark"] .text-dark {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-light {
+    background-color: var(--surface) !important;
+}
+
+[data-theme="dark"] .border {
+    border-color: var(--border-color) !important;
+}

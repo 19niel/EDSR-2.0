@@ -11,7 +11,7 @@
             <!-- Modal body containing the form to add a category -->
             <div class="modal-body">
                 <!-- Form with validation and POST method -->
-                <form class="row g-3" action="" onsubmit="return isValid()" method="POST">
+                <form class="row g-3" action="" method="POST">
                     <!-- Dropdown to select the category field -->
                     <div class="form-floating col-md-12 mb-2">
                         <select class="form-select" name="field">
