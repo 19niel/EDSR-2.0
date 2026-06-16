@@ -66,9 +66,9 @@
                                        <label for="team" class="form-label">Team <span class="req">*</span></label>
                                         <select name="team" class="form-control form-select" id="team" required>
                                             <option value="" disabled selected>-- Select Team --</option>
-                                            <option value="Makati">Makati</option>
+                                            <option value="MAKATI">Makati</option>
                                             <option value="QC">QC</option>
-                                            <option value="Manila">Manila</option>
+                                            <option value="MANILA">Manila</option>
                                         </select>
                                     </div>
 

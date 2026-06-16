@@ -134,9 +134,9 @@
                                         <label for="team" class="form-label fw-bold small text-secondary">Team <span class="text-danger">*</span></label>
                                         <select name="team" class="form-control form-select text-dark fw-medium" id="team" required style="border-radius: 6px;" disabled>
                                             <option value="" disabled <?php echo (!isset($row['team']) || empty($row['team'])) ? 'selected' : ''; ?>>-- Select Team --</option>
-                                            <option value="Makati" <?php echo (isset($row['team']) && $row['team'] == 'Makati') ? 'selected' : ''; ?>>Makati</option>
+                                            <option value="MAKATI" <?php echo (isset($row['team']) && $row['team'] == 'MAKATI') ? 'selected' : ''; ?>>Makati</option>
                                             <option value="QC" <?php echo (isset($row['team']) && $row['team'] == 'QC') ? 'selected' : ''; ?>>QC</option>
-                                            <option value="Manila" <?php echo (isset($row['team']) && $row['team'] == 'Manila') ? 'selected' : ''; ?>>Manila</option>
+                                            <option value="MANILA" <?php echo (isset($row['team']) && $row['team'] == 'MANILA') ? 'selected' : ''; ?>>Manila</option>
                                         </select>
                                     </div>
                                 </div>

@@ -1,62 +1,63 @@
 <?php
-// Ensure no hidden errors or notices pollute our clean JSON stream output
 error_reporting(0);
 ini_set('display_errors', 0);
 
 include('db_conn.php');
 header('Content-Type: application/json');
 
-// Pull month tracking constraints securely
+// Pull layout month tracking arguments securely from request variables
 $monthFilter = isset($_GET['month']) ? mysqli_real_escape_string($conn, $_GET['month']) : 'current';
 
-// Compile date constraints matching filter states using callDate
-$whereClause = "WHERE is_deleted = 0"; 
+// Enforce status filter condition 230 (Won Project) and ignore soft deleted assets
+$whereClause = "WHERE is_deleted = 0 AND accStatus = 230"; 
+
 if ($monthFilter === 'current') {
     $currentMonth = date('m');
     $currentYear = date('Y');
-    // 🎯 Changed from created_at to callDate
     $whereClause .= " AND MONTH(callDate) = '$currentMonth' AND YEAR(callDate) = '$currentYear'";
 } elseif ($monthFilter !== 'all' && preg_match('/^\d{2}$/', $monthFilter)) {
     $currentYear = date('Y');
-    // 🎯 Changed from created_at to callDate
     $whereClause .= " AND MONTH(callDate) = '$monthFilter' AND YEAR(callDate) = '$currentYear'";
 }
 
-// 🎯 Hitting your exact table 'encoded'
-$query = "SELECT accCat, COUNT(*) as total_count FROM encoded $whereClause GROUP BY accCat";
+// Build query to select counts grouped strictly by cleaned team values
+$query = "SELECT TRIM(UPPER(team)) as team_name, COUNT(*) as total_count 
+          FROM encoded 
+          $whereClause 
+          AND team IS NOT NULL 
+          AND TRIM(team) != ''
+          GROUP BY TRIM(UPPER(team))";
+
 $result = mysqli_query($conn, $query);
 
-$response = [
-    'existing' => 0,
-    'new' => 0,
-    'total' => 0,
-    'success' => true
+// Setup baseline payload map structure
+$response = [    
+    'makati' => 0,
+    'qc'     => 0,
+    'manila' => 0,
+    'total'  => 0,
+    'success'=> true
 ];
 
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
-        // Handle variations in formatting securely (e.g., "Existing", "new", "EXISTING")
-        $category = strtoupper(trim($row['accCat']));
+        $team = strtoupper(trim($row['team_name']));
         $count = intval($row['total_count']);
         
-        if ($category === 'EXISTING') {
-            $response['existing'] = $count;
-        } elseif ($category === 'NEW') {
-            $response['new'] = $count;
+        if ($team === 'MAKATI') {
+            $response['makati'] = $count;
+        } elseif ($team === 'QC') {
+            $response['qc'] = $count;
+        } elseif ($team === 'MANILA') {
+            $response['manila'] = $count;
         }
     }
     
-    // Calculate the absolute sum total explicitly
-    $response['total'] = $response['existing'] + $response['new'];
+    // Aggregated data total summary tally calculation
+    $response['total'] = $response['makati'] + $response['qc'] + $response['manila'];
 } else {
-    // If the SQL query drops out completely, flag it so the JS console catches it cleanly
     $response['success'] = false;
-    $response['error_message'] = mysqli_error($conn);
 }
 
-// Clear out output buffers to make sure only pure clean JSON prints out
-if (ob_get_length()) ob_clean();
-
 echo json_encode($response);
-mysqli_close($conn);
 ?>

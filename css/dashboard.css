@@ -26,16 +26,14 @@
     width: 240px;
     height: 240px;
     border-radius: 50%;
-    
+
     /* 🎯 FIX: Changed baseline anchor 'from 270deg' to lock 0% directly to the horizontal left edge.
        The fill color now advances clockwise in lockstep with the visual progress angle. */
-    background: conic-gradient(
-        from 270deg,
-        var(--bar-color, #dc3545) 0deg,
-        var(--bar-color, #dc3545) var(--body-fill-sweep, 0deg),
-        #dee2e6 var(--body-fill-sweep, 0deg),
-        #dee2e6 360deg
-    );
+    background: conic-gradient(from 270deg,
+            var(--bar-color, #dc3545) 0deg,
+            var(--bar-color, #dc3545) var(--body-fill-sweep, 0deg),
+            #dee2e6 var(--body-fill-sweep, 0deg),
+            #dee2e6 360deg);
     box-sizing: border-box;
     z-index: 1;
     transition: --body-fill-sweep 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -47,21 +45,26 @@
     top: 0;
     left: 50%;
     width: 4px;
-    height: 24px; /* Matches the 24px track depth thickness */
-    background: #212529; 
-    transform-origin: 50% 120px; /* Core rotation axle alignment */
-    transform: translateX(-50%) rotate(22.5deg); /* Target alignment matching your line layout */
+    height: 24px;
+    /* Matches the 24px track depth thickness */
+    background: #212529;
+    transform-origin: 50% 120px;
+    /* Core rotation axle alignment */
+    transform: translateX(-50%) rotate(22.5deg);
+    /* Target alignment matching your line layout */
     z-index: 4;
 }
 
 /* 🏷️ FLOATING STATIC VALUE LABEL ABOVE TARGET LINE */
 .gauge-target-line::after {
     /* 🎯 AUTOMATED: Dynamically pulls whatever text JavaScript injects into data-target="" */
-    content: attr(data-target); 
+    content: attr(data-target);
     position: absolute;
-    top: -24px; /* Pulls the label up safely above the gauge's outer rim */
+    top: -24px;
+    /* Pulls the label up safely above the gauge's outer rim */
     left: 50%;
-    transform: translateX(-50%); /* Keeps the text perfectly centered over the 4px line */
+    transform: translateX(-50%);
+    /* Keeps the text perfectly centered over the 4px line */
     font-size: 0.8rem;
     font-weight: 700;
     color: #212529;
@@ -74,10 +77,12 @@
     position: absolute;
     top: 24px;
     left: 24px;
-    width: 192px; /* 240px minus 48px combined track wall width sizes */
+    width: 192px;
+    /* 240px minus 48px combined track wall width sizes */
     height: 192px;
     border-radius: 50%;
-    background: #ffffff; /* Must match dashboard card background color */
+    background: #ffffff;
+    /* Must match dashboard card background color */
     z-index: 3;
 }
 
@@ -87,11 +92,13 @@
     bottom: 0;
     left: 50%;
     width: 4px;
-    height: 110px; /* Reaches right to the outer edge of the bar channel */
+    height: 110px;
+    /* Reaches right to the outer edge of the bar channel */
     background: #212529;
     border-radius: 2px;
     transform-origin: 50% 100%;
-    transform: translateX(-50%) rotate(-90deg); /* Starts at far-left (0%) */
+    transform: translateX(-50%) rotate(-90deg);
+    /* Starts at far-left (0%) */
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 5;
 }
@@ -107,7 +114,7 @@
     border-radius: 50%;
     transform: translateX(-50%);
     z-index: 6;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Digital Percentage Display Text */
@@ -120,9 +127,17 @@
 }
 
 /* Font Accent Colors for textual status updates */
-.text-state-low { color: #dc3545 !important; }
-.text-state-mid { color: #fd7e14 !important; }
-.text-state-high { color: #198754 !important; }
+.text-state-low {
+    color: #dc3545 !important;
+}
+
+.text-state-mid {
+    color: #fd7e14 !important;
+}
+
+.text-state-high {
+    color: #198754 !important;
+}
 
 /* ==========================================================================
    Pipeline Funnel Component Styles (Dynamic Bar Chart Variation)
@@ -131,18 +146,20 @@
 .funnel-row-wrapper {
     position: relative;
     width: 100%;
-    margin-bottom: 6px; /* Clean tracking gaps */
+    margin-bottom: 6px;
+    /* Clean tracking gaps */
 }
 
 /* Base Track: Flat, full-width, non-tapered anchor track */
 .funnel-bar-track {
     position: relative;
-    height: 30px; 
+    height: 30px;
     background-color: #d4d5d6;
     border-radius: 4px !important;
     overflow: hidden;
     display: flex;
-    justify-content: center; /* Keeps text centered inside the track track */
+    justify-content: center;
+    /* Keeps text centered inside the track track */
     align-items: center;
 }
 
@@ -153,11 +170,25 @@
     border-radius: 0px !important;
 }
 
-.bg-funnel-qualified   { background-color: #0d6efd !important; }
-.bg-funnel-negotiation { background-color: #0dcaf0 !important; }
-.bg-funnel-won         { background-color: #198754 !important; }
-.bg-funnel-lost        { background-color: #dc3545 !important; }
-.bg-funnel-dropped     { background-color: #6c757d !important; }
+.bg-funnel-qualified {
+    background-color: #0d6efd !important;
+}
+
+.bg-funnel-negotiation {
+    background-color: #0dcaf0 !important;
+}
+
+.bg-funnel-won {
+    background-color: #198754 !important;
+}
+
+.bg-funnel-lost {
+    background-color: #dc3545 !important;
+}
+
+.bg-funnel-dropped {
+    background-color: #6c757d !important;
+}
 
 /* Text Overlay Config */
 .funnel-text-overlay {
@@ -170,11 +201,12 @@
     justify-content: center;
     align-items: center;
     z-index: 3;
-    color: #f5f5f5; 
+    color: #f5f5f5;
     font-size: 0.72rem;
     font-weight: 700;
     pointer-events: none;
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.85); /* Protects readability when bar passes behind text */
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.85);
+    /* Protects readability when bar passes behind text */
 }
 
 /* Legend 2-Row Grid Layout */
@@ -206,23 +238,16 @@
     flex-shrink: 0;
 }
 
-
 /* ==========================================================================
-   Account Categories Split-Direction Donut Chart Styles
+   MULTI-SEGMENT PROJECTS WON DISTRIBUTION DONUT TRACK STRUCTURES 
    ========================================================================== */
 
-.donut-outer-wrapper {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
+/* 1. Base SVG Container Matrix Layout */
 .donut-svg-container {
     position: relative;
-    width: 155px; 
+    width: 155px;
     height: 155px;
+    margin: 0 auto;
 }
 
 .donut-svg-matrix {
@@ -230,39 +255,50 @@
     height: 100%;
 }
 
+/* 2. Background Track: The empty grey channel ring */
 .donut-track-bg {
     fill: transparent;
     stroke: #f1f3f5;
-    stroke-width: 20;
+    stroke-width: 8.5;
 }
 
+/* 3. Dynamic Segment Arcs (Makati, QC, Manila) */
 .donut-segment-track {
     fill: transparent;
-    stroke-width: 20;
-    stroke-linecap:butt;
-    stroke-dasharray: 251.2; /* Circumference for Radius 40 */
-    stroke-dashoffset: 251.2;
-    transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    stroke-width: 8.5;
+
+    /* 🎯 FIX: Removed the global -90deg rotation from here to stop the layout calculation collision */
     transform-origin: 50px 50px;
+
+    /* Smooth transition handling for live updates */
+    transition: stroke-dasharray 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+        stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 🎯 EXISTING: Starts at top center, runs clockwise (Right ->) */
-#donut-track-existing {
+/* 🎯 FIX: Explicitly handle individual directional base rotations independently */
+#donut-track-makati,
+#donut-track-qc,
+#donut-track-manila {
     transform: rotate(-90deg);
 }
 
-/* 🎯 NEW: Starts at top center, runs counter-clockwise (Left <-) */
-#donut-track-new {
-    transform: rotate(-90deg) scaleY(-1);
+/* 4. Team Color Hex Mapping Configurations */
+#donut-track-makati {
+    stroke: #30885f !important;
+    /* Makati - Emerald Green */
 }
 
-/* Color Palettes */
-.stroke-existing { stroke: #30885f  !important; } /* Green */
-.stroke-new      { stroke: #0d6efd !important; } /* Blue */
+#donut-track-qc {
+    stroke: #0d6efd !important;
+    /* QC - Corporate Blue */
+}
 
-.bg-cat-existing { background-color: #30885f !important; }
-.bg-cat-new      { background-color: #0d6efd !important; }
+#donut-track-manila {
+    stroke: #ffc107 !important;
+    /* Manila - Yellow */
+}
 
+/* 5. Center Absolute Floating Counter Display Placement */
 .donut-center-metric {
     position: absolute;
     top: 50%;
@@ -273,42 +309,13 @@
 }
 
 .donut-total-count {
-    font-size: 1.85rem; 
+    font-size: 1.85rem;
     line-height: 1.1;
     color: #212529;
 }
 
+/* 6. Metric Footer Representation Panel Grid */
 .donut-metric-footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     padding-top: 10px;
     border-top: 1px dashed #e9ecef;
-}
-
-.donut-footer-split {
-    padding: 0 4px;
-}
-
-.donut-footer-split .d-flex {
-    gap: 5px; 
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap; 
-}
-
-.donut-footer-split h5 {
-    font-size: 0.95rem !important; 
-    font-weight: 700;
-}
-
-.donut-footer-split .small {
-    font-size: 0.65rem !important;
-    color: #495057 !important;
-}
-
-.legend-square {
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    flex-shrink: 0;
 }
