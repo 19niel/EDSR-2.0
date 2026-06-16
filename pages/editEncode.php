@@ -129,6 +129,16 @@
                                         <label for="callDate" class="form-label">Date of Activity <span class="req">*</span></label>
                                         <input type="date" class="form-control" disabled required id="callDate" name="callDate" min="<?php echo $min; ?>" max="<?php echo $max; ?>" value="<?php echo htmlspecialchars($row['callDate'] ?? '');  ?>" required/>
                                     </div>
+
+                                    <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+                                        <label for="team" class="form-label fw-bold small text-secondary">Team <span class="text-danger">*</span></label>
+                                        <select name="team" class="form-control form-select text-dark fw-medium" id="team" required style="border-radius: 6px;" disabled>
+                                            <option value="" disabled <?php echo (!isset($row['team']) || empty($row['team'])) ? 'selected' : ''; ?>>-- Select Team --</option>
+                                            <option value="Makati" <?php echo (isset($row['team']) && $row['team'] == 'Makati') ? 'selected' : ''; ?>>Makati</option>
+                                            <option value="QC" <?php echo (isset($row['team']) && $row['team'] == 'QC') ? 'selected' : ''; ?>>QC</option>
+                                            <option value="Manila" <?php echo (isset($row['team']) && $row['team'] == 'Manila') ? 'selected' : ''; ?>>Manila</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 

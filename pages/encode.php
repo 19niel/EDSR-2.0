@@ -61,6 +61,17 @@
                                         <label for="callDate" class="form-label">Date of Activity <span class="req">*</span></label>
                                         <input type="date" class="form-control" id="callDate" required name="callDate" min="<?php echo $min; ?>" max="<?php echo $max; ?>" />
                                     </div>
+                                    
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                       <label for="team" class="form-label">Team <span class="req">*</span></label>
+                                        <select name="team" class="form-control form-select" id="team" required>
+                                            <option value="" disabled selected>-- Select Team --</option>
+                                            <option value="Makati">Makati</option>
+                                            <option value="QC">QC</option>
+                                            <option value="Manila">Manila</option>
+                                        </select>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -245,11 +256,11 @@
                                     </div>
                                 </div>
 
-                                <div class="row mb-4">
+                                <!-- <div class="row mb-4">
                                     <div class="col-12">
                                         <button type="button" class="btn btn-outline-primary btn-sm" id="addContactEntry">Add Another Contact</button>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <!-- Decision Maker Details -->
                                 <div class="row g-3 border-top pt-3">
@@ -280,8 +291,8 @@
                                     </div>
 
                                     <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <label for="proposedPrice" class="form-label">Proposed Price <span class="req">*</span></label>
-                                        <input type="text" class="form-control" id="proposedPrice" name="proposedPrice" required/>
+                                        <label for="proposedPrice" class="form-label">Proposed Price </label>
+                                        <input type="text" class="form-control" id="proposedPrice" name="proposedPrice" />
                                     </div>
 
                                     <div class="col-md-6 col-lg-4 col-xl-3">

@@ -9,11 +9,15 @@ if (isset($_POST['encodeAccount'])) {
     $sbu = $_POST['sbu'] ?? NULL;
     $accountExecutive = $_POST['accountExecutive'] ?? NULL;
     $callDate = $_POST['callDate'] ?? NULL;
+    
+    // ADDED: Capture the team choice from your dropdown menu
+    $team = $_POST['team'] ?? NULL; 
+
     $accountName = $_POST['accountName'] ?? NULL;
     $arsExpiryDate = $_POST['arsExpiryDate'] ?? NULL;
 
-    // ADDED: Catching the month input variable from the form post data
-    $estimatedDelivery = $_POST['estimatedDelivery'] ?? NULL; 
+    // FIXED: Formats "YYYY-MM" from your HTML5 month picker into a valid MySQL "YYYY-MM-DD"
+    $estimatedDelivery = !empty($_POST['estimatedDelivery']) ? $_POST['estimatedDelivery'] . "-01" : NULL; 
 
     $endUser = $_POST['endUserType'] ?? NULL;
     $segment = $_POST['segment'] ?? NULL;
@@ -105,6 +109,7 @@ if (isset($_POST['encodeAccount'])) {
         branch,
         dept,
         callDate,
+        team, -- ADDED: Inserted team right here
         accName,
         arsExpiryDate,
         estimatedDelivery, 
@@ -147,7 +152,7 @@ if (isset($_POST['encodeAccount'])) {
         progressDate
     ) VALUES (
         ?, ?, ?, ?, ?,
-        ?, ?, ?, ?, ?,
+        ?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?,
@@ -165,13 +170,14 @@ if (isset($_POST['encodeAccount'])) {
 
     mysqli_stmt_bind_param(
         $stmt,
-        "sssssssssssssssssssssssssssssssssssssssssssss", 
+        "ssssssssssssssssssssssssssssssssssssssssssssss", // FIXED: Increased total characters to 46 's' types
 
         $sbu,
         $accountExecutive,
         $branch,
         $department,
         $callDate,
+        $team, // ADDED: Mapped $team variable directly to line up after $callDate
         $accountName,
         $arsExpiryDate,
         $estimatedDelivery, 
@@ -225,7 +231,7 @@ if (isset($_POST['encodeAccount'])) {
     mysqli_stmt_close($stmt);
 
     // ====================================================
-    // ADDED: INSERT SUBMISSION INTO ENCODED_LOGS TABLE
+    // INSERT SUBMISSION INTO ENCODED_LOGS TABLE
     // ====================================================
     $logSql = "INSERT INTO encoded_logs (
         encodedID, 
@@ -241,12 +247,11 @@ if (isset($_POST['encodeAccount'])) {
     $logStmt = mysqli_prepare($conn, $logSql);
 
     if ($logStmt) {
-        // Sanitize variables or handle empty states gracefully before binding
         $logStatusID  = (!empty($accountStatus) && $accountStatus !== 'N/A') ? (int)$accountStatus : NULL;
         $logSubcatID  = (!empty($reasonSubcategory) && $reasonSubcategory !== 'N/A') ? (int)$reasonSubcategory : NULL;
         $logProgDate  = !empty($progressDate) ? $progressDate : NULL;
         $logRemarks   = !empty($remarks) ? $remarks : NULL;
-        $logEstDel    = !empty($estimatedDelivery) ? $estimatedDelivery : NULL;
+        $logEstDel    = !empty($estimatedDelivery) ? $estimatedDelivery : NULL; // Uses the updated "YYYY-MM-01" string
         $logDelDate   = !empty($deliveryDate) ? $deliveryDate : NULL;
         $logConEnd    = !empty($contractEnd) ? $contractEnd : NULL;
 

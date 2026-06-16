@@ -24,6 +24,7 @@ $query = "SELECT
           FROM encoded 
           WHERE is_deleted = 0 
             AND progressDate IS NOT NULL 
+            AND accStatus IN (345, 346)
             AND DATEDIFF(NOW(), progressDate) >= $thresholdDays
           ORDER BY progressDate ASC"; // Oldest unattended items prioritized at the top of the table
 

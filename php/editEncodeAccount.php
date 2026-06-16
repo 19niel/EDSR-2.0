@@ -29,6 +29,7 @@ if (isset($_POST['editEncode'])) {
         $sbu = $_POST['sbu'] ?? NULL;
         $accountExecutive = $_POST['accountExecutive'] ?? NULL;
         $callDate = $_POST['callDate'] ?? NULL;
+        $team = $_POST['team'] ?? NULL;
         $accountName = $_POST['accountName'] ?? NULL;
         $arsExpiryDate = $_POST['arsExpiryDate'] ?? NULL;
         $endUser = $_POST['endUserType'] ?? NULL;
@@ -85,7 +86,8 @@ if (isset($_POST['editEncode'])) {
                 accExec = '$accountExecutive', 
                 branch = '$branch',
                 dept = '$department',
-                callDate = '$callDate', 
+                callDate = '$callDate',
+                team = '$team',  
                 accName = '$accountName',
                 arsExpiryDate = '$arsExpiryDate',
                 endUser = '$endUser', 

@@ -1,4 +1,9 @@
 <?php
+// Ensure session is active so variables can be read across files
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 include('db_conn.php');
 
 if (isset($_COOKIE['e-dsr-user'])) {
@@ -15,12 +20,14 @@ if (isset($_COOKIE['e-dsr-user'])) {
         $stat = $qResult['stat'];
         $dept = $qResult['dept'];
         $is_download_restricted = $qResult['is_download_restricted'];
+        
+        // 🔒 Save the role inside the session so bo_dashboard.php can access it
+        $_SESSION['category'] = $category;
     }
 } else {
-    echo '<script>
-            window.location.href = "../index.php";
-            alert("Please log in to access the welcome page!");
-          </script>';
+    echo '<script>';
+    echo 'window.location.href = "../index.php";';
+    echo 'alert("Please log in to access the welcome page!");';
+    echo '</script>';
 }
-
 ?>

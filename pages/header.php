@@ -13,13 +13,12 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link text-white" href="welcome_page.php">Home</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="encode.php">Encode</a></li>
-                <li id="performanceTab" class="nav-item"><a class="nav-link text-white" href="performance.php">Performance</a></li>
+                <!-- <li id="performanceTab" class="nav-item"><a class="nav-link text-white" href="performance.php">Performance</a></li> -->
                 <li class="nav-item"><a class="nav-link text-white" href="bo_search.php">Search</a></li>
                 <li id="users" class="nav-item admin"><a class="nav-link text-white" href="user.php">User</a></li>
                 <li id="leave" class="nav-item admin"><a class="nav-link text-white" href="leaveData.php">Leave Data</a></li>
                 <li id="customize" class="nav-item admin"><a class="nav-link text-white" href="customize.php">Customize</a></li>
                 <li id="bo_dashboard" class="nav-item admin"><a class="nav-link text-white" href="bo_dashboard.php">BO Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="my_accounts.php">My Encoded</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="../php/logout.php?logoutid=<?php echo $name; ?>" onclick="return confirm('Logout Account?')">Logout</a></li>
             </ul>
         </div>

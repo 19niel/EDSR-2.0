@@ -13,6 +13,8 @@ if ($settingsResult && mysqli_num_rows($settingsResult) > 0) {
     $kpiSalesTarget = floatval($settingsRow['setting_value']);
 }
 mysqli_close($conn); 
+
+$userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category'])) : '';
 ?>
 
 <!DOCTYPE html>
@@ -51,9 +53,11 @@ mysqli_close($conn);
                         <a href="../php/exportAllData.php" class="btn btn-white border border-secondary-subtle btn-light px-3 fw-medium d-flex align-items-center gap-2 shadow-sm rounded-3">
                             <i class="fa fa-download text-secondary"></i> Export Dataset
                         </a>
+                    <?php if ($userRole === 'ADMIN' || $userRole === 'VP'): ?>
                         <a href="bo_dashboardSettings.php" class="btn btn-outline-secondary px-3 fw-medium d-flex align-items-center gap-2 shadow-sm rounded-3">
                             <i class="fa-solid fa-gear text-secondary"></i> Settings
                         </a>
+                    <?php endif; ?>
                     </div>
                 </div>
 
