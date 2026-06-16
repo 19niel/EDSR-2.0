@@ -58,6 +58,11 @@ if (isset($_POST['login'])) {
     }
 }
 
+
+if (!defined('BASE_URL')) {
+    define('BASE_URL', 'http://192.168.3.12/e-dsr/');
+}
+
 // First-time login handler
 if (isset($_POST['newLogin'])) {
     $username = $_POST['user'];
