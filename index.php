@@ -22,8 +22,7 @@ include('php/autoLogin.php');
     <!-- Anti-flash: apply saved theme before render -->
     <script>
     (function(){
-        var t = localStorage.getItem('edsr-theme');
-        if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        var t = localStorage.getItem('edsr-theme') || 'light';
         document.documentElement.setAttribute('data-theme', t);
         document.documentElement.setAttribute('data-bs-theme', t);
     })();
@@ -36,7 +35,7 @@ include('php/autoLogin.php');
         <form name="form" action="php/login.php" method="POST">
             <div class="title">
                 Electronic Daily Sales Report
-                <span style="display:block;font-size:0.78rem;font-weight:500;color:var(--login-muted);margin-top:4px;">Version 2.0 — Login to Continue</span>
+                <span style="display:block;font-size:0.78rem;font-weight:500;color:var(--login-muted);margin-top:4px;">Version 2.0</span>
             </div>
 
             <div class="txt_field">

@@ -13,8 +13,7 @@ include('../php/accountList.php');
     <!-- Anti-flash: apply saved theme before render -->
     <script>
     (function(){
-        var t = localStorage.getItem('edsr-theme');
-        if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        var t = localStorage.getItem('edsr-theme') || 'light';
         document.documentElement.setAttribute('data-theme', t);
         document.documentElement.setAttribute('data-bs-theme', t);
         window.EDSR_THEME = t;
@@ -225,7 +224,7 @@ include('../php/accountList.php');
                                     <?php } 
                                 } else { ?>
                                     <tr>
-                                        <td colspan="9" class="text-center text-muted py-5">
+                                        <td colspan="10" class="text-center text-muted py-5">
                                             <div class="py-4">
                                                 <i class="fa fa-inbox d-block mb-3 text-secondary opacity-50" style="font-size: 3.5rem;"></i>
                                                 <h5 class="fw-semibold text-dark m-0">No Matching Records Found</h5>

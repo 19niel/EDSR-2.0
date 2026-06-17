@@ -13,8 +13,7 @@ include('../php/userpagination.php');
     <!-- Anti-flash: apply saved theme before render -->
     <script>
     (function(){
-        var t = localStorage.getItem('edsr-theme');
-        if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        var t = localStorage.getItem('edsr-theme') || 'light';
         document.documentElement.setAttribute('data-theme', t);
         document.documentElement.setAttribute('data-bs-theme', t);
         window.EDSR_THEME = t;

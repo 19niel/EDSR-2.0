@@ -51,7 +51,7 @@
                                     <span class="text-primary"><?php echo htmlspecialchars($row['LID'] ?? 'N/A'); ?></span>
                                 </h3>
                                 <div class="d-flex gap-2">
-                                    <a href="/e-dsr/pages/search.php" class="btn btn-outline-secondary d-flex align-items-center gap-2 shadow-sm">
+                                    <a href="bo_search.php" class="btn btn-outline-secondary d-flex align-items-center gap-2 shadow-sm">
                                         <i class="fa-solid fa-arrow-left"></i> Back to Search
                                     </a>
                                     <!-- Changed type="submit" to type="button" to execute our password logic -->

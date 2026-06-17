@@ -49,7 +49,7 @@
             </h6>
             <span class="badge bg-danger-subtle text-danger border px-2 py-0.5" style="font-size: 0.65rem; font-weight: 600; border-radius: 4px;">Attention Required</span>
         </div>
-        <hr class="my-1.5 text-black-50">
+        <hr class="my-2 text-black-50">
     </div>
 
     <div class="table-responsive aging-table-container flex-grow-1">

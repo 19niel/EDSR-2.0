@@ -11,11 +11,11 @@ $currentMonthIndex = date('m');
     </div>
 
     <div class="flex-grow-1 d-flex flex-column justify-content-center position-relative" style="min-height: 220px;">
-        <div style="position: relative; height: 160px; width: 100%;">
+        <div style="position: relative; height: 290px; width: 100%;">
             <canvas id="teamWonChart"></canvas>
             <div class="position-absolute top-50 start-50 translate-middle text-center" style="pointer-events: none;">
-                <span class="d-block fw-bold text-dark" id="donutTotalCount" style="font-size: 1.5rem; line-height: 1;">0</span>
-                <span class="text-uppercase text-muted tracking-wide" style="font-size: 0.55rem; font-weight: 700;">Total Won</span>
+                <span class="d-block fw-bold text-dark" id="donutTotalCount" style="font-size: 2rem; line-height: 1;">0</span>
+                <span class="text-uppercase text-muted tracking-wide" style="font-size: 0.90rem; font-weight: 700;">Total Won</span>
             </div>
         </div>
 
@@ -24,7 +24,7 @@ $currentMonthIndex = date('m');
                 
                 <div class="text-center flex-grow-1 border-end">
                     <div class="d-flex align-items-center justify-content-center gap-1 mb-1">
-                        <div style="width: 7px; height: 7px; background-color: #30885f; border-radius: 2px;"></div>
+                        <div style="width: 12px; height: 7px; background-color: #30885f; border-radius: 2px;"></div>
                         <span class="text-muted fw-bold text-uppercase" style="font-size: 0.65rem;">Makati</span>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-1">
@@ -35,7 +35,7 @@ $currentMonthIndex = date('m');
 
                 <div class="text-center flex-grow-1 border-end">
                     <div class="d-flex align-items-center justify-content-center gap-1 mb-1">
-                        <div style="width: 7px; height: 7px; background-color: #0d6efd; border-radius: 2px;"></div>
+                        <div style="width: 12px; height: 7px; background-color: #0d6efd; border-radius: 2px;"></div>
                         <span class="text-muted fw-bold text-uppercase" style="font-size: 0.65rem;">QC</span>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-1">
@@ -46,7 +46,7 @@ $currentMonthIndex = date('m');
 
                 <div class="text-center flex-grow-1">
                     <div class="d-flex align-items-center justify-content-center gap-1 mb-1">
-                        <div style="width: 7px; height: 7px; background-color: #ffc107; border-radius: 2px;"></div>
+                        <div style="width: 12px; height: 7px; background-color: #ffc107; border-radius: 2px;"></div>
                         <span class="text-muted fw-bold text-uppercase" style="font-size: 0.65rem;">Manila</span>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-1">

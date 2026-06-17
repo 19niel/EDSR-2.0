@@ -16,68 +16,68 @@
 :root,
 [data-theme="light"] {
     /* Backgrounds */
-    --app-bg:          #F6F8FB;
-    --surface:         #FFFFFF;
-    --surface-muted:   #F1F5F9;
+    --app-bg: #F6F8FB;
+    --surface: #FFFFFF;
+    --surface-muted: #F1F5F9;
 
     /* Brand Colors */
-    --primary:         #2563EB;
-    --primary-hover:   #1D4ED8;
-    --accent:          #14B8A6;
+    --primary: #2563EB;
+    --primary-hover: #1D4ED8;
+    --accent: #14B8A6;
 
     /* Semantic Status Colors */
-    --success:         #16A34A;
-    --warning:         #F59E0B;
-    --danger:          #DC2626;
+    --success: #16A34A;
+    --warning: #F59E0B;
+    --danger: #DC2626;
 
     /* Text */
-    --text-primary:    #0F172A;
-    --text-secondary:  #64748B;
-    --text-muted:      #94A3B8;
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+    --text-muted: #94A3B8;
 
     /* Borders & Dividers */
-    --border-color:    #E2E8F0;
+    --border-color: #E2E8F0;
 
     /* Sidebar */
-    --sidebar-bg:      #0F172A;
-    --sidebar-text:    #CBD5E1;
-    --sidebar-active:  #2563EB;
-    --sidebar-hover-bg:#1E293B;
+    --sidebar-bg: #0F172A;
+    --sidebar-text: #CBD5E1;
+    --sidebar-active: #2563EB;
+    --sidebar-hover-bg: #1E293B;
 
     /* Cards */
-    --card-shadow:     0 4px 16px rgba(15, 23, 42, 0.08);
+    --card-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
     --card-shadow-hover: 0 8px 24px rgba(15, 23, 42, 0.13);
 
     /* Gauge + Charts (light) */
-    --gauge-track-bg:  #dee2e6;
-    --gauge-inner-bg:  #ffffff;
-    --gauge-needle:    #0F172A;
-    --gauge-cap:       #0F172A;
-    --gauge-label:     #0F172A;
-    --chart-grid:      rgba(15, 23, 42, 0.08);
-    --chart-text:      #64748B;
+    --gauge-track-bg: #dee2e6;
+    --gauge-inner-bg: #ffffff;
+    --gauge-needle: #0F172A;
+    --gauge-cap: #0F172A;
+    --gauge-label: #0F172A;
+    --chart-grid: rgba(15, 23, 42, 0.08);
+    --chart-text: #64748B;
 
     /* Inputs */
-    --input-bg:        #FFFFFF;
-    --input-border:    #CBD5E1;
-    --input-focus:     #2563EB;
-    --input-text:      #0F172A;
+    --input-bg: #FFFFFF;
+    --input-border: #CBD5E1;
+    --input-focus: #2563EB;
+    --input-text: #0F172A;
     --input-placeholder: #94A3B8;
 
     /* Modal */
-    --modal-bg:        #FFFFFF;
+    --modal-bg: #FFFFFF;
     --modal-header-bg: #F8FAFC;
-    --modal-border:    #E2E8F0;
+    --modal-border: #E2E8F0;
 
     /* Tables */
     --table-header-bg: #F8FAFC;
     --table-row-hover: #F1F5F9;
-    --table-border:    #E2E8F0;
+    --table-border: #E2E8F0;
 
     /* Navbar */
-    --navbar-bg:       #0F172A;
-    --navbar-text:     #F1F5F9;
-    --navbar-brand:    #FFFFFF;
+    --navbar-bg: #0F172A;
+    --navbar-text: #F1F5F9;
+    --navbar-brand: #FFFFFF;
 }
 
 /* --------------------------------------------------------------------------
@@ -85,68 +85,68 @@
    -------------------------------------------------------------------------- */
 [data-theme="dark"] {
     /* Backgrounds */
-    --app-bg:          #0B1120;
-    --surface:         #111827;
-    --surface-muted:   #1E293B;
+    --app-bg: #0B1120;
+    --surface: #111827;
+    --surface-muted: #1E293B;
 
     /* Brand Colors */
-    --primary:         #60A5FA;
-    --primary-hover:   #3B82F6;
-    --accent:          #2DD4BF;
+    --primary: #60A5FA;
+    --primary-hover: #3B82F6;
+    --accent: #2DD4BF;
 
     /* Semantic Status Colors */
-    --success:         #22C55E;
-    --warning:         #FBBF24;
-    --danger:          #F87171;
+    --success: #22C55E;
+    --warning: #FBBF24;
+    --danger: #F87171;
 
     /* Text */
-    --text-primary:    #F8FAFC;
-    --text-secondary:  #94A3B8;
-    --text-muted:      #64748B;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
 
     /* Borders & Dividers */
-    --border-color:    #334155;
+    --border-color: #334155;
 
     /* Sidebar */
-    --sidebar-bg:      #020617;
-    --sidebar-text:    #CBD5E1;
-    --sidebar-active:  #60A5FA;
-    --sidebar-hover-bg:#0F172A;
+    --sidebar-bg: #020617;
+    --sidebar-text: #CBD5E1;
+    --sidebar-active: #60A5FA;
+    --sidebar-hover-bg: #0F172A;
 
     /* Cards */
-    --card-shadow:     0 4px 16px rgba(0, 0, 0, 0.35);
+    --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
     --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
 
     /* Gauge + Charts (dark) */
-    --gauge-track-bg:  #334155;
-    --gauge-inner-bg:  #111827;
-    --gauge-needle:    #F8FAFC;
-    --gauge-cap:       #F8FAFC;
-    --gauge-label:     #F8FAFC;
-    --chart-grid:      rgba(248, 250, 252, 0.07);
-    --chart-text:      #94A3B8;
+    --gauge-track-bg: #334155;
+    --gauge-inner-bg: #111827;
+    --gauge-needle: #F8FAFC;
+    --gauge-cap: #F8FAFC;
+    --gauge-label: #F8FAFC;
+    --chart-grid: rgba(248, 250, 252, 0.07);
+    --chart-text: #94A3B8;
 
     /* Inputs */
-    --input-bg:        #1E293B;
-    --input-border:    #334155;
-    --input-focus:     #60A5FA;
-    --input-text:      #F8FAFC;
+    --input-bg: #1E293B;
+    --input-border: #334155;
+    --input-focus: #60A5FA;
+    --input-text: #F8FAFC;
     --input-placeholder: #64748B;
 
     /* Modal */
-    --modal-bg:        #111827;
+    --modal-bg: #111827;
     --modal-header-bg: #1E293B;
-    --modal-border:    #334155;
+    --modal-border: #334155;
 
     /* Tables */
     --table-header-bg: #1E293B;
     --table-row-hover: #1a2540;
-    --table-border:    #334155;
+    --table-border: #334155;
 
     /* Navbar */
-    --navbar-bg:       #020617;
-    --navbar-text:     #CBD5E1;
-    --navbar-brand:    #F8FAFC;
+    --navbar-bg: #020617;
+    --navbar-text: #CBD5E1;
+    --navbar-brand: #F8FAFC;
 }
 
 /* ==========================================================================
@@ -185,7 +185,12 @@ body {
    TYPOGRAPHY OVERRIDES
    ========================================================================== */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     color: var(--text-primary);
@@ -193,7 +198,10 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.3;
 }
 
-p, span, small, li {
+p,
+span,
+small,
+li {
     color: var(--text-primary);
 }
 
@@ -201,7 +209,8 @@ p, span, small, li {
     color: var(--text-secondary) !important;
 }
 
-small, .small {
+small,
+.small {
     font-size: 0.8125rem;
     letter-spacing: 0.01em;
 }
@@ -212,8 +221,8 @@ small, .small {
 
 .edsr-navbar {
     background-color: var(--navbar-bg) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
     min-height: 60px;
     padding: 0 1.25rem;
     position: sticky;
@@ -248,7 +257,7 @@ small, .small {
 }
 
 .edsr-navbar .navbar-toggler {
-    border-color: rgba(255,255,255,0.2);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .edsr-navbar .navbar-toggler-icon {
@@ -258,7 +267,7 @@ small, .small {
 /* Theme toggle button in navbar */
 #themeToggleBtn {
     background: transparent;
-    border: 1px solid rgba(255,255,255,0.18);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 8px;
     color: var(--sidebar-text);
     width: 36px;
@@ -274,20 +283,20 @@ small, .small {
 }
 
 #themeToggleBtn:hover {
-    background: rgba(255,255,255,0.12);
-    border-color: rgba(255,255,255,0.35);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.35);
     transform: scale(1.08);
 }
 
 /* Logged-in user badge in navbar */
 .edsr-user-badge {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 4px 12px;
     font-size: 0.8rem;
     font-weight: 600;
     color: #F1F5F9;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     white-space: nowrap;
     max-width: 180px;
     overflow: hidden;
@@ -493,7 +502,7 @@ small, .small {
     background-color: var(--modal-bg) !important;
     border: 1px solid var(--modal-border) !important;
     border-radius: 14px !important;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.25) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25) !important;
     color: var(--text-primary) !important;
 }
 
@@ -681,7 +690,7 @@ hr {
 
 .edsr-metric-card h6 {
     font-size: 0.75rem;
-    color: rgba(255,255,255,0.8) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
     margin: 0;
     font-weight: 500;
     text-align: right;

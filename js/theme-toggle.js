@@ -48,16 +48,11 @@
     /**
      * Resolve which theme to use:
      * 1. Saved localStorage preference
-     * 2. OS system preference
-     * 3. Fallback → light
+     * 2. Fallback → light
      */
     function resolveTheme() {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved === DARK || saved === LIGHT) return saved;
-        // Respect system preference only when nothing is saved
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            return DARK;
-        }
         return LIGHT;
     }
 
@@ -84,15 +79,7 @@
         applyTheme(resolveTheme());
     });
 
-    // Listen for OS theme change (in case user changes system pref while app is open)
-    if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-            // Only respect system change if user has not saved a manual preference
-            if (!localStorage.getItem(STORAGE_KEY)) {
-                applyTheme(e.matches ? DARK : LIGHT);
-            }
-        });
-    }
+
 
     // Expose toggleTheme globally for inline onclick fallback if needed
     window.edsrToggleTheme = toggleTheme;
