@@ -66,7 +66,7 @@ $(document).ready(function () {
             data: {
                 labels: [],
                 datasets: [{
-                    label: 'Volume (PHP)',
+                    label: '', // Volume PHP
                     data: [],
                     backgroundColor: '#0d6efd',
                     borderRadius: 4,
@@ -86,7 +86,7 @@ $(document).ready(function () {
                     legend: { show: false },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return formatShortCurrency(context.raw);
                             }
                         }
@@ -164,7 +164,7 @@ $(document).ready(function () {
         fetchLeaderboardMetrics(pickedMonth);
     });
 
-    document.addEventListener('edsrThemeChange', function(e) {
+    document.addEventListener('edsrThemeChange', function (e) {
         if (leaderboardChart) {
             const isDark = e.detail.theme === 'dark';
             leaderboardChart.options.scales.y.ticks.color = isDark ? '#F8FAFC' : '#0F172A';
