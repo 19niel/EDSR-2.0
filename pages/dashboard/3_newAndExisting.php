@@ -36,7 +36,7 @@ $currentMonthIndex = date('m');
                 <div class="text-center flex-grow-1 border-end">
                     <div class="d-flex align-items-center justify-content-center gap-1 mb-1">
                         <div style="width: 12px; height: 7px; background-color: #0d6efd; border-radius: 2px;"></div>
-                        <span class="text-muted fw-bold text-uppercase" style="font-size: 0.65rem;">QC</span>
+                        <span class="text-muted fw-bold text-uppercase" style="font-size: 0.65rem;">QC/Ortigas</span>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-1">
                         <h6 class="fw-bold m-0 text-dark small" id="qcCount">0</h6>

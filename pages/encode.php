@@ -91,7 +91,7 @@
                                         <select name="team" class="form-control form-select" id="team" required>
                                             <option value="" disabled selected>-- Select Team --</option>
                                             <option value="MAKATI">Makati</option>
-                                            <option value="QC">QC</option>
+                                            <option value="QC">QC/Ortigas</option>
                                             <option value="MANILA">Manila</option>
                                         </select>
                                     </div>

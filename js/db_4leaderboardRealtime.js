@@ -13,6 +13,18 @@ $(document).ready(function () {
         }).format(value);
     }
 
+    function formatCurrencyShorthand(value) {
+        const num = parseFloat(value);
+        if (isNaN(num) || num <= 0) return "0";
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(num % 1000000 === 0 ? 0 : 1) + 'M';
+        }
+        if (num >= 1000) {
+            return (num / 1000).toFixed(num % 1000 === 0 ? 0 : 1) + 'K';
+        }
+        return num.toString();
+    }
+
     function initLeaderboardChart() {
         const ctx = document.getElementById('leaderboardChart');
         if (!ctx) return;
@@ -22,8 +34,35 @@ $(document).ready(function () {
         const textColor = isDark ? '#F8FAFC' : '#0F172A';
         const gridColor = isDark ? 'rgba(248, 250, 252, 0.05)' : 'rgba(15, 23, 42, 0.05)';
 
+        const barLabelsPlugin = {
+            id: 'barLabels',
+            afterDatasetsDraw(chart) {
+                const { ctx } = chart;
+                ctx.save();
+                ctx.font = 'bold 11px Inter, sans-serif';
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                const isDarkTheme = currentTheme === 'dark';
+                ctx.fillStyle = isDarkTheme ? '#F8FAFC' : '#0F172A';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+
+                chart.data.datasets.forEach((dataset, i) => {
+                    const meta = chart.getDatasetMeta(i);
+                    meta.data.forEach((bar, index) => {
+                        const value = dataset.data[index];
+                        if (value !== undefined && value !== null) {
+                            const formattedValue = formatCurrencyShorthand(value);
+                            ctx.fillText(formattedValue, bar.x + 8, bar.y);
+                        }
+                    });
+                });
+                ctx.restore();
+            }
+        };
+
         leaderboardChart = new Chart(ctx, {
             type: 'bar',
+            plugins: [barLabelsPlugin],
             data: {
                 labels: [],
                 datasets: [{
@@ -38,6 +77,11 @@ $(document).ready(function () {
                 indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        right: 45
+                    }
+                },
                 plugins: {
                     legend: { show: false },
                     tooltip: {

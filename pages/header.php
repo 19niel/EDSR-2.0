@@ -24,7 +24,7 @@
             <span style="background:var(--primary);border-radius:6px;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
                 <i class="fa-solid fa-chart-line" style="color:#fff;font-size:0.75rem;"></i>
             </span>
-            <span class="navbar-brand">E-DSR</span>
+            <span class="navbar-brand">E-DSR 2.0</span>
         </a>
 
         <div class="d-flex align-items-center gap-2 d-lg-none ms-auto me-2">

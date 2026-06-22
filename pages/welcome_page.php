@@ -116,7 +116,7 @@ include ('../php/managerList.php');
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4">
-                            <div class="row">
+                            <div class="row gy-1">
                                 <!-- Metric Counter Cards — themed via sidebar.css .mini-btns rules -->
                                 <div class="col-12 mini-btns">
                                     <div class="card p-2">
