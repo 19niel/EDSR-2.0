@@ -63,11 +63,11 @@ function fetchData(encodedId) {
 // Function to prefill the form with the fetched data
 function prefillForm(data) {
   console.log("Prefilling data:", data); // Log the data for debugging
-  
+
   document.getElementById("accountName").value = data.accName || "";
   document.getElementById("arsExpiryDate").value = data.arsExpiryDate || "";
   document.getElementById("address").value = data.address || "";
-  
+
   // FIXED: Handle Contact Information Array Inputs safely using Query Selectors
   const cpInput = document.querySelector('input[name="contactPerson[]"]');
   if (cpInput) cpInput.value = data.contactPerson || "";
@@ -85,7 +85,7 @@ function prefillForm(data) {
   document.getElementById("dmEmail").value = data.decisionMakerEmail || "";
   document.getElementById("decisionMaker").value = data.decisionMaker || "";
   document.getElementById("dmDesignation").value = data.dmDesignation || "";
-  
+
   // Project & Pricing Data Fields
   document.getElementById("proposedPrice").value = data.proposedPrice || "";
   document.getElementById("whatTranspired").value = data.whatTranspired || "";
@@ -208,7 +208,7 @@ function prefillForm(data) {
 
       // Retry logic until subcategory is present
       let attempts = 0;
-      const maxAttempts = 30; 
+      const maxAttempts = 30;
       const retryInterval = setInterval(() => {
         const subcatOptions = Array.from(subcatSelect.options).map((opt) => opt.value);
         if (subcatOptions.includes(targetSubcat)) {
@@ -230,16 +230,16 @@ function prefillForm(data) {
     const adminState = document.getElementById('isAdminEdit') ? document.getElementById('isAdminEdit').value : "false";
     if (adminState === "true") {
       var allControls = document.querySelectorAll('#editEncodeForm input, #editEncodeForm select, #editEncodeForm textarea');
-      allControls.forEach(function(el) {
+      allControls.forEach(function (el) {
         el.disabled = false;
         el.removeAttribute('disabled');
         el.classList.remove('disabled');
       });
       var actionBtns = document.querySelectorAll('#editEncodeForm button, .add-product-btn, .remove-product-btn');
-      actionBtns.forEach(function(btn) {
+      actionBtns.forEach(function (btn) {
         btn.disabled = false;
         btn.removeAttribute('disabled');
       });
     }
-  }, 500); 
+  }, 500);
 }
