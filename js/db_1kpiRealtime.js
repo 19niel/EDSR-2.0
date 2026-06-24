@@ -28,9 +28,9 @@ function formatCurrencyShorthand(value) {
 }
 
 function updateSalesMeterRealtime() {
-    const targetGoal = window.dashboardConfig && window.dashboardConfig.salesTarget 
-                       ? window.dashboardConfig.salesTarget 
-                       : 5000000.00;
+    const targetGoal = window.dashboardConfig && window.dashboardConfig.salesTarget
+        ? window.dashboardConfig.salesTarget
+        : 5000000.00;
 
     // 🎯 Dynamically reads whatever option PHP selected automatically on page boot
     const monthFilterEl = document.getElementById('kpiMonthFilter');
@@ -41,12 +41,12 @@ function updateSalesMeterRealtime() {
         .then(res => {
             if (res && res.success) {
                 const totalSales = res.totalSales;
-                
+
                 let percentage = (totalSales / targetGoal) * 100;
                 let cappedPercentage = Math.min(percentage, 200);
 
                 let needleRotation = -90 + (cappedPercentage * 1.125);
-                let fillSweepDegrees = cappedPercentage * 1.125; 
+                let fillSweepDegrees = cappedPercentage * 1.125;
 
                 const bodyEl = document.querySelector('.gauge-body');
                 const needleEl = document.querySelector('.gauge-needle');
@@ -63,12 +63,12 @@ function updateSalesMeterRealtime() {
 
                 bodyEl.style.setProperty('--body-fill-sweep', `${fillSweepDegrees}deg`);
                 needleEl.style.transform = `translateX(-50%) rotate(${needleRotation}deg)`;
-                
+
                 if (displayValueEl) {
                     displayValueEl.innerHTML = `${percentage.toFixed(1)}%`;
                 }
                 if (textMetricEl) {
-                    textMetricEl.innerHTML = `Won Amount: <strong>₱${totalSales.toLocaleString('en-US', {minimumFractionDigits: 2})}</strong> / ₱${targetGoal.toLocaleString('en-US', {maximumFractionDigits: 0})}`;
+                    textMetricEl.innerHTML = `EMR Amount: <strong>₱${totalSales.toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong> / ₱${targetGoal.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
                 }
 
                 if (displayValueEl) displayValueEl.className = "gauge-value-display";

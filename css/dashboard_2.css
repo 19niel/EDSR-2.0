@@ -1,0 +1,46 @@
+/* ==========================================================================
+   HIGH-DENSITY COMPACT OVERRIDES FOR 3x2 MATRIX DESIGN
+   ========================================================================== */
+
+/* Shave off internal layout margins to recover vertical viewport real estate */
+.main-content-card {
+    padding: 0.85rem 1rem !important;
+    /* Tightens core component padding profile */
+}
+
+/* Hard structural constraints to squeeze the Sales Meter */
+:root {
+    --gauge-size: 65cqw !important;
+    --gauge-max-size: 200px !important;
+    /* Keeps the gauge compact on all widths */
+}
+
+.gauge-outer-container {
+    margin: 5px auto !important;
+    /* Eliminates blank white margins */
+}
+
+/* Bring down the custom data table heights to ensure Row 2 elements align perfectly with Row 1 */
+.won-table-container,
+.aging-table-container {
+    height: 140px !important;
+    /* Locks rows into identical alignments */
+    min-height: 140px !important;
+}
+
+/* Ensure ChartJS canvas contexts don't blow past their grid columns */
+.pipeline-container[style*="min-height: 280px;"] {
+    min-height: 180px !important;
+    /* Lowers total viewport space usage */
+}
+
+/* Ensure the leaderboard wrapper aligns with table row layouts */
+.d-flex.flex-column.justify-content-center.flex-grow-1.position-relative[style*="min-height: 250px;"] {
+    min-height: 180px !important;
+}
+
+/* Tighten divider rules */
+hr.my-2 {
+    margin-top: 0.4rem !important;
+    margin-bottom: 0.4rem !important;
+}

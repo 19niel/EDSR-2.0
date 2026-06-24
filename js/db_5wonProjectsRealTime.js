@@ -11,19 +11,19 @@ $(document).ready(function () {
     // 🎯 Compact value abbreviator to stop text breaks or horizontal overflows
     function formatShortCurrency(value) {
         if (value === 0) return '₱0';
-        
+
         const symbols = [
             { value: 1E6, suffix: 'M' },
             { value: 1E3, suffix: 'K' }
         ];
-        
+
         for (let i = 0; i < symbols.length; i++) {
             if (value >= symbols[i].value) {
                 // Returns ₱1M or ₱12.3K without breaking width containers
                 return '₱' + (value / symbols[i].value).toFixed(value % symbols[i].value === 0 ? 0 : 1) + symbols[i].suffix;
             }
         }
-        
+
         return new Intl.NumberFormat('en-PH', {
             style: 'currency',
             currency: 'PHP',
@@ -33,14 +33,14 @@ $(document).ready(function () {
 
     function fetchWonProjectTableMetrics(selectedMonth = 'current') {
         $.ajax({
-            url: '../php/get_5wonProjectsData.php', 
+            url: '../php/get_5wonProjectsData.php',
             type: 'GET',
             data: { month: selectedMonth },
             dataType: 'json',
             success: function (response) {
                 if (response && response.success) {
                     allWonDataCache = response.data;
-                    currentTablePage = 1; 
+                    currentTablePage = 1;
                     displayPaginatedTableRows();
                 } else {
                     console.error("[Won Table Engine] Server Exception:", response.error_message);
@@ -114,7 +114,7 @@ $(document).ready(function () {
         const $buttonsContainer = $('#won-table-pagination-buttons');
         $buttonsContainer.empty();
 
-        if (totalPages <= 1) return; 
+        if (totalPages <= 1) return;
 
         // Previous Button
         const prevDisabled = currentTablePage === 1 ? 'disabled' : '';

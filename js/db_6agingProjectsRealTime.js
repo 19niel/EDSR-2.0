@@ -10,22 +10,22 @@ $(document).ready(function () {
 
     function fetchAgingProjectMetrics() {
         $.ajax({
-            url: '../php/get_6agingProjectsData.php', 
+            url: '../php/get_6agingProjectsData.php',
             type: 'GET',
             dataType: 'json',
             success: function (response) {
                 if (response && response.success) {
                     allAgingDataCache = response.data;
-                    currentTablePage = 1; 
+                    currentTablePage = 1;
                     displayPaginatedTableRows();
                 } else {
                     console.error("[Aging Table Engine] Server Exception:", response.error_message);
-                    $('#aging-projects-table-body').html('<tr><td colspan="3" class="text-center text-danger py-2">Error loading rows</td></tr>');
+                    $('#aging-projects-table-body').html('<tr><td colspan="3" class="text-center text-danger py-3">Error loading rows</td></tr>');
                 }
             },
             error: function (xhr, status, error) {
                 console.error("[Aging Table Engine] Connection failure:", error);
-                $('#aging-projects-table-body').html('<tr><td colspan="3" class="text-center text-danger py-2">Connection Error</td></tr>');
+                $('#aging-projects-table-body').html('<tr><td colspan="3" class="text-center text-danger py-3">Connection Error</td></tr>');
             }
         });
     }
@@ -37,58 +37,54 @@ $(document).ready(function () {
         const totalRecords = allAgingDataCache.length;
 
         if (totalRecords === 0) {
-            $tbody.html('<tr><td colspan="3" class="text-center text-muted py-3">No aging records found.</td></tr>');
+            $tbody.html('<tr><td colspan="3" class="text-center py-4 text-muted">No aging accounts found matching current thresholds.</td></tr>');
             $('#aging-table-pagination-info').text('Showing 0-0 of 0');
-            setupPaginationInterfaceButtons(0);
+            $('#aging-table-pagination-controls').empty();
             return;
         }
 
         const totalPages = Math.ceil(totalRecords / recordsPerPage);
         if (currentTablePage > totalPages) currentTablePage = totalPages;
-        if (currentTablePage < 1) currentTablePage = 1;
 
         const startIndex = (currentTablePage - 1) * recordsPerPage;
         const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
+        const paginatedData = allAgingDataCache.slice(startIndex, endIndex);
 
-        const pageData = allAgingDataCache.slice(startIndex, endIndex);
-
-        // 🎯 Injected dynamic row reference pointer pathways targeting editEncode profiles using item.LID
-        pageData.forEach(item => {
-            const targetUrl = `editEncode.php?id=${item.LID}`;
-            const rowHtml = `
-                <tr style="cursor: pointer;">
-                    <td class="py-1 fw-bold">
-                        <a href="${targetUrl}" class="text-decoration-none d-block text-danger">
-                            #${item.LID}
+        // Build HTML output to match segment 5
+        let rowsHtml = '';
+        $.each(paginatedData, function (index, item) {
+            rowsHtml += `
+                <tr>
+                    <td class="fw-semibold text-dark">
+                        <a href="/e-dsr/pages/editEncode.php?id=${encodeURIComponent(item.id)}" class="text-decoration-none text-danger border-bottom border-danger border-opacity-10 pb-0.5">
+                            ${item.LID}
                         </a>
                     </td>
-                    <td class="py-1">
-                        <a href="${targetUrl}" class="text-decoration-none d-block">
-                            <div class="text-ellipsis-aging text-dark" title="${item.accName}">${item.accName}</div>
-                        </a>
+                    <td>
+                        <div class="text-ellipsis-aging fw-medium text-secondary" title="${item.accName}">
+                            ${item.accName}
+                        </div>
                     </td>
-                    <td class="py-1 text-end text-nowrap">
-                        <a href="${targetUrl}" class="text-decoration-none d-block text-muted" style="font-size: 0.68rem;">
-                            <i class="fa-regular fa-calendar me-1"></i>${item.progressDate}
-                        </a>
+                    <td class="text-end text-muted font-monospace" style="font-size: 0.70rem;">
+                        ${item.progressDate}
                     </td>
-                </tr>
-            `;
-            $tbody.append(rowHtml);
+                </tr>`;
         });
 
-        // Track pagination text parameters
+        $tbody.html(rowsHtml);
+
+        // Render dynamic context values matching segment 5 strings
         $('#aging-table-pagination-info').text(`Showing ${startIndex + 1}-${endIndex} of ${totalRecords}`);
-        setupPaginationInterfaceButtons(totalPages);
+        renderPaginationButtons(totalPages);
     }
 
-    function setupPaginationInterfaceButtons(totalPages) {
-        const $buttonsContainer = $('#aging-table-pagination-buttons');
+    function renderPaginationButtons(totalPages) {
+        const $buttonsContainer = $('#aging-table-pagination-controls');
         $buttonsContainer.empty();
 
-        if (totalPages <= 1) return; 
+        if (totalPages <= 1) return;
 
-        // Previous Arrow
+        // Previous Arrow Link
         const prevDisabled = currentTablePage === 1 ? 'disabled' : '';
         const $prevBtn = $(`<li class="page-item ${prevDisabled}"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>`);
         if (currentTablePage > 1) {
@@ -100,11 +96,11 @@ $(document).ready(function () {
         }
         $buttonsContainer.append($prevBtn);
 
-        // Active page count state view badge
+        // Active page indicator count view
         const $currentIndicator = $(`<li class="page-item active"><span class="page-link py-0.5">${currentTablePage}/${totalPages}</span></li>`);
         $buttonsContainer.append($currentIndicator);
 
-        // Next Arrow
+        // Next Arrow Link
         const nextDisabled = currentTablePage === totalPages ? 'disabled' : '';
         const $nextBtn = $(`<li class="page-item ${nextDisabled}"><a class="page-link" href="#" aria-label="Next">&raquo;</a></li>`);
         if (currentTablePage < totalPages) {
@@ -117,9 +113,11 @@ $(document).ready(function () {
         $buttonsContainer.append($nextBtn);
     }
 
-    // Initialize layout population immediately on execution load loop
+    // Run immediately on page load
     fetchAgingProjectMetrics();
 
-    // Standard engine connection for dashboard background poll executions
-    window.refreshAgingProjectsTable = fetchAgingProjectMetrics;
+    // Standard engine binding connection for real-time dashboard poll cycles
+    window.refreshAgingProjectsTable = function () {
+        fetchAgingProjectMetrics();
+    };
 });

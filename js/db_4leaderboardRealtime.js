@@ -32,17 +32,16 @@ $(document).ready(function () {
         const theme = document.documentElement.getAttribute('data-theme') || 'light';
         const isDark = theme === 'dark';
         const textColor = isDark ? '#F8FAFC' : '#0F172A';
-        const gridColor = isDark ? 'rgba(248, 250, 252, 0.05)' : 'rgba(15, 23, 42, 0.05)';
 
+        /* 🎯 RE-ADDED PLUGIN: Custom text rendering to show values on the right edge of bars */
         const barLabelsPlugin = {
             id: 'barLabels',
             afterDatasetsDraw(chart) {
                 const { ctx } = chart;
                 ctx.save();
-                ctx.font = 'bold 11px Inter, sans-serif';
+                ctx.font = 'bold 10px Inter, sans-serif';
                 const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-                const isDarkTheme = currentTheme === 'dark';
-                ctx.fillStyle = isDarkTheme ? '#F8FAFC' : '#0F172A';
+                ctx.fillStyle = currentTheme === 'dark' ? '#F8FAFC' : '#0F172A';
                 ctx.textAlign = 'left';
                 ctx.textBaseline = 'middle';
 
@@ -52,7 +51,8 @@ $(document).ready(function () {
                         const value = dataset.data[index];
                         if (value !== undefined && value !== null) {
                             const formattedValue = formatCurrencyShorthand(value);
-                            ctx.fillText(formattedValue, bar.x + 8, bar.y);
+                            /* Adds a crisp 6px offset past the edge of the horizontal bar fill */
+                            ctx.fillText(formattedValue, bar.x + 6, bar.y);
                         }
                     });
                 });
@@ -62,51 +62,64 @@ $(document).ready(function () {
 
         leaderboardChart = new Chart(ctx, {
             type: 'bar',
-            plugins: [barLabelsPlugin],
+            plugins: [barLabelsPlugin], // Activated the tracking labels plugin
             data: {
                 labels: [],
                 datasets: [{
-                    label: '', // Volume PHP
+                    label: 'Amount',
                     data: [],
-                    backgroundColor: '#0d6efd',
-                    borderRadius: 4,
-                    barThickness: 24,
+                    backgroundColor: 'rgba(13, 110, 253, 0.85)',
+                    borderColor: '#0d6efd',
+                    borderWidth: 0,
+                    borderRadius: 3,
+                    borderSkipped: false,
+                    barThickness: 12
                 }]
             },
             options: {
-                indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: false,
+                indexAxis: 'y',
                 layout: {
                     padding: {
-                        right: 45
-                    }
-                },
-                plugins: {
-                    legend: { show: false },
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                return formatShortCurrency(context.raw);
-                            }
-                        }
+                        top: 4,
+                        bottom: 4,
+                        left: 8, // Ample room on the left to avoid names clipping out
+                        right: 40 // Safe zone clearance buffer to stop shorthand numbers from hitting the right edge
                     }
                 },
                 scales: {
                     x: {
-                        beginAtZero: true,
                         display: false,
                         grid: { display: false }
                     },
                     y: {
-                        grid: {
-                            display: true,
-                            color: gridColor,
-                            drawBorder: false,
-                        },
+                        grid: { display: false },
+                        border: { display: false },
                         ticks: {
                             color: textColor,
-                            font: { family: 'Inter', size: 11, weight: '600' }
+                            mirror: false,
+                            padding: 4,
+                            font: {
+                                fontFamily: 'Inter, sans-serif',
+                                size: 9,
+                                weight: '600'
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: isDark ? '#1E293B' : '#FFFFFF',
+                        titleColor: isDark ? '#F8FAFC' : '#0F172A',
+                        bodyColor: isDark ? '#CBD5E1' : '#475569',
+                        borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function (context) {
+                                return ' Total Pipeline: ' + formatShortCurrency(context.raw);
+                            }
                         }
                     }
                 }
@@ -114,17 +127,15 @@ $(document).ready(function () {
         });
     }
 
-    function fetchLeaderboardMetrics(selectedMonth = 'current') {
+    function fetchLeaderboardMetrics(month) {
         $.ajax({
             url: '../php/get_4LeaderboardData.php',
             type: 'GET',
-            data: { month: selectedMonth },
+            data: { month: month },
             dataType: 'json',
             success: function (response) {
                 if (response && response.success) {
                     renderLeaderboardLayout(response.data);
-                } else {
-                    console.error("[Leaderboard Engine] Execution exception:", response.error_message);
                 }
             },
             error: function (xhr, status, error) {
@@ -168,10 +179,12 @@ $(document).ready(function () {
         if (leaderboardChart) {
             const isDark = e.detail.theme === 'dark';
             leaderboardChart.options.scales.y.ticks.color = isDark ? '#F8FAFC' : '#0F172A';
-            leaderboardChart.options.scales.y.grid.color = isDark ? 'rgba(248, 250, 252, 0.05)' : 'rgba(15, 23, 42, 0.05)';
             leaderboardChart.update();
         }
     });
 
-    window.refreshLeaderboard = fetchLeaderboardMetrics;
+    setInterval(function () {
+        const pickedMonth = $('#kpiMonthFilter').val() || 'current';
+        fetchLeaderboardMetrics(pickedMonth);
+    }, 5000);
 });

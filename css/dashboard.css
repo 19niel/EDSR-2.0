@@ -4,21 +4,38 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   DYNAMIC SEMI-CIRCULAR KPI SALES GAUGE
+   DYNAMIC FLUID SEMI-CIRCULAR KPI SALES GAUGE (RESPONSIVE VARIANT)
    -------------------------------------------------------------------------- */
 
-/* Registers the custom property so CSS transitions understand degree shifts */
 @property --body-fill-sweep {
     syntax: '<angle>';
     inherits: false;
     initial-value: 0deg;
 }
 
+/* Master container definition mapping sizing bounds to parent container scale */
+:root {
+    /* 🎯 TO MAKE IT SMALLER: Decrease these baseline scale targets */
+    --gauge-size: 65cqw;
+    /* Default was 85cqw. Try 60cqw - 70cqw */
+    --gauge-max-size: 260px;
+    /* Default was 380px. Caps it from scaling too large */
+}
+
+.gauge-outer-container {
+    position: relative;
+    width: var(--gauge-size);
+    max-width: var(--gauge-max-size);
+    /* Aspect ratio technique guarantees height remains perfectly half of its active width context */
+    aspect-ratio: 2 / 1;
+    margin: 15px auto;
+}
+
 /* Base structural wrapper — masks bottom half of the circle */
 .gauge-wrapper {
     position: relative;
-    width: 240px;
-    height: 120px;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     margin: 0;
 }
@@ -28,14 +45,15 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 240px;
-    height: 240px;
+    width: 100%;
+    height: 200%;
+    /* Spans 2x height bound to form complete background circle footprint */
     border-radius: 50%;
     background: conic-gradient(from 270deg,
-        var(--bar-color, #dc3545) 0deg,
-        var(--bar-color, #dc3545) var(--body-fill-sweep, 0deg),
-        var(--gauge-track-bg, #dee2e6) var(--body-fill-sweep, 0deg),
-        var(--gauge-track-bg, #dee2e6) 360deg);
+            var(--bar-color, #dc3545) 0deg,
+            var(--bar-color, #dc3545) var(--body-fill-sweep, 0deg),
+            var(--gauge-track-bg, #dee2e6) var(--body-fill-sweep, 0deg),
+            var(--gauge-track-bg, #dee2e6) 360deg);
     box-sizing: border-box;
     z-index: 1;
     transition: --body-fill-sweep 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -47,21 +65,24 @@
     top: 0;
     left: 50%;
     width: 4px;
-    height: 24px;
+    height: 30%;
+    /* Scales dynamically as a percentage of overall gauge footprint depth */
     background: var(--gauge-label, #212529);
-    transform-origin: 50% 120px;
+    transform-origin: 50% calc(var(--gauge-size) / 2);
     transform: translateX(-50%) rotate(22.5deg);
     z-index: 4;
 }
 
-/* Floating label above target line */
+/* Target notch value label text modifications */
 .gauge-target-line::after {
     content: attr(data-target);
     position: absolute;
-    top: -24px;
+    top: -18px;
+    /* Pulled closer from -22px to balance smaller sizes */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    /* Shrunk down slightly from 0.8rem */
     font-weight: 700;
     color: var(--gauge-label, #212529);
     white-space: nowrap;
@@ -71,10 +92,12 @@
 .gauge-body::before {
     content: "";
     position: absolute;
-    top: 24px;
-    left: 24px;
-    width: 192px;
-    height: 192px;
+    /* Mask offsets are built as percentage thicknesses, tracking uniformly across fluid layout widths */
+    top: 9%;
+    left: 9%;
+    width: 82%;
+    /* Calculates remaining interior track area dynamically (100% - 18% paths) */
+    height: 82%;
     border-radius: 50%;
     background: var(--gauge-inner-bg, #ffffff);
     z-index: 3;
@@ -86,7 +109,8 @@
     bottom: 0;
     left: 50%;
     width: 4px;
-    height: 110px;
+    height: 94%;
+    /* Extends pointer tracking arc path line accurately along responsive diameter */
     background: var(--gauge-needle, #212529);
     border-radius: 2px;
     transform-origin: 50% 100%;
@@ -95,51 +119,65 @@
     z-index: 5;
 }
 
-/* Center Pin Cap */
+/* Center Pin Axle Cap Adjustment */
 .gauge-center-cap {
     position: absolute;
-    bottom: -10px;
+    bottom: -8px;
+    /* Position adjustment for small gauges */
     left: 50%;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    /* Shrunk cap from 22px to keep proportions looking sharp */
+    height: 16px;
     background: var(--gauge-cap, #212529);
     border-radius: 50%;
     transform: translateX(-50%);
     z-index: 6;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Digital Percentage Display */
+/* Digital Percentage Display text adjustments */
 .gauge-value-display {
-    font-size: 1.8rem;
+    font-size: calc(1rem + 0.5cqw);
+    /* Fluid typography scales text size smoothly based on card width */
     font-weight: 700;
-    margin-top: 15px;
+    margin-top: 12px;
     line-height: 1;
     transition: color 0.4s ease;
     color: var(--text-primary);
 }
 
 /* Font Accent Colors for gauge state */
-.text-state-low  { color: #dc3545 !important; }
-.text-state-mid  { color: #fd7e14 !important; }
-.text-state-high { color: var(--success, #198754) !important; }
+.text-state-low {
+    color: #dc3545 !important;
+}
+
+.text-state-mid {
+    color: #fd7e14 !important;
+}
+
+.text-state-high {
+    color: var(--success, #198754) !important;
+}
 
 /* ==========================================================================
-   PIPELINE FUNNEL COMPONENT
+   PIPELINE FUNNEL COMPONENT (FLUID & UPSCALED)
    ========================================================================== */
 
 .funnel-row-wrapper {
     position: relative;
     width: 100%;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    /* Slightly increased separation spacing */
 }
 
 /* Base Track */
+/* UPSCALED & RESPONSIVE: Increased base track thickness using container width context */
 .funnel-bar-track {
     position: relative;
-    height: 30px;
+    height: calc(28px + 1.5cqw);
+    /* Dynamic height scales up gracefully on larger screens */
     background-color: var(--surface-muted, #d4d5d6);
-    border-radius: 4px !important;
+    border-radius: 6px !important;
+    /* Slightly smoother rounded corners */
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -153,13 +191,28 @@
     border-radius: 0px !important;
 }
 
-.bg-funnel-qualified   { background-color: #3B82F6 !important; }
-.bg-funnel-negotiation { background-color: #06B6D4 !important; }
-.bg-funnel-won         { background-color: #16A34A !important; }
-.bg-funnel-lost        { background-color: #EF4444 !important; }
-.bg-funnel-dropped     { background-color: #6B7280 !important; }
+.bg-funnel-qualified {
+    background-color: #3B82F6 !important;
+}
+
+.bg-funnel-negotiation {
+    background-color: #06B6D4 !important;
+}
+
+.bg-funnel-won {
+    background-color: #16A34A !important;
+}
+
+.bg-funnel-lost {
+    background-color: #EF4444 !important;
+}
+
+.bg-funnel-dropped {
+    background-color: #6B7280 !important;
+}
 
 /* Text overlay on bars */
+/* UPSCALED & RESPONSIVE: Lifted font size from 0.72rem to fluid sizing scales */
 .funnel-text-overlay {
     position: absolute;
     top: 0;
@@ -171,15 +224,16 @@
     align-items: center;
     z-index: 3;
     color: #f5f5f5;
-    font-size: 0.72rem;
+    font-size: calc(0.8rem + 0.3cqw);
+    /* Scaled up typography for clarity */
     font-weight: 700;
     pointer-events: none;
-    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.9);
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.9);
 }
 
 /* Legend */
 .funnel-legend-container {
-    padding-top: 10px;
+    padding-top: 14px;
     border-top: 1px dashed var(--border-color, #e9ecef);
 }
 
@@ -187,22 +241,25 @@
     display: flex;
     justify-content: center;
     gap: 1.5em;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
+/* UPSCALED & RESPONSIVE: Boosted legend labels font profile */
 .funnel-legend-item {
     display: flex;
     align-items: center;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: calc(0.8rem + 0.2cqw);
+    /* Dynamic scaling legend fonts */
+    font-weight: 700;
     color: var(--text-secondary, #6c757d);
 }
 
+/* UPSCALED: Enlarged color indicator markers to balance text weights */
 .legend-square {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    margin-right: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 6px;
     flex-shrink: 0;
 }
 
@@ -236,7 +293,7 @@
     stroke-width: 8.5;
     transform-origin: 50px 50px;
     transition: stroke-dasharray 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Individual segment rotations */
@@ -247,9 +304,17 @@
 }
 
 /* Team Color Mappings */
-#donut-track-makati { stroke: #30885f !important; }
-#donut-track-qc     { stroke: #3B82F6 !important; }
-#donut-track-manila { stroke: #ffc107 !important; }
+#donut-track-makati {
+    stroke: #30885f !important;
+}
+
+#donut-track-qc {
+    stroke: #3B82F6 !important;
+}
+
+#donut-track-manila {
+    stroke: #ffc107 !important;
+}
 
 /* Center metric display */
 .donut-center-metric {
@@ -326,8 +391,15 @@
    WON PROJECTS TABLE (5_wonProjects.php)
    ========================================================================== */
 
-.won-table-fontSize { font-size: 0.70rem !important; }
-.won-table-container { height: 165px; overflow-y: auto; }
+.won-table-fontSize {
+    font-size: 0.70rem !important;
+}
+
+.won-table-container {
+    height: 165px;
+    overflow-y: auto;
+}
+
 .text-ellipsis-won {
     max-width: 95px;
     white-space: nowrap;
@@ -353,8 +425,14 @@
    AGING PROJECTS TABLE (6_agingProjects.php)
    ========================================================================== */
 
-.aging-table-fontSize { font-size: 0.70rem !important; }
-.aging-table-container { min-height: 165px; }
+.aging-table-fontSize {
+    font-size: 0.70rem !important;
+}
+
+.aging-table-container {
+    min-height: 165px;
+}
+
 .text-ellipsis-aging {
     max-width: 145px;
     white-space: nowrap;
@@ -386,6 +464,7 @@
 #aging-projects-table-body tr {
     transition: background-color 0.15s ease-in-out;
 }
+
 #aging-projects-table-body tr:hover {
     background-color: rgba(239, 68, 68, 0.06) !important;
 }

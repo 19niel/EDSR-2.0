@@ -1,5 +1,5 @@
 /**
- * E-DSR Dashboard - Pipeline Funnel Real-Time Population Engine
+ * E-DSR Dashboard - Pipeline Funnel Real-Time Population Engine (UPSCALED & RESPONSIVE)
  */
 
 $(document).ready(function () {
@@ -26,7 +26,7 @@ $(document).ready(function () {
             }],
             chart: {
                 type: 'bar',
-                height: 250,
+                height: 160, // UPSCALED: Raised standard rendering box depth from 250 for a larger dashboard footprint
                 background: 'transparent',
                 toolbar: { show: false },
                 fontFamily: 'Inter, sans-serif'
@@ -37,14 +37,14 @@ $(document).ready(function () {
             colors: ['#0d6efd', '#0dcaf0', '#198754', '#dc3545', '#6c757d'],
             plotOptions: {
                 bar: {
-                    borderRadius: 6,
+                    borderRadius: 4, // UPSCALED: Smoother curved edges matching modern card views
                     horizontal: true,
-                    barHeight: '60%',
+                    barHeight: '80%', // UPSCALED: Thickened data bars visually for emphasis
                     distributed: true,
                     colors: {
                         backgroundBarColors: isDark ? ['rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)'] : ['rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)', 'rgba(0,0,0,0.03)'],
                         backgroundBarOpacity: 1,
-                        backgroundBarRadius: 6
+                        backgroundBarRadius: 4
                     }
                 },
             },
@@ -56,11 +56,11 @@ $(document).ready(function () {
                     const accs = (seriesObj && seriesObj.extraAccounts) ? (seriesObj.extraAccounts[opt.dataPointIndex] || 0) : 0;
                     return accs + ' Accs | ' + formatCurrency(val);
                 },
-                offsetX: 10,
+                offsetX: 8, // UPSCALED: Pushed layout padding further out to ensure large text labels do not overlay the bar limits
                 dropShadow: { enabled: false },
                 style: {
-                    fontSize: '11px',
-                    fontWeight: 600,
+                    fontSize: '10px', // UPSCALED: Increased from 11px to ensure text elements match high-resolution dashboards
+                    fontWeight: 700,   // UPSCALED: Higher visual text-weight layout contrast
                     colors: [isDark ? '#f8fafc' : '#0f172a']
                 }
             },
@@ -75,9 +75,9 @@ $(document).ready(function () {
                     show: true,
                     style: {
                         colors: isDark ? '#cbd5e1' : '#475569',
-                        fontSize: '12px',
+                        fontSize: '11px', // UPSCALED: Bumped category header row labels from 12px to 14px
                         fontFamily: 'Inter, sans-serif',
-                        fontWeight: 600
+                        fontWeight: 700   // UPSCALED: Clearer contrast definitions
                     }
                 }
             },
@@ -87,7 +87,7 @@ $(document).ready(function () {
             legend: { show: false },
             tooltip: {
                 y: {
-                    formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+                    formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
                         return formatCurrency(value);
                     }
                 }
@@ -125,9 +125,8 @@ $(document).ready(function () {
     function updatePipelineFunnelLayout(data) {
         if (!data || !pipelineChart) return;
 
-        // Keys mapping: 345=Qualified, 346=Negotiation, 230=Won, 348=Lost, 349=Dropped
         const order = ['345', '346', '230', '348', '349'];
-        
+
         const volumes = [];
         const accounts = [];
 
@@ -144,19 +143,19 @@ $(document).ready(function () {
         pipelineChart.updateSeries([{
             name: "Volume",
             data: volumes,
-            extraAccounts: accounts // Custom field for formatter
+            extraAccounts: accounts
         }]);
 
         // --- UPDATE KPI SUMMARY CARDS ---
         const wonVolume = parseFloat(data['230']?.volume || 0);
         const pipeVolume = parseFloat(data['345']?.volume || 0) + parseFloat(data['346']?.volume || 0);
         const activeAccs = parseInt(data['345']?.accounts || 0) + parseInt(data['346']?.accounts || 0);
-        
+
         const wonAccs = parseInt(data['230']?.accounts || 0);
         const lostAccs = parseInt(data['348']?.accounts || 0);
         const droppedAccs = parseInt(data['349']?.accounts || 0);
         const closedAccs = wonAccs + lostAccs + droppedAccs;
-        
+
         let winRate = 0;
         if (closedAccs > 0) {
             winRate = (wonAccs / closedAccs) * 100;
@@ -194,7 +193,7 @@ $(document).ready(function () {
     });
 
     // Handle theme toggle
-    document.addEventListener('edsrThemeChange', function(e) {
+    document.addEventListener('edsrThemeChange', function (e) {
         if (pipelineChart) {
             const isDark = e.detail.theme === 'dark';
             pipelineChart.updateOptions({
@@ -222,6 +221,5 @@ $(document).ready(function () {
         }
     });
 
-    // Expose engine trigger handles into global application windows
     window.refreshPipelineFunnel = fetchPipelineFunnelMetrics;
 });

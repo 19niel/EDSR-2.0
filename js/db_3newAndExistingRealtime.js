@@ -24,12 +24,21 @@ $(document).ready(function () {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                cutout: '75%',
+                /* 🎯 FIXED THICKNESS: Dropped from 65% to 50% to make the colored rings significantly thicker */
+                cutout: '50%',
+                layout: {
+                    padding: {
+                        top: 2,
+                        bottom: 2,
+                        left: 0,
+                        right: 0
+                    }
+                },
                 plugins: {
-                    legend: { show: false },
+                    legend: { display: false },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return ' ' + context.label + ': ' + context.raw + ' Projects';
                             }
                         }

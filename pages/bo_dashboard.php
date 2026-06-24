@@ -49,6 +49,7 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
     <link rel="stylesheet" href="../css/table.css">
     <link rel="stylesheet" href="../css/search.css">
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/dashboard_2.css">
 
     <title>E-DSR — BO Dashboard</title>
 </head>
@@ -59,9 +60,9 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
         <div class="row">
             <main class="col-12 col-xl-11 mx-auto">
                 
-                <div class="d-flex justify-content-between align-items-center pb-4 mb-4 border-bottom flex-wrap gap-3">
+                <div class="d-flex justify-content-between align-items-center pb-2 mb-2 border-bottom flex-wrap gap-3">
                     <div>
-                        <h3 class="m-0 fw-bold tracking-tight" style="color:var(--text-primary);">BO Dashboard</h3>
+                        <h5 class="m-0 fw-bold tracking-tight" style="color:var(--text-primary);">BO Dashboard</h5>
                         <p class="small m-0 mt-1" style="color:var(--text-secondary);">Real-time digitalization metric matrices and operational performance summary data logs.</p>
                     </div>
                     <div class="d-flex gap-2">
@@ -78,13 +79,19 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
 
                 <!-- KPI Summary Cards -->
                 <?php include('dashboard/0_kpiSummaryCards.php'); ?>
-
-                <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch">
+                                
+                <!-- ==========================================================================
+                FIXED 3x2 MASTER GRID ENGINE (NO-WRAP VIEWPORT ARCHITECTURE)
+                ========================================================================== -->
+                <!-- row-cols-md-2 handles tablet collapse, while row-cols-lg-3 forces a 3-wide split on desktop monitors -->
+                <div class="row g-3 row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch">
                     
+                    <!-- GRID ROW 1, SLOT 1: Sales Meter -->
                     <div class="col d-flex">
                         <?php include('dashboard/1_kpiMeter.php'); ?>
                     </div>
 
+                    <!-- GRID ROW 1, SLOT 2: Sales Meter -->
                     <div class="col d-flex">
                         <?php include('dashboard/2_pipeline.php'); ?>
                     </div>
@@ -97,6 +104,7 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
                         <?php include('dashboard/4_leaderboard.php'); ?>
                     </div>
 
+                    
                     <div class="col d-flex">
                         <?php include('dashboard/5_wonProjects.php'); ?>
                     </div>
@@ -104,7 +112,6 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
                     <div class="col d-flex">
                         <?php include('dashboard/6_agingProjects.php'); ?>
                     </div>
-
                 </div>
             </main>
         </div>
