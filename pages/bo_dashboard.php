@@ -63,7 +63,7 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
                 <div class="d-flex justify-content-between align-items-center pb-2 mb-2 border-bottom flex-wrap gap-3">
                     <div>
                         <h5 class="m-0 fw-bold tracking-tight" style="color:var(--text-primary);">BO Dashboard</h5>
-                        <p class="small m-0 mt-1" style="color:var(--text-secondary);">Data Growth Leverage for Sales Department</p>
+                        <p class="small m-0 mt-1" style="color:var(--text-secondary);">Data Generation Leverage for Sales Department</p>
                     </div>
                     <div class="d-flex gap-2">
                         <a href="../php/exportAllData.php" class="btn btn-white border border-secondary-subtle btn-light px-3 fw-medium d-flex align-items-center gap-2 shadow-sm rounded-3">
