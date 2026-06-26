@@ -5,8 +5,8 @@
 }
 /* Standardized height matching the recently won projects container */
 .aging-table-container {
-    height: 140px !important;
-    max-height: 140px !important;
+    height: 165px !important;
+    max-height: 165px !important;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -70,7 +70,7 @@
             <thead class="table-light text-secondary sticky-top aging-compact-head">
                 <tr>
                     <th style="width: 25%;">LID</th>
-                    <th style="width: 50%;">Client Name</th>
+                    <th style="width: 40%;">Client Name</th>
                     <th class="text-end" style="width: 25%;">Last Update</th>
                 </tr>
             </thead>
