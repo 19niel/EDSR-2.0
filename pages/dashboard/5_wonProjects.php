@@ -8,8 +8,8 @@
 }
 /* 🎯 SCROLL FIX: Enforced clean scaling to guarantee the layout matches the template footprint */
 .won-table-container { 
-    height: 140px !important; 
-    max-height: 140px !important; 
+    height: 165px !important; 
+    max-height: 165px !important; 
     overflow-y: auto; 
     overflow-x: hidden; 
 }
