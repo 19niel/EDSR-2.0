@@ -84,7 +84,7 @@ $userRole = isset($_SESSION['category']) ? strtoupper(trim($_SESSION['category']
                 FIXED 3x2 MASTER GRID ENGINE (NO-WRAP VIEWPORT ARCHITECTURE)
                 ========================================================================== -->
                 <!-- row-cols-md-2 handles tablet collapse, while row-cols-lg-3 forces a 3-wide split on desktop monitors -->
-                <div class="row g-3 row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch">
+                <div class="row g-2 row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch">
                     
                     <!-- GRID ROW 1, SLOT 1: Sales Meter -->
                     <div class="col d-flex">

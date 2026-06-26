@@ -54,13 +54,21 @@ $(document).ready(function () {
                 formatter: function (val, opt) {
                     const seriesObj = opt.w.config.series[0];
                     const accs = (seriesObj && seriesObj.extraAccounts) ? (seriesObj.extraAccounts[opt.dataPointIndex] || 0) : 0;
-                    return accs + ' Accs | ' + formatCurrency(val);
+
+                    // 🎯 CALCULATION: Sum all account counts to get the total
+                    const totalAccs = seriesObj.extraAccounts.reduce((a, b) => a + b, 0);
+
+                    // 🎯 CALCULATION: Get percentage
+                    const percent = totalAccs > 0 ? Math.round((accs / totalAccs) * 100) : 0;
+
+                    // 🎯 OUTPUT: X Accs | Y%
+                    return accs + ' Accs | ' + percent + '%';
                 },
-                offsetX: 8, // UPSCALED: Pushed layout padding further out to ensure large text labels do not overlay the bar limits
+                offsetX: 8,
                 dropShadow: { enabled: false },
                 style: {
-                    fontSize: '10px', // UPSCALED: Increased from 11px to ensure text elements match high-resolution dashboards
-                    fontWeight: 700,   // UPSCALED: Higher visual text-weight layout contrast
+                    fontSize: '10px',
+                    fontWeight: 700,
                     colors: [isDark ? '#f8fafc' : '#0f172a']
                 }
             },
@@ -147,28 +155,36 @@ $(document).ready(function () {
         }]);
 
         // --- UPDATE KPI SUMMARY CARDS ---
-        const wonVolume = parseFloat(data['230']?.volume || 0);
-        const pipeVolume = parseFloat(data['345']?.volume || 0) + parseFloat(data['346']?.volume || 0);
-        const activeAccs = parseInt(data['345']?.accounts || 0) + parseInt(data['346']?.accounts || 0);
+        // Sum all relevant categories: 345 (Qualified), 346 (Negotiation), 230 (Won), 348 (Lost), 349 (Dropped)
+        const allIds = ['345', '346', '230', '348', '349'];
 
+        let totalVolume = 0;
+        let totalAccs = 0;
+
+        allIds.forEach(id => {
+            if (data[id]) {
+                totalVolume += parseFloat(data[id].volume || 0);
+                totalAccs += parseInt(data[id].accounts || 0);
+            }
+        });
+
+        // Specific values for cards
+        const wonVolume = parseFloat(data['230']?.volume || 0);
         const wonAccs = parseInt(data['230']?.accounts || 0);
         const lostAccs = parseInt(data['348']?.accounts || 0);
         const droppedAccs = parseInt(data['349']?.accounts || 0);
-        const closedAccs = wonAccs + lostAccs + droppedAccs;
 
-        let winRate = 0;
-        if (closedAccs > 0) {
-            winRate = (wonAccs / closedAccs) * 100;
-        }
+        const closedAccs = wonAccs + lostAccs + droppedAccs;
+        let winRate = closedAccs > 0 ? (wonAccs / closedAccs) * 100 : 0;
 
         const elTotalWon = document.getElementById('summaryTotalWon');
-        const elPipeline = document.getElementById('summaryPipeline');
-        const elActive = document.getElementById('summaryActiveAccs');
+        const elPipeline = document.getElementById('summaryPipeline'); // Displays sum of all
+        const elActive = document.getElementById('summaryActiveAccs');  // Displays sum of all
         const elWinRate = document.getElementById('summaryWinRate');
 
         if (elTotalWon) elTotalWon.innerText = formatCurrency(wonVolume);
-        if (elPipeline) elPipeline.innerText = formatCurrency(pipeVolume);
-        if (elActive) elActive.innerText = activeAccs;
+        if (elPipeline) elPipeline.innerText = formatCurrency(totalVolume); // Updated
+        if (elActive) elActive.innerText = totalAccs;                      // Updated
         if (elWinRate) elWinRate.innerText = winRate.toFixed(1) + '%';
 
         // --- UPDATE FUNNEL LEGEND GRID ---

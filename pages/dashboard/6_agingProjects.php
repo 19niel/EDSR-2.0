@@ -57,7 +57,8 @@
     <div class="w-100">
         <div class="d-flex justify-content-between align-items-center">
             <h6 class="card-title mb-0 d-flex align-items-center fw-bold text-dark text-uppercase tracking-wider" style="font-size: 0.8rem;">
-                <i class="fa-solid fa-triangle-exclamation me-2 text-danger"></i>Aging Accounts
+                <i class="fa-solid fa-triangle-exclamation me-2 text-danger"></i>
+                <span id="aging-title-text">Aging Accounts</span>
             </h6>
             <span class="badge bg-danger-subtle text-danger border px-2 py-0.5" style="font-size: 0.65rem; font-weight: 600; border-radius: 4px;">Attention Required</span>
         </div>

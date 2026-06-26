@@ -25,11 +25,11 @@ $(document).ready(function () {
                 responsive: true,
                 maintainAspectRatio: false,
                 /* 🎯 FIXED THICKNESS: Dropped from 65% to 50% to make the colored rings significantly thicker */
-                cutout: '50%',
+                cutout: '70%',
                 layout: {
                     padding: {
-                        top: 2,
-                        bottom: 2,
+                        top: 0,
+                        bottom: 0,
                         left: 0,
                         right: 0
                     }

@@ -16,11 +16,14 @@ $(document).ready(function () {
             success: function (response) {
                 if (response && response.success) {
                     allAgingDataCache = response.data;
+
+                    // 🎯 NEW: Update the title dynamically if threshold is returned
+                    if (typeof response.threshold !== 'undefined') {
+                        $('#aging-title-text').text(`Aging Accounts of (${response.threshold}) Days`);
+                    }
+
                     currentTablePage = 1;
                     displayPaginatedTableRows();
-                } else {
-                    console.error("[Aging Table Engine] Server Exception:", response.error_message);
-                    $('#aging-projects-table-body').html('<tr><td colspan="3" class="text-center text-danger py-3">Error loading rows</td></tr>');
                 }
             },
             error: function (xhr, status, error) {
