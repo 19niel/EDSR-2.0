@@ -150,6 +150,38 @@ if (isset($_POST['editEncode'])) {
         }
     }
 
+
+        if ($isAdminEdit) {
+        // 1. Delete existing product records for this ID to ensure a clean sync
+        $deleteProductSql = "DELETE FROM product_details WHERE encodedID = ?";
+        $delStmt = mysqli_prepare($conn, $deleteProductSql);
+        mysqli_stmt_bind_param($delStmt, "i", $id);
+        mysqli_stmt_execute($delStmt);
+        mysqli_stmt_close($delStmt);
+
+        // 2. Re-insert the new list of products from the form
+        $productTypes = $_POST['productType'] ?? [];
+        $subcategories = $_POST['productTypeSubcategory'] ?? [];
+        $deviceConditions = $_POST['deviceCondition'] ?? [];
+        $quantities = $_POST['quantity'] ?? [];
+
+        if (!empty($productTypes)) {
+            $productSql = "INSERT INTO product_details (encodedID, productTypeID, productSubcategoryID, deviceConditionID, quantity) VALUES (?, ?, ?, ?, ?)";
+            $productStmt = mysqli_prepare($conn, $productSql);
+
+            foreach ($productTypes as $index => $productTypeID) {
+                $subcategoryID = !empty($subcategories[$index]) ? $subcategories[$index] : NULL;
+                $conditionID = !empty($deviceConditions[$index]) ? $deviceConditions[$index] : NULL;
+                $quantity = !empty($quantities[$index]) ? $quantities[$index] : 0;
+
+                mysqli_stmt_bind_param($productStmt, "iiiii", $id, $productTypeID, $subcategoryID, $conditionID, $quantity);
+                mysqli_stmt_execute($productStmt);
+            }
+            mysqli_stmt_close($productStmt);
+        }
+    }
+
+
     // ====================================================
     // CONDITION 2: WRITE NEW PROGRESS SNAPSHOT TO LOGS
     // ====================================================
