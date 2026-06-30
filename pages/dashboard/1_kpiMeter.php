@@ -38,8 +38,10 @@ $currentMonthIndex = date('m');
         </div>
 
         <div id="customDateRange" class="mt-2" style="display:none; text-align: right;">
-            <input type="date" id="dateFrom" class="form-control form-control-sm d-inline-block w-auto" style="font-size: 0.7rem; height: 28px;">
-            <input type="date" id="dateTo" class="form-control form-control-sm d-inline-block w-auto" style="font-size: 0.7rem; height: 28px;">
+            <label for="dateFrom" class="small text-secondary me-1" style="font-size: 0.75rem;">From:</label>
+            <input type="date" id="dateFrom" class="form-control form-control-sm d-inline-block w-auto me-2" style="font-size: 0.7rem; height: 28px;">
+            <label for="dateTo" class="small text-secondary me-1" style="font-size: 0.75rem;">To:</label>
+            <input type="date" id="dateTo" class="form-control form-control-sm d-inline-block w-auto me-2" style="font-size: 0.7rem; height: 28px;">
             <button class="btn btn-sm btn-primary py-0" style="font-size: 0.7rem; height: 28px;" onclick="updateSalesMeterRealtime()">Go</button>
         </div>
 
