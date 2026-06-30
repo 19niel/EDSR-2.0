@@ -36,7 +36,26 @@ function updateSalesMeterRealtime() {
     const monthFilterEl = document.getElementById('kpiMonthFilter');
     const selectedPeriod = monthFilterEl ? monthFilterEl.value : 'current';
 
-    fetch(`../php/get_1KpiSalesTotal.php?period=${selectedPeriod}`)
+    // Show/hide the custom date range section
+    const customDateRangeEl = document.getElementById('customDateRange');
+    if (customDateRangeEl) {
+        if (selectedPeriod === 'custom') {
+            customDateRangeEl.style.display = 'block';
+        } else {
+            customDateRangeEl.style.display = 'none';
+        }
+    }
+
+    let url = `../php/get_1KpiSalesTotal.php?period=${selectedPeriod}`;
+    if (selectedPeriod === 'custom') {
+        const dateFromEl = document.getElementById('dateFrom');
+        const dateToEl = document.getElementById('dateTo');
+        const dateFrom = dateFromEl ? dateFromEl.value : '';
+        const dateTo = dateToEl ? dateToEl.value : '';
+        url += `&dateFrom=${encodeURIComponent(dateFrom)}&dateTo=${encodeURIComponent(dateTo)}`;
+    }
+
+    fetch(url)
         .then(response => response.json())
         .then(res => {
             if (res && res.success) {

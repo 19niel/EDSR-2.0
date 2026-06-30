@@ -9,14 +9,35 @@ $query = "SELECT SUM(CAST(NULLIF(proposedPrice, '') AS DECIMAL(10,2))) AS total_
           FROM encoded 
           WHERE is_deleted = 0 AND accStatus = 230";
 
-// 🎯 FILTER SWITCH: Query conditions now bind directly to progressDate column layers
+$currentYear = date('Y');
+
+// 🎯 FILTER SWITCH: Updated to handle Months, Quarters, Custom Ranges, and All Time
 if ($period === 'current') {
-    // Limits dataset exclusively to the current active calendar month bounds based on progressDate
-    $query .= " AND MONTH(progressDate) = MONTH(CURRENT_DATE()) AND YEAR(progressDate) = YEAR(CURRENT_DATE())";
-} else if ($period !== 'all' && is_numeric($period)) {
-    // Limits datasets to specific selected operational month numeric indexing strings
+    // Current month
+    $query .= " AND MONTH(progressDate) = MONTH(CURRENT_DATE()) AND YEAR(progressDate) = '$currentYear'";
+} elseif (in_array($period, ['Q1', 'Q2', 'Q3', 'Q4'])) {
+    // Quarterly logic
+    if ($period === 'Q1') $query .= " AND MONTH(progressDate) IN (1, 2, 3)";
+    if ($period === 'Q2') $query .= " AND MONTH(progressDate) IN (4, 5, 6)";
+    if ($period === 'Q3') $query .= " AND MONTH(progressDate) IN (7, 8, 9)";
+    if ($period === 'Q4') $query .= " AND MONTH(progressDate) IN (10, 11, 12)";
+    $query .= " AND YEAR(progressDate) = '$currentYear'";
+} elseif ($period === 'custom') {
+    // Custom date range logic
+    $dateFrom = isset($_GET['dateFrom']) ? mysqli_real_escape_string($conn, trim($_GET['dateFrom'])) : '';
+    $dateTo = isset($_GET['dateTo']) ? mysqli_real_escape_string($conn, trim($_GET['dateTo'])) : '';
+    
+    if (!empty($dateFrom) && !empty($dateTo)) {
+        $query .= " AND progressDate BETWEEN '$dateFrom' AND '$dateTo'";
+    } elseif (!empty($dateFrom)) {
+        $query .= " AND progressDate >= '$dateFrom'";
+    } elseif (!empty($dateTo)) {
+        $query .= " AND progressDate <= '$dateTo'";
+    }
+} elseif ($period !== 'all' && preg_match('/^\d{2}$/', $period)) {
+    // Specific month
     $monthVal = intval($period);
-    $query .= " AND MONTH(progressDate) = $monthVal AND YEAR(progressDate) = YEAR(CURRENT_DATE())";
+    $query .= " AND MONTH(progressDate) = $monthVal AND YEAR(progressDate) = '$currentYear'";
 }
 
 $result = mysqli_query($conn, $query);
@@ -30,11 +51,6 @@ if ($result) {
         'totalSales' => $totalSales
     ]);
 } else {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Failed to read tracking matrix values: ' . mysqli_error($conn)
-    ]);
+    echo json_encode(['success' => false, 'error' => mysqli_error($conn)]);
 }
-
-mysqli_close($conn);
 ?>
