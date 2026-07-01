@@ -127,11 +127,24 @@ $(document).ready(function () {
         });
     }
 
-    function fetchLeaderboardMetrics(month) {
+    function fetchLeaderboardMetrics(month = null) {
+        if (!month) {
+            const monthFilterEl = document.getElementById('kpiMonthFilter');
+            month = monthFilterEl ? monthFilterEl.value : 'current';
+        }
+
+        let requestData = { month: month };
+        if (month === 'custom') {
+            const dateFromEl = document.getElementById('dateFrom');
+            const dateToEl = document.getElementById('dateTo');
+            requestData.dateFrom = dateFromEl ? dateFromEl.value : '';
+            requestData.dateTo = dateToEl ? dateToEl.value : '';
+        }
+
         $.ajax({
             url: '../php/get_4LeaderboardData.php',
             type: 'GET',
-            data: { month: month },
+            data: requestData,
             dataType: 'json',
             success: function (response) {
                 if (response && response.success) {
@@ -168,11 +181,10 @@ $(document).ready(function () {
     }
 
     initLeaderboardChart();
-    fetchLeaderboardMetrics('current');
+    fetchLeaderboardMetrics();
 
-    $('#kpiMonthFilter').on('change', function () {
-        const pickedMonth = $(this).val();
-        fetchLeaderboardMetrics(pickedMonth);
+    document.addEventListener('kpiFilterUpdated', function (e) {
+        fetchLeaderboardMetrics(e.detail.period);
     });
 
     document.addEventListener('edsrThemeChange', function (e) {
@@ -184,7 +196,6 @@ $(document).ready(function () {
     });
 
     setInterval(function () {
-        const pickedMonth = $('#kpiMonthFilter').val() || 'current';
-        fetchLeaderboardMetrics(pickedMonth);
+        fetchLeaderboardMetrics();
     }, 5000);
 });

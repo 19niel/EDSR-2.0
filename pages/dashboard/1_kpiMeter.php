@@ -7,7 +7,7 @@ $currentMonthIndex = date('m');
     <div class="w-100 mb-2">
         <div class="d-flex justify-content-between align-items-center">
             <h6 class="text-uppercase text-secondary tracking-wider fw-bold small m-0">EMR Sales Meter</h6>
-            <select class="form-select form-select-sm w-auto py-0 px-2 text-muted fw-medium border-secondary-subtle shadow-sm style-select small" id="kpiMonthFilter" style="font-size: 0.75rem; height: 28px; border-radius: 6px;" onchange="updateSalesMeterRealtime()">
+            <select class="form-select form-select-sm w-auto py-0 px-2 text-muted fw-medium border-secondary-subtle shadow-sm style-select small" id="kpiMonthFilter" style="font-size: 0.75rem; height: 28px; border-radius: 6px;">
                 <option value="all">All Time</option>
                 <option value="current" selected>Current Month</option> 
                 
@@ -42,7 +42,7 @@ $currentMonthIndex = date('m');
             <input type="date" id="dateFrom" class="form-control form-control-sm d-inline-block w-auto me-2" style="font-size: 0.7rem; height: 28px;">
             <label for="dateTo" class="small text-secondary me-1" style="font-size: 0.75rem;">To:</label>
             <input type="date" id="dateTo" class="form-control form-control-sm d-inline-block w-auto me-2" style="font-size: 0.7rem; height: 28px;">
-            <button class="btn btn-sm btn-primary py-0" style="font-size: 0.7rem; height: 28px;" onclick="updateSalesMeterRealtime()">Go</button>
+            <button class="btn btn-sm btn-primary py-0" style="font-size: 0.7rem; height: 28px;" onclick="triggerKpiFilterUpdate()">Go</button>
         </div>
 
         <hr class="my-2 text-black-50">

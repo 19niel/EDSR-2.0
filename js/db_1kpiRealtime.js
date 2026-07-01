@@ -10,10 +10,29 @@ document.addEventListener("DOMContentLoaded", function () {
     // 🔄 TRIGGER IMMEDIATE DATABASE RE-QUERY WHEN DROPDOWN VALUE CHANGES
     if (monthFilterEl) {
         monthFilterEl.addEventListener('change', function () {
-            updateSalesMeterRealtime();
+            triggerKpiFilterUpdate();
         });
     }
 });
+
+function triggerKpiFilterUpdate() {
+    updateSalesMeterRealtime();
+    const monthFilterEl = document.getElementById('kpiMonthFilter');
+    const selectedPeriod = monthFilterEl ? monthFilterEl.value : 'current';
+    const dateFromEl = document.getElementById('dateFrom');
+    const dateToEl = document.getElementById('dateTo');
+    const dateFrom = dateFromEl ? dateFromEl.value : '';
+    const dateTo = dateToEl ? dateToEl.value : '';
+
+    const event = new CustomEvent('kpiFilterUpdated', {
+        detail: {
+            period: selectedPeriod,
+            dateFrom: dateFrom,
+            dateTo: dateTo
+        }
+    });
+    document.dispatchEvent(event);
+}
 
 function formatCurrencyShorthand(value) {
     const num = parseFloat(value);

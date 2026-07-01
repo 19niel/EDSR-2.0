@@ -8,14 +8,30 @@ header('Content-Type: application/json');
 $monthFilter = isset($_GET['month']) ? mysqli_real_escape_string($conn, $_GET['month']) : 'current';
 
 $whereClause = "WHERE is_deleted = 0";
+$currentYear = date('Y');
 
 if ($monthFilter === 'current') {
-    $currentMonth = date('m');
-    $currentYear = date('Y');
-    $whereClause .= " AND MONTH(callDate) = '$currentMonth' AND YEAR(callDate) = '$currentYear'";
+    $whereClause .= " AND MONTH(callDate) = MONTH(CURRENT_DATE()) AND YEAR(callDate) = '$currentYear'";
+} elseif (in_array($monthFilter, ['Q1', 'Q2', 'Q3', 'Q4'])) {
+    if ($monthFilter === 'Q1') $whereClause .= " AND MONTH(callDate) IN (1, 2, 3)";
+    if ($monthFilter === 'Q2') $whereClause .= " AND MONTH(callDate) IN (4, 5, 6)";
+    if ($monthFilter === 'Q3') $whereClause .= " AND MONTH(callDate) IN (7, 8, 9)";
+    if ($monthFilter === 'Q4') $whereClause .= " AND MONTH(callDate) IN (10, 11, 12)";
+    $whereClause .= " AND YEAR(callDate) = '$currentYear'";
+} elseif ($monthFilter === 'custom') {
+    $dateFrom = isset($_GET['dateFrom']) ? mysqli_real_escape_string($conn, trim($_GET['dateFrom'])) : '';
+    $dateTo = isset($_GET['dateTo']) ? mysqli_real_escape_string($conn, trim($_GET['dateTo'])) : '';
+    
+    if (!empty($dateFrom) && !empty($dateTo)) {
+        $whereClause .= " AND callDate BETWEEN '$dateFrom' AND '$dateTo'";
+    } elseif (!empty($dateFrom)) {
+        $whereClause .= " AND callDate >= '$dateFrom'";
+    } elseif (!empty($dateTo)) {
+        $whereClause .= " AND callDate <= '$dateTo'";
+    }
 } elseif ($monthFilter !== 'all' && preg_match('/^\d{2}$/', $monthFilter)) {
-    $currentYear = date('Y');
-    $whereClause .= " AND MONTH(callDate) = '$monthFilter' AND YEAR(callDate) = '$currentYear'";
+    $monthVal = intval($monthFilter);
+    $whereClause .= " AND MONTH(callDate) = $monthVal AND YEAR(callDate) = '$currentYear'";
 }
 
 // SQL Query targeting accStatus and dynamic aggregate totals from encoded

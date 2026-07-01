@@ -109,13 +109,25 @@ $(document).ready(function () {
         }
     }
 
-    function fetchPipelineFunnelMetrics(selectedMonth = 'current') {
+    function fetchPipelineFunnelMetrics(selectedMonth = null) {
+        if (!selectedMonth) {
+            const monthFilterEl = document.getElementById('kpiMonthFilter');
+            selectedMonth = monthFilterEl ? monthFilterEl.value : 'current';
+        }
         console.log(`%c[Pipeline Engine] Fetching pipeline metrics for filter: ${selectedMonth}`, 'color: #0dcaf0; font-weight: bold;');
+
+        let requestData = { month: selectedMonth };
+        if (selectedMonth === 'custom') {
+            const dateFromEl = document.getElementById('dateFrom');
+            const dateToEl = document.getElementById('dateTo');
+            requestData.dateFrom = dateFromEl ? dateFromEl.value : '';
+            requestData.dateTo = dateToEl ? dateToEl.value : '';
+        }
 
         $.ajax({
             url: '../php/get_2PipelineData.php',
             type: 'GET',
-            data: { month: selectedMonth },
+            data: requestData,
             dataType: 'json',
             success: function (response) {
                 if (response && response.success) {
@@ -200,12 +212,11 @@ $(document).ready(function () {
 
     // Initialize chart and data
     initFunnelChart();
-    fetchPipelineFunnelMetrics('current');
+    fetchPipelineFunnelMetrics();
 
     // Attach listening interceptors
-    $('#kpiMonthFilter').on('change', function () {
-        const pickedMonth = $(this).val();
-        fetchPipelineFunnelMetrics(pickedMonth);
+    document.addEventListener('kpiFilterUpdated', function (e) {
+        fetchPipelineFunnelMetrics(e.detail.period);
     });
 
     // Handle theme toggle

@@ -51,10 +51,18 @@ $(document).ready(function () {
     function fetchTeamDistributionRealtime() {
         const activeMonth = $('#kpiMonthFilter').val() || $('#dashboardMonthFilter').val() || 'current';
 
+        let requestData = { month: activeMonth };
+        if (activeMonth === 'custom') {
+            const dateFromEl = document.getElementById('dateFrom');
+            const dateToEl = document.getElementById('dateTo');
+            requestData.dateFrom = dateFromEl ? dateFromEl.value : '';
+            requestData.dateTo = dateToEl ? dateToEl.value : '';
+        }
+
         $.ajax({
             url: '../php/get_3AccountStatusTotal.php',
             type: 'GET',
-            data: { month: activeMonth },
+            data: requestData,
             dataType: 'json',
             success: function (response) {
                 if (response && response.success) {
@@ -94,7 +102,11 @@ $(document).ready(function () {
     initTeamChart();
     fetchTeamDistributionRealtime();
 
-    $(document).on('change', '#kpiMonthFilter, #dashboardMonthFilter', function () {
+    document.addEventListener('kpiFilterUpdated', function () {
+        fetchTeamDistributionRealtime();
+    });
+
+    $(document).on('change', '#dashboardMonthFilter', function () {
         fetchTeamDistributionRealtime();
     });
 
