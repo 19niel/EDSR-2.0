@@ -100,6 +100,7 @@ function prefillForm(data) {
   $("#reminderDate").val(data.reminderDate || "");
   $("#deliveryDate").val(data.deliveryDate || "");
   $("#contractEnd").val(data.contractEnd || "");
+  $("#estimatedDelivery").val(data.estimatedDelivery || "");
 
   // Populate Region and trigger Province, City, and Barangay loading
   $("#region").val(data.region || "").trigger("change");
@@ -150,11 +151,8 @@ function prefillForm(data) {
   }
 
   // Populate Account Status and trigger Reason Subcategory loading
+  $("#reasonSubcategory").attr("data-saved-value", data.reasonSubcategory || "");
   $("#accountStatus").val(data.accStatus || "").trigger("change");
-
-  setTimeout(() => {
-    $("#reasonSubcategory").val(data.reasonSubcategory || "");
-  }, 100);
 
   if (data.accStatus === "230") {
     document.getElementById("deliveryDateContainer").style.display = "block";

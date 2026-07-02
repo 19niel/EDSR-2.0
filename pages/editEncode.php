@@ -548,14 +548,15 @@
                                 <div class="col-md-6 col-lg-4 col-xl-3">
                                     <label for="estimatedDelivery" class="form-label">Estimated Delivery</label>
                                     <select id="estimatedDelivery" name="estimatedDelivery" class="form-select">
-                                        <option value="" disabled>Choose Month...</option>
+                                        <option value="N/A" disabled <?php echo empty($row['estimatedDelivery']) ? 'selected' : ''; ?>>Choose Month...</option>
                                         <?php 
                                         $months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                                         foreach ($months as $m) {
-                                            $selected = (isset($row['estimatedDelivery']) && $row['estimatedDelivery'] === $m) ? 'selected' : '';
-                                            echo '<option value="'.$m.'" '.$selected.'>'.$m.'</option>';
-                                        }
+                                            // This logic mirrors your accountStatus approach
+                                            $selected = (isset($row['estimatedDelivery']) && $row['estimatedDelivery'] == $m) ? 'selected' : '';
                                         ?>
+                                            <option value="<?php echo $m; ?>" <?php echo $selected; ?>><?php echo $m; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
