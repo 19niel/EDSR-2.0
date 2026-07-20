@@ -30,6 +30,11 @@ if (isset($_GET['callDate'])) {
 $callDateStart = isset($_GET['callDateStart']) ? $_GET['callDateStart'] : '';
 $callDateEnd = isset($_GET['callDateEnd']) ? $_GET['callDateEnd'] : '';
 
+$progressDateStart = isset($_GET['progressDateStart']) ? $_GET['progressDateStart'] : '';
+$progressDateEnd = isset($_GET['progressDateEnd']) ? $_GET['progressDateEnd'] : '';
+$accStatus = isset($_GET['accStatus']) ? $_GET['accStatus'] : '';
+$estimatedDelivery = isset($_GET['estimatedDelivery']) ? $_GET['estimatedDelivery'] : '';
+
 // Capture the global search parameter from the big search input box
 if (isset($_GET['globalSearch'])) {
     $globalSearch = trim($_GET['globalSearch']);
@@ -67,13 +72,21 @@ if (!empty($accountName)) {
     $whereConditions[] = "e.accName LIKE '%" . mysqli_real_escape_string($conn, $accountName) . "%'";
 }
 
-if (!empty($callDate)) {
-    $whereConditions[] = "e.callDate = '" . mysqli_real_escape_string($conn, $callDate) . "'";
-}
-
 // FIXED: Date Range Filter - Only restrict queries if dates are explicitly submitted by user
 if (!empty($callDateStart) && !empty($callDateEnd)) {
     $whereConditions[] = "e.callDate BETWEEN '" . mysqli_real_escape_string($conn, $callDateStart) . "' AND '" . mysqli_real_escape_string($conn, $callDateEnd) . "'";
+}
+
+if (!empty($progressDateStart) && !empty($progressDateEnd)) {
+    $whereConditions[] = "e.progressDate BETWEEN '" . mysqli_real_escape_string($conn, $progressDateStart) . "' AND '" . mysqli_real_escape_string($conn, $progressDateEnd) . "'";
+}
+
+if (!empty($accStatus)) {
+    $whereConditions[] = "e.accStatus = '" . mysqli_real_escape_string($conn, $accStatus) . "'";
+}
+
+if (!empty($estimatedDelivery)) {
+    $whereConditions[] = "e.estimatedDelivery = '" . mysqli_real_escape_string($conn, $estimatedDelivery) . "'";
 }
 
 // Global Search tracking
@@ -82,7 +95,12 @@ if (!empty($globalSearch)) {
     $whereConditions[] = "(e.LID LIKE '%$escapedSearch%' 
                           OR e.accName LIKE '%$escapedSearch%' 
                           OR e.projTitle LIKE '%$escapedSearch%'
-                          OR e.accExec LIKE '%$escapedSearch%')";
+                          OR e.accExec LIKE '%$escapedSearch%'
+                          OR e.callDate LIKE '%$escapedSearch%'
+                          OR e.proposedPrice LIKE '%$escapedSearch%'
+                          OR e.estimatedDelivery LIKE '%$escapedSearch%'
+                          OR e.progressDate LIKE '%$escapedSearch%'
+                          OR c.category_name LIKE '%$escapedSearch%')";
 }
 
 $whereConditions[] = "e.is_deleted = 0"; // Always filter out deleted records
@@ -97,7 +115,7 @@ if ($current_page < 1) { $current_page = 1; }
 $start_record = ($current_page - 1) * $records_per_page;
 
 // Count total records matching final built criteria
-$sql_count = "SELECT COUNT(*) as total FROM encoded e";
+$sql_count = "SELECT COUNT(*) as total FROM encoded e LEFT JOIN categories c ON e.accStatus = c.id";
 if (!empty($condition)) {
     $sql_count .= " WHERE $condition";
 }
@@ -108,6 +126,10 @@ $total_records = mysqli_fetch_assoc($result_count)['total'] ?? 0;
 $sql = "SELECT e.*, c.category_name AS status_name 
         FROM encoded e
         LEFT JOIN categories c ON e.accStatus = c.id";
+
+// Fetch status for dropdown
+$sql_status = "SELECT * FROM categories WHERE field = 'Account Status' AND is_deleted = 0 ORDER BY id ASC";
+$accountstatusResult = mysqli_query($conn, $sql_status);
 
 if (!empty($condition)) {
     $sql .= " WHERE $condition";

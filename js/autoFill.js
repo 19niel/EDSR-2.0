@@ -56,6 +56,9 @@ function populateAccountExecutiveDropdown(accounts) {
     return;
   }
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedExec = urlParams.get('accountExecutiveSearch');
+
   accounts.forEach((account) => {
     if (!account.accExec) {
       console.warn("Account entry missing 'accExec' field:", account);
@@ -64,6 +67,9 @@ function populateAccountExecutiveDropdown(accounts) {
     let option = document.createElement("option");
     option.value = account.accExec;
     option.textContent = account.accExec;
+    if (selectedExec && account.accExec === selectedExec) {
+      option.selected = true;
+    }
     accountExecSelect.appendChild(option);
   });
 }

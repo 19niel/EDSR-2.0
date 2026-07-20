@@ -126,7 +126,7 @@ include('../php/accountList.php');
                         <p class="text-muted small m-0 mt-1">Manage, filter, and extract digital support and account registry history.</p>
                     </div>
                     <div class="d-flex gap-2">
-                        <a href="../php/exportAllData.php?globalSearch=<?php echo urlencode($_GET['globalSearch'] ?? ''); ?>&accountExecutiveSearch=<?php echo urlencode($accountExecutive ?? ''); ?>&accountName=<?php echo urlencode($accountName ?? ''); ?>&callDate=<?php echo urlencode($callDate ?? ''); ?>&callDateStart=<?php echo urlencode($callDateStart ?? ''); ?>&callDateEnd=<?php echo urlencode($callDateEnd ?? ''); ?>" class="btn btn-white border border-secondary-subtle btn-light px-3 fw-medium d-flex align-items-center gap-2 shadow-sm rounded-3">
+                        <a href="../php/exportAllData.php?globalSearch=<?php echo urlencode($_GET['globalSearch'] ?? ''); ?>&accountExecutiveSearch=<?php echo urlencode($_GET['accountExecutiveSearch'] ?? ''); ?>&accountName=<?php echo urlencode($_GET['accountName'] ?? ''); ?>&callDateStart=<?php echo urlencode($_GET['callDateStart'] ?? ''); ?>&callDateEnd=<?php echo urlencode($_GET['callDateEnd'] ?? ''); ?>&progressDateStart=<?php echo urlencode($_GET['progressDateStart'] ?? ''); ?>&progressDateEnd=<?php echo urlencode($_GET['progressDateEnd'] ?? ''); ?>&accStatus=<?php echo urlencode($_GET['accStatus'] ?? ''); ?>&estimatedDelivery=<?php echo urlencode($_GET['estimatedDelivery'] ?? ''); ?>" class="btn btn-white border border-secondary-subtle btn-light px-3 fw-medium d-flex align-items-center gap-2 shadow-sm rounded-3">
                             <i class="fa fa-download text-secondary"></i> Export Dataset
                         </a>
                         <button type="button" class="btn btn-primary px-3 fw-medium d-flex align-items-center gap-2 shadow-sm rounded-3" data-bs-toggle="modal" data-bs-target="#searchAccount">
@@ -139,7 +139,7 @@ include('../php/accountList.php');
                 <div class="mb-4">
                     <form action="" method="GET" class="d-flex gap-2 w-100" style="max-width: 600px;">
                         <?php
-                        $modal_filters = ['accountExecutiveSearch', 'accountName', 'callDate', 'callDateStart', 'callDateEnd'];
+                        $modal_filters = ['accountExecutiveSearch', 'accountName', 'callDateStart', 'callDateEnd', 'progressDateStart', 'progressDateEnd', 'accStatus', 'estimatedDelivery'];
                         foreach ($modal_filters as $mf) {
                             if (!empty($_GET[$mf])) {
                                 echo '<input type="hidden" name="' . htmlspecialchars($mf) . '" value="' . htmlspecialchars($_GET[$mf]) . '">';
@@ -254,7 +254,7 @@ include('../php/accountList.php');
                     <ul class="pagination shadow-sm rounded-3 overflow-hidden">
                         <?php
                         $filter_query_string = '';
-                        $filters = ['accountExecutiveSearch', 'accountName', 'callDate', 'callDateStart', 'callDateEnd', 'globalSearch'];
+                        $filters = ['accountExecutiveSearch', 'accountName', 'callDateStart', 'callDateEnd', 'progressDateStart', 'progressDateEnd', 'accStatus', 'estimatedDelivery', 'globalSearch'];
 
                         foreach ($filters as $f) {
                             if (!empty($_GET[$f])) {
@@ -297,5 +297,6 @@ include('../php/accountList.php');
         var category = "<?php echo $_SESSION['category'] ?? $category ?? ''; ?>";
     </script>
     <script src="../js/hideElement.js"></script>
+    <script type="text/javascript" src="../js/autoFill.js"></script>
 </body>
 </html>

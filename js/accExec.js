@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Append the dropdown to the container
       accountExecutiveContainer.innerHTML = ""; // Clear the container
       accountExecutiveContainer.appendChild(dropdown);
-    } else if (category === "Admin") {
+    } else if (category === "Admin" || category === "VP") {
       // Create a dropdown (select) element
       var dropdown = document.createElement("select");
       dropdown.className = "form-control";
