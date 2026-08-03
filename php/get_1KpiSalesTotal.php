@@ -14,30 +14,30 @@ $currentYear = date('Y');
 // 🎯 FILTER SWITCH: Updated to handle Months, Quarters, Custom Ranges, and All Time
 if ($period === 'current') {
     // Current month
-    $query .= " AND MONTH(progressDate) = MONTH(CURRENT_DATE()) AND YEAR(progressDate) = '$currentYear'";
+    $query .= " AND MONTH(callDate) = MONTH(CURRENT_DATE()) AND YEAR(callDate) = '$currentYear'";
 } elseif (in_array($period, ['Q1', 'Q2', 'Q3', 'Q4'])) {
     // Quarterly logic
-    if ($period === 'Q1') $query .= " AND MONTH(progressDate) IN (1, 2, 3)";
-    if ($period === 'Q2') $query .= " AND MONTH(progressDate) IN (4, 5, 6)";
-    if ($period === 'Q3') $query .= " AND MONTH(progressDate) IN (7, 8, 9)";
-    if ($period === 'Q4') $query .= " AND MONTH(progressDate) IN (10, 11, 12)";
-    $query .= " AND YEAR(progressDate) = '$currentYear'";
+    if ($period === 'Q1') $query .= " AND MONTH(callDate) IN (1, 2, 3)";
+    if ($period === 'Q2') $query .= " AND MONTH(callDate) IN (4, 5, 6)";
+    if ($period === 'Q3') $query .= " AND MONTH(callDate) IN (7, 8, 9)";
+    if ($period === 'Q4') $query .= " AND MONTH(callDate) IN (10, 11, 12)";
+    $query .= " AND YEAR(callDate) = '$currentYear'";
 } elseif ($period === 'custom') {
     // Custom date range logic
     $dateFrom = isset($_GET['dateFrom']) ? mysqli_real_escape_string($conn, trim($_GET['dateFrom'])) : '';
     $dateTo = isset($_GET['dateTo']) ? mysqli_real_escape_string($conn, trim($_GET['dateTo'])) : '';
     
     if (!empty($dateFrom) && !empty($dateTo)) {
-        $query .= " AND progressDate BETWEEN '$dateFrom' AND '$dateTo'";
+        $query .= " AND callDate BETWEEN '$dateFrom' AND '$dateTo'";
     } elseif (!empty($dateFrom)) {
-        $query .= " AND progressDate >= '$dateFrom'";
+        $query .= " AND callDate >= '$dateFrom'";
     } elseif (!empty($dateTo)) {
-        $query .= " AND progressDate <= '$dateTo'";
+        $query .= " AND callDate <= '$dateTo'";
     }
 } elseif ($period !== 'all' && preg_match('/^\d{2}$/', $period)) {
     // Specific month
     $monthVal = intval($period);
-    $query .= " AND MONTH(progressDate) = $monthVal AND YEAR(progressDate) = '$currentYear'";
+    $query .= " AND MONTH(callDate) = $monthVal AND YEAR(callDate) = '$currentYear'";
 }
 
 $result = mysqli_query($conn, $query);
