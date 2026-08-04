@@ -28,7 +28,7 @@ $query = "SELECT
             COALESCE(proposedPrice, 0) as amount
           FROM encoded 
           $whereClause 
-          ORDER BY id DESC";
+          ORDER BY deliveryDate DESC, id DESC";
 
 $result = mysqli_query($conn, $query);
 $projectsList = [];
