@@ -71,6 +71,11 @@
             margin-top: 2px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
+        .form-control:disabled, .form-select:disabled, input:disabled {
+            background-color: #e9ecef !important;
+            color: #6c757d !important;
+            opacity: 1;
+        }
     </style>
 
     <script src="../js/hideElement.js" defer></script>

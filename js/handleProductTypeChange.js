@@ -7,8 +7,9 @@ $(document).ready(function () {
     var subcategoryDropdown = container.find(".productTypeSubcategory");
 
     if (productTypeId && productTypeId !== "N/A") {
+      var isLocked = $(this).prop("disabled");
       subcategoryDropdown
-        .prop("disabled", false)
+        .prop("disabled", isLocked)
         .html('<option value="N/A" disabled selected>Loading...</option>');
 
       $.ajax({
