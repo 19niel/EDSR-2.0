@@ -13,18 +13,18 @@ $whereClause = "WHERE is_deleted = 0 AND accStatus = '230'";
 if ($monthFilter === 'current') {
     $currentMonth = date('m');
     $currentYear = date('Y');
-    $whereClause .= " AND MONTH(callDate) = '$currentMonth' AND YEAR(callDate) = '$currentYear'";
+    $whereClause .= " AND MONTH(deliveryDate) = '$currentMonth' AND YEAR(deliveryDate) = '$currentYear'";
 } elseif ($monthFilter !== 'all' && preg_match('/^\d{2}$/', $monthFilter)) {
     $currentYear = date('Y');
-    $whereClause .= " AND MONTH(callDate) = '$monthFilter' AND YEAR(callDate) = '$currentYear'";
+    $whereClause .= " AND MONTH(deliveryDate) = '$monthFilter' AND YEAR(deliveryDate) = '$currentYear'";
 }
 
-// 🎯 Added clear formatting parsing rules for progressDate to keep it thin
+// 🎯 Added clear formatting parsing rules for deliveryDate to keep it thin
 $query = "SELECT 
             id,
             COALESCE(NULLIF(TRIM(accExec), ''), 'Unassigned') as exec_name,
             COALESCE(NULLIF(TRIM(accName), ''), 'Unknown') as client_name,
-            COALESCE(DATE_FORMAT(progressDate, '%m/%d/%Y'), 'N/A') as formatted_date,
+            COALESCE(DATE_FORMAT(deliveryDate, '%m/%d/%Y'), 'N/A') as formatted_date,
             COALESCE(proposedPrice, 0) as amount
           FROM encoded 
           $whereClause 

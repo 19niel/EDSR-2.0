@@ -518,7 +518,8 @@
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6 col-lg-4 col-xl-3">
                                     <label for="progressDate" class="form-label">Date of Progress</label>
-                                    <input type="date" class="form-control" id="progressDate" name="progressDate" min="<?php echo $min_expiry; ?>" value="<?php echo htmlspecialchars($row['progressDate'] ?? ''); ?>"/>
+                                    <?php $one_month_ago = date('Y-m-d', strtotime('-1 month')); ?>
+                                    <input type="date" class="form-control" id="progressDate" name="progressDate" min="<?php echo $one_month_ago; ?>" value="<?php echo htmlspecialchars($row['progressDate'] ?? ''); ?>"/>
                                 </div>
                               
                                 <div class="col-md-6 col-lg-4 col-xl-3">
@@ -754,6 +755,7 @@
                     element.disabled = false;
                     element.removeAttribute('disabled');
                 });
+                document.getElementById('progressDate').removeAttribute('min');
                 
                 // Keep structural fields matching standard layout dependencies active
                 document.getElementById('addProductEntry').disabled = false;
