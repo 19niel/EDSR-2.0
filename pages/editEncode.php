@@ -570,7 +570,7 @@
                             <div class="row g-3">
                                 <div class="col-md-6 col-lg-4 col-xl-3" id="deliveryDateContainer" style="display: none;">
                                     <label for="deliveryDate" class="form-label">Delivery Date</label>
-                                    <input type="date" class="form-control" id="deliveryDate" name="deliveryDate" min="<?php echo $min_expiry; ?>" value="<?php echo htmlspecialchars($row['deliveryDate'] ?? ''); ?>" />
+                                    <input type="date" class="form-control" id="deliveryDate" name="deliveryDate" min="<?php echo $one_month_ago; ?>" value="<?php echo htmlspecialchars($row['deliveryDate'] ?? ''); ?>" />
                                 </div>
                                 <div class="col-md-6 col-lg-4 col-xl-3" id="contractEndContainer" style="display: none;">
                                     <label for="contractEnd" class="form-label">Contract End</label>
@@ -761,6 +761,7 @@
                     element.removeAttribute('disabled');
                 });
                 document.getElementById('progressDate').removeAttribute('min');
+                document.getElementById('deliveryDate').removeAttribute('min');
                 
                 // Keep structural fields matching standard layout dependencies active
                 document.getElementById('addProductEntry').disabled = false;
