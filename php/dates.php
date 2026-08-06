@@ -1,6 +1,6 @@
 <?php
 $max = date('Y-m-d');
-$min = date("Y-m-d", strtotime("-7 days", strtotime($max)));
+$min = date("Y-01-01");
 
 $min_expiry = date("Y-m-d");
 
