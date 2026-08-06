@@ -389,6 +389,11 @@
                                 </div>
 
                                 <div class="col-md-6 col-lg-4 col-xl-3">
+                                    <label for="gp" class="form-label">GP (Gross Price)</label>
+                                    <input type="text" class="form-control" id="gp" name="gp" disabled value="<?php echo htmlspecialchars($row['gp'] ?? ''); ?>"/>
+                                </div>
+
+                                <div class="col-md-6 col-lg-4 col-xl-3">
                                     <label for="paymentTerms" class="form-label">Terms of Payment<span class="req">*</span></label>
                                     <select id="paymentTerms" name="paymentTerms" class="form-select" disabled>
                                         <option value="N/A" disabled>Choose...</option>

@@ -46,6 +46,7 @@ if (isset($_POST['encodeAccount'])) {
     // =========================
     $projTitle = $_POST['projTitle'] ?? NULL;
     $proposedPrice = $_POST['proposedPrice'] ?? NULL;
+    $gp = $_POST['gp'] ?? NULL;
     $paymentTerms = $_POST['paymentTerms'] ?? NULL;
     $contractType = $_POST['contractType'] ?? NULL;
     $projAddress = $_POST['projectAddress'] ?? NULL;
@@ -137,6 +138,7 @@ if (isset($_POST['encodeAccount'])) {
         decisionMakerEmail,
         projTitle,
         proposedPrice,
+        gp,
         paymentTerms,
         contactType,
         projAddress,
@@ -159,7 +161,7 @@ if (isset($_POST['encodeAccount'])) {
         ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?,
-        ?, ?, ?, ?, ?
+        ?, ?, ?, ?, ?, ?
     )"; 
 
     $stmt = mysqli_prepare($conn, $sql);
@@ -170,7 +172,7 @@ if (isset($_POST['encodeAccount'])) {
 
     mysqli_stmt_bind_param(
         $stmt,
-        "ssssssssssssssssssssssssssssssssssssssssssssss", // FIXED: Increased total characters to 46 's' types
+        "sssssssssssssssssssssssssssssssssssssssssssssss", // FIXED: Increased total characters to 47 's' types
 
         $sbu,
         $accountExecutive,
@@ -205,6 +207,7 @@ if (isset($_POST['encodeAccount'])) {
         $dmEmail,
         $projTitle,
         $proposedPrice,
+        $gp,
         $paymentTerms,
         $contractType,
         $projAddress,

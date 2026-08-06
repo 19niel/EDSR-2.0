@@ -320,6 +320,11 @@
                                     </div>
 
                                     <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <label for="gp" class="form-label">GP (Gross Price)</label>
+                                        <input type="number" class="form-control" id="gp" name="gp" />
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-4 col-xl-3">
                                         <label for="paymentTerms" class="form-label">Terms of Payment <span class="req">*</span></label>
                                         <select id="paymentTerms" name="paymentTerms" class="form-select" required>
                                             <option value="N/A" selected disabled>Choose...</option>

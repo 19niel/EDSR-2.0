@@ -55,6 +55,7 @@ if (isset($_POST['editEncode'])) {
         $quantity               = isset($_POST['quantity'][0]) ? $_POST['quantity'][0] : ($_POST['quantity'] ?? NULL);
         
         $proposedPrice = $_POST['proposedPrice'] ?? NULL;
+        $gp = $_POST['gp'] ?? NULL;
         $paymentTerms = $_POST['paymentTerms'] ?? NULL;
         $contractType = $_POST['contractType'] ?? NULL;
         $callNature = $_POST['callNature'] ?? NULL;
@@ -107,6 +108,7 @@ if (isset($_POST['editEncode'])) {
                 productTypeSubcategory = '$productTypeSubcategory',
                 quantity = '$quantity',
                 proposedPrice = '$proposedPrice',
+                gp = '$gp',
                 paymentTerms = '$paymentTerms',
                 contactType = '$contractType',
                 callNature = '$callNature',
