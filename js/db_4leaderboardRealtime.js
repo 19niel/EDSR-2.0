@@ -39,7 +39,7 @@ $(document).ready(function () {
             afterDatasetsDraw(chart) {
                 const { ctx } = chart;
                 ctx.save();
-                ctx.font = 'bold 10px Inter, sans-serif';
+                ctx.font = 'bold 8px Inter, sans-serif';
                 const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
                 ctx.fillStyle = currentTheme === 'dark' ? '#F8FAFC' : '#0F172A';
                 ctx.textAlign = 'left';
@@ -73,7 +73,8 @@ $(document).ready(function () {
                     borderWidth: 0,
                     borderRadius: 3,
                     borderSkipped: false,
-                    barThickness: 12
+                    barThickness: 'flex',
+                    maxBarThickness: 10
                 }]
             },
             options: {
@@ -102,7 +103,7 @@ $(document).ready(function () {
                             padding: 4,
                             font: {
                                 fontFamily: 'Inter, sans-serif',
-                                size: 9,
+                                size: 8,
                                 weight: '600'
                             }
                         }
@@ -148,6 +149,12 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                 if (response && response.success) {
+                    if (response.limit) {
+                        const titleEl = document.getElementById('leaderboardTitleCount');
+                        if (titleEl) {
+                            titleEl.textContent = response.limit;
+                        }
+                    }
                     renderLeaderboardLayout(response.data);
                 }
             },

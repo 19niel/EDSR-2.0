@@ -34,7 +34,16 @@ if ($monthFilter === 'current') {
     $whereClause .= " AND MONTH(progressDate) = $monthVal AND YEAR(progressDate) = '$currentYear'";
 }
 
-// Target the top 5 Account Executives based on total active volume
+// Fetch the dynamic leaderboard limit from settings
+$limitQuery = "SELECT setting_value FROM dashboard_settings WHERE setting_key = 'leaderboard_limit'";
+$limitResult = mysqli_query($conn, $limitQuery);
+$leaderboardLimit = 10; // Fallback default
+if ($limitResult && $row = mysqli_fetch_assoc($limitResult)) {
+    $leaderboardLimit = intval($row['setting_value']);
+    if ($leaderboardLimit < 1) $leaderboardLimit = 10;
+}
+
+// Target the top Account Executives based on total active volume
 $query = "SELECT accExec, 
                  SUM(COALESCE(proposedPrice, 0)) as total_amount 
           FROM encoded 
@@ -42,7 +51,7 @@ $query = "SELECT accExec,
           GROUP BY accExec 
           HAVING total_amount > 0
           ORDER BY total_amount DESC 
-          LIMIT 5";
+          LIMIT $leaderboardLimit";
 
 $result = mysqli_query($conn, $query);
 $leaderboard = [];
@@ -56,7 +65,7 @@ if ($result) {
             'amount' => floatval($row['total_amount'])
         ];
     }
-    echo json_encode(['success' => true, 'data' => $leaderboard]);
+    echo json_encode(['success' => true, 'limit' => $leaderboardLimit, 'data' => $leaderboard]);
 } else {
     echo json_encode(['success' => false, 'error_message' => mysqli_error($conn), 'data' => []]);
 }

@@ -61,13 +61,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $statusMessageHtml = '<div class="alert alert-warning">Stagnation limit rules require at least 1 day.</div>';
         }
     }
+
+    // Processing Panel Action 3: Leaderboard Top Sales Limit
+    if (isset($_POST['leaderboard_limit'])) {
+        $leaderboardLimit = intval($_POST['leaderboard_limit']);
+        if ($leaderboardLimit >= 1) {
+            $updateQuery = "INSERT INTO dashboard_settings (setting_key, setting_value) 
+                            VALUES ('leaderboard_limit', ?)
+                            ON DUPLICATE KEY UPDATE setting_value = ?";
+            
+            $stmt = mysqli_prepare($conn, $updateQuery);
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "ss", $leaderboardLimit, $leaderboardLimit);
+                if (mysqli_stmt_execute($stmt)) {
+                    $statusMessageHtml = '
+                        <div class="alert alert-success alert-dismissible fade show shadow-sm rounded-3" role="alert">
+                            <i class="fa-solid fa-circle-check me-2"></i>Leaderboard display limit saved successfully!
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>';
+                } else {
+                    $statusMessageHtml = '<div class="alert alert-danger">Error writing leaderboard limit: ' . mysqli_error($conn) . '</div>';
+                }
+                mysqli_stmt_close($stmt);
+            }
+        } else {
+            $statusMessageHtml = '<div class="alert alert-warning">Leaderboard limit must be at least 1.</div>';
+        }
+    }
 }
 
 // 🎯 Fetch current live configurations safely from the database to pre-populate input cells
 $currentSalesTarget = 5000000.00; // System baseline fallback limit
 $agingDaysThreshold = 60;         // Stagnation baseline fallback rule index
+$leaderboardLimit = 10;           // Leaderboard baseline fallback limit
 
-$settingsQuery = "SELECT setting_key, setting_value FROM dashboard_settings WHERE setting_key IN ('kpi_sales_target', 'aging_days_threshold')";
+$settingsQuery = "SELECT setting_key, setting_value FROM dashboard_settings WHERE setting_key IN ('kpi_sales_target', 'aging_days_threshold', 'leaderboard_limit')";
 $settingsResult = mysqli_query($conn, $settingsQuery);
 
 if ($settingsResult) {
@@ -76,6 +104,8 @@ if ($settingsResult) {
             $currentSalesTarget = floatval($row['setting_value']);
         } elseif ($row['setting_key'] === 'aging_days_threshold') {
             $agingDaysThreshold = intval($row['setting_value']);
+        } elseif ($row['setting_key'] === 'leaderboard_limit') {
+            $leaderboardLimit = intval($row['setting_value']);
         }
     }
 }
@@ -215,8 +245,30 @@ mysqli_close($conn);
                     </div>
 
                     <div class="col-12 col-md-6 col-lg-4">
-                        <div class="main-content-card p-4 shadow-sm text-center border-dashed">
-                            <span class="small font-monospace opacity-75">Cell 4 Settings Placeholder</span>
+                        <div class="main-content-card p-4 shadow-sm text-start">
+                            <div class="w-100 mb-3">
+                                <h6 class="text-uppercase text-warning tracking-wider fw-bold small m-0">
+                                    <i class="fa-solid fa-trophy me-2"></i>Cell 4: Leaderboard Top Sales Limit
+                                </h6>
+                                <hr class="my-2 hr-muted">
+                            </div>
+                            
+                            <form method="POST" action="" class="w-100 d-flex flex-column h-100 justify-content-between">
+                                <div class="mb-3 flex-grow-1">
+                                    <label for="leaderboardLimitInput" class="form-label small fw-bold text-secondary text-uppercase" style="font-size:0.68rem;">Display Limit Count</label>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text bg-light text-secondary"><i class="fa-solid fa-list-ol"></i></span>
+                                        <input type="number" min="1" class="form-control fw-bold fs-6" id="leaderboardLimitInput" name="leaderboard_limit" value="<?php echo $leaderboardLimit; ?>" required>
+                                    </div>
+                                    <div class="form-text text-muted" style="font-size: 0.7rem;">
+                                        Sets how many top executives are displayed in the dashboard panel (e.g. Top 10).
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-warning w-100 rounded-3 fw-semibold py-2 mt-2 shadow-sm text-dark">
+                                    <i class="fa fa-save me-2"></i>Save Display Limit
+                                </button>
+                            </form>
                         </div>
                     </div>
 
