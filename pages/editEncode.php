@@ -178,6 +178,7 @@
                                         <option value="MAKATI" <?php echo (isset($row['team']) && $row['team'] == 'MAKATI') ? 'selected' : ''; ?>>Makati</option>
                                         <option value="QC" <?php echo (isset($row['team']) && $row['team'] == 'QC') ? 'selected' : ''; ?>>QC/Ortigas</option>
                                         <option value="MANILA" <?php echo (isset($row['team']) && $row['team'] == 'MANILA') ? 'selected' : ''; ?>>Manila</option>
+                                        <option value="CALABARZON" <?php echo (isset($row['team']) && $row['team'] == 'CALABARZON') ? 'selected' : ''; ?>>Calabarzon</option>
                                     </select>
                                 </div>
                             </div>

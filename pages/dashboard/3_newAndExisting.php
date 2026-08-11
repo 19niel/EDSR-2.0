@@ -56,6 +56,17 @@ $currentMonthIndex = date('m');
                 </div>
             </div>
 
+            <div class="text-center flex-grow-1 border-start">
+                <div class="d-flex align-items-center justify-content-center gap-1 mb-0.5">
+                    <div style="width: 7px; height: 7px; background-color: #6f42c1; border-radius: 2px;"></div>
+                    <span class="text-muted fw-bold text-uppercase" style="font-size: 0.58rem;">Calabarzon</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-center gap-1" style="line-height: 1;">
+                    <h6 class="fw-bold m-0 text-dark small" id="calabarzonCount" style="font-size: 0.72rem;">0</h6>
+                    <span class="text-muted fw-bold" id="calabarzonPercent" style="font-size: 0.58rem;">0.0%</span>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

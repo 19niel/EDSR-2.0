@@ -93,6 +93,7 @@
                                             <option value="MAKATI">Makati</option>
                                             <option value="QC">QC/Ortigas</option>
                                             <option value="MANILA">Manila</option>
+                                            <option value="CALABARZON">Calabarzon</option>
                                         </select>
                                     </div>
 

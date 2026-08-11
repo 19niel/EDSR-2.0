@@ -13,10 +13,10 @@ $(document).ready(function () {
         teamChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Makati', 'QC', 'Manila'],
+                labels: ['Makati', 'QC', 'Manila', 'Calabarzon'],
                 datasets: [{
-                    data: [0, 0, 0],
-                    backgroundColor: ['#30885f', '#0d6efd', '#ffc107'],
+                    data: [0, 0, 0, 0],
+                    backgroundColor: ['#30885f', '#0d6efd', '#ffc107', '#6f42c1'],
                     borderWidth: 0,
                     hoverOffset: 4
                 }]
@@ -69,26 +69,30 @@ $(document).ready(function () {
                     const makati = parseInt(response.makati) || 0;
                     const qc = parseInt(response.qc) || 0;
                     const manila = parseInt(response.manila) || 0;
+                    const calabarzon = parseInt(response.calabarzon) || 0;
                     const total = parseInt(response.total) || 0;
 
                     $('#donutTotalCount').text(total);
                     $('#makatiCount').text(makati);
                     $('#qcCount').text(qc);
                     $('#manilaCount').text(manila);
+                    $('#calabarzonCount').text(calabarzon);
 
-                    let makatiPct = 0, qcPct = 0, manilaPct = 0;
+                    let makatiPct = 0, qcPct = 0, manilaPct = 0, calabarzonPct = 0;
                     if (total > 0) {
                         makatiPct = (makati / total) * 100;
                         qcPct = (qc / total) * 100;
                         manilaPct = (manila / total) * 100;
+                        calabarzonPct = (calabarzon / total) * 100;
                     }
 
                     $('#makatiPercent').text(makatiPct.toFixed(1) + '%');
                     $('#qcPercent').text(qcPct.toFixed(1) + '%');
                     $('#manilaPercent').text(manilaPct.toFixed(1) + '%');
+                    $('#calabarzonPercent').text(calabarzonPct.toFixed(1) + '%');
 
                     if (teamChart) {
-                        teamChart.data.datasets[0].data = [makati, qc, manila];
+                        teamChart.data.datasets[0].data = [makati, qc, manila, calabarzon];
                         teamChart.update();
                     }
                 }

@@ -48,10 +48,11 @@ $result = mysqli_query($conn, $query);
 
 // Setup baseline payload map structure
 $response = [    
-    'makati' => 0,
-    'qc'     => 0,
-    'manila' => 0,
-    'total'  => 0,
+    'makati'     => 0,
+    'qc'         => 0,
+    'manila'     => 0,
+    'calabarzon' => 0,
+    'total'      => 0,
     'success'=> true
 ];
 
@@ -66,11 +67,13 @@ if ($result) {
             $response['qc'] = $count;
         } elseif ($team === 'MANILA') {
             $response['manila'] = $count;
+        } elseif ($team === 'CALABARZON') {
+            $response['calabarzon'] = $count;
         }
     }
     
     // Aggregated data total summary tally calculation
-    $response['total'] = $response['makati'] + $response['qc'] + $response['manila'];
+    $response['total'] = $response['makati'] + $response['qc'] + $response['manila'] + $response['calabarzon'];
 } else {
     $response['success'] = false;
 }
