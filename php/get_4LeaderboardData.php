@@ -40,6 +40,7 @@ $query = "SELECT accExec,
           FROM encoded 
           $whereClause 
           GROUP BY accExec 
+          HAVING total_amount > 0
           ORDER BY total_amount DESC 
           LIMIT 5";
 
