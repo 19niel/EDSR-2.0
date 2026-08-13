@@ -1,5 +1,7 @@
 # Electronic Daily Sales Report (E-DSR) - Version 2.0
 
+naka hard code yung e-dsr na url 😭😭😭 paayos nalang  
+
 E-DSR is a secure, role-based database web application designed to digitalize daily sales reporting, coordinate lead activities, and monitor pipeline health for business operations. Built on a PHP backend and MySQL database, it provides real-time sales dashboards, granular activity registration, performance analytics, and administrative management portals.
 
 ---
