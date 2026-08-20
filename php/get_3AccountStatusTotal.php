@@ -13,27 +13,27 @@ $whereClause = "WHERE is_deleted = 0 AND accStatus = 230";
 $currentYear = date('Y');
 
 if ($monthFilter === 'current') {
-    $whereClause .= " AND MONTH(progressDate) = MONTH(CURRENT_DATE()) AND YEAR(progressDate) = '$currentYear'";
+    $whereClause .= " AND MONTH(deliveryDate) = MONTH(CURRENT_DATE()) AND YEAR(deliveryDate) = '$currentYear'";
 } elseif (in_array($monthFilter, ['Q1', 'Q2', 'Q3', 'Q4'])) {
-    if ($monthFilter === 'Q1') $whereClause .= " AND MONTH(progressDate) IN (1, 2, 3)";
-    if ($monthFilter === 'Q2') $whereClause .= " AND MONTH(progressDate) IN (4, 5, 6)";
-    if ($monthFilter === 'Q3') $whereClause .= " AND MONTH(progressDate) IN (7, 8, 9)";
-    if ($monthFilter === 'Q4') $whereClause .= " AND MONTH(progressDate) IN (10, 11, 12)";
-    $whereClause .= " AND YEAR(progressDate) = '$currentYear'";
+    if ($monthFilter === 'Q1') $whereClause .= " AND MONTH(deliveryDate) IN (1, 2, 3)";
+    if ($monthFilter === 'Q2') $whereClause .= " AND MONTH(deliveryDate) IN (4, 5, 6)";
+    if ($monthFilter === 'Q3') $whereClause .= " AND MONTH(deliveryDate) IN (7, 8, 9)";
+    if ($monthFilter === 'Q4') $whereClause .= " AND MONTH(deliveryDate) IN (10, 11, 12)";
+    $whereClause .= " AND YEAR(deliveryDate) = '$currentYear'";
 } elseif ($monthFilter === 'custom') {
     $dateFrom = isset($_GET['dateFrom']) ? mysqli_real_escape_string($conn, trim($_GET['dateFrom'])) : '';
     $dateTo = isset($_GET['dateTo']) ? mysqli_real_escape_string($conn, trim($_GET['dateTo'])) : '';
     
     if (!empty($dateFrom) && !empty($dateTo)) {
-        $whereClause .= " AND progressDate BETWEEN '$dateFrom' AND '$dateTo'";
+        $whereClause .= " AND deliveryDate BETWEEN '$dateFrom' AND '$dateTo'";
     } elseif (!empty($dateFrom)) {
-        $whereClause .= " AND progressDate >= '$dateFrom'";
+        $whereClause .= " AND deliveryDate >= '$dateFrom'";
     } elseif (!empty($dateTo)) {
-        $whereClause .= " AND progressDate <= '$dateTo'";
+        $whereClause .= " AND deliveryDate <= '$dateTo'";
     }
 } elseif ($monthFilter !== 'all' && preg_match('/^\d{2}$/', $monthFilter)) {
     $monthVal = intval($monthFilter);
-    $whereClause .= " AND MONTH(progressDate) = $monthVal AND YEAR(progressDate) = '$currentYear'";
+    $whereClause .= " AND MONTH(deliveryDate) = $monthVal AND YEAR(deliveryDate) = '$currentYear'";
 }
 
 // Build query to select counts grouped strictly by cleaned team values
