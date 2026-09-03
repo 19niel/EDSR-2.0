@@ -295,7 +295,7 @@
                                     <select name="branch1" class="form-control form-select" id="branch1" disabled required>
                                         <option value="" disabled>-- Select Branch --</option>
                                         <?php 
-                                        $branches = ['MM', 'ANG', 'CAB', 'LAU', 'BAT', 'NAG', 'SUB', 'BAC', 'CEB', 'DUM', 'ILO', 'TAC', 'CDO', 'DAV', 'GEN', 'ZAM'];
+                                        $branches = ['MM', 'ANG', 'CAB', 'LAG', 'LAU', 'BAT', 'NAG', 'SUB', 'BAC', 'CEB', 'DUM', 'ILO', 'TAC', 'CDO', 'DAV', 'GEN', 'ZAM'];
                                         foreach($branches as $b) {
                                             $selected = (isset($row['branch1']) && $row['branch1'] === $b) ? 'selected' : '';
                                             echo "<option value=\"$b\" $selected>$b</option>";

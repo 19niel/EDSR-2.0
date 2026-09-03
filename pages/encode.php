@@ -213,6 +213,7 @@
                                             <option value="MM">MM</option>
                                             <option value="ANG">ANG</option>
                                             <option value="CAB">CAB</option>
+                                            <option value="LAG">LAG</option>
                                             <option value="LAU">LAU</option>
                                             <option value="BAT">BAT</option>
                                             <option value="NAG">NAG</option>
