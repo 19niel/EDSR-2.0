@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         'CAB': 'LUZON',
         'CAV': 'LUZON',
         'LAG': 'LUZON',
+        'LAU': 'LUZON',
         'BAT': 'LUZON',
         'NAG': 'LUZON',
         'SUB': 'LUZON',
