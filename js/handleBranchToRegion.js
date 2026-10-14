@@ -5,21 +5,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // Company business rules lookup table
     const branchToRegionMap = {
         'MM': 'MM',
-        'ANG': 'LUZON', 
-        'CAB': 'LUZON', 
-        'LAU': 'LUZON', 
+        'ANG': 'LUZON',
+        'CAB': 'LUZON',
+        'CAV': 'LUZON',
         'LAG': 'LUZON',
-        'BAT': 'LUZON', 
-        'NAG': 'LUZON', 
+        'BAT': 'LUZON',
+        'NAG': 'LUZON',
         'SUB': 'LUZON',
-        'BAC': 'VISAYAS', 
-        'CEB': 'VISAYAS', 
-        'DUM': 'VISAYAS', 
-        'ILO': 'VISAYAS', 
+        'BAC': 'VISAYAS',
+        'CEB': 'VISAYAS',
+        'DUM': 'VISAYAS',
+        'ILO': 'VISAYAS',
         'TAC': 'VISAYAS',
-        'CDO': 'MINDANAO', 
-        'DAV': 'MINDANAO', 
-        'GEN': 'MINDANAO', 
+        'CDO': 'MINDANAO',
+        'DAV': 'MINDANAO',
+        'GEN': 'MINDANAO',
         'ZAM': 'MINDANAO'
     };
 
